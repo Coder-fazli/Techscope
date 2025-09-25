@@ -25,7 +25,7 @@
 <?php wp_body_open(); ?>
 
 <!-- NAVIGATION -->
-<nav class="sticky top-0 z-50 mt-4">
+<nav class="sticky top-0 z-50 mt-2 sm:mt-4">
   <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
 
