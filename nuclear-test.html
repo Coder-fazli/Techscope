@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuclear Debug Mode Test - Mobile Overflow</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Load our theme styles with nuclear debug mode -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .test-container {
+      border: 1px solid #ccc;
+      margin: 10px 0;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+
+    .overflow-status {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #ff0000;
+      color: white;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      z-index: 9999;
+      max-width: 250px;
+    }
+
+    .status-ok { background: #00aa00; }
+    .status-overflow { background: #ff0000; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<div id="overflow-status" class="overflow-status">
+  Testing nuclear mode...
+</div>
+
+<div class="max-w-full mx-auto px-3 sm:px-4">
+
+  <h1 class="text-2xl font-bold text-center mb-8 text-blue-600">Nuclear Debug Mode Test</h1>
+
+  <!-- TEST 1: Navigation (most problematic) -->
+  <div class="test-container">
+    <h2 class="font-bold mb-4">TEST 1: Navigation Layout</h2>
+    <nav class="sticky top-0 z-50 mt-2 sm:mt-4">
+      <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between p-4 md:hidden">
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-blue-600">phone_iphone</span>
+              <span class="text-blue-600 font-bold text-lg">SmartObzor</span>
+            </div>
+            <button class="text-gray-600 hover:text-blue-600 transition-colors">
+              <span class="material-icons text-2xl">menu</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- TEST 2: Hero Section -->
+  <div class="test-container">
+    <h2 class="font-bold mb-4">TEST 2: Hero Section</h2>
+    <div class="w-full h-64 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg relative overflow-hidden">
+      <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+      <div class="absolute inset-0 flex items-center justify-center text-white text-center p-4">
+        <div>
+          <h2 class="text-2xl md:text-4xl font-bold mb-4">Test Hero Title</h2>
+          <p class="text-lg opacity-90">Nuclear debug mode should eliminate all hidden overflow</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEST 3: Grid Layout -->
+  <div class="test-container">
+    <h2 class="font-bold mb-4">TEST 3: Grid Layout</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 overflow-hidden">
+      <div class="bg-white p-4 rounded-lg shadow-sm">
+        <div class="w-full h-32 bg-gray-300 rounded mb-2"></div>
+        <h4 class="font-semibold text-sm">Test Card 1</h4>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm">
+        <div class="w-full h-32 bg-gray-300 rounded mb-2"></div>
+        <h4 class="font-semibold text-sm">Test Card 2</h4>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm">
+        <div class="w-full h-32 bg-gray-300 rounded mb-2"></div>
+        <h4 class="font-semibold text-sm">Test Card 3</h4>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm">
+        <div class="w-full h-32 bg-gray-300 rounded mb-2"></div>
+        <h4 class="font-semibold text-sm">Test Card 4</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEST 4: Form Elements -->
+  <div class="test-container">
+    <h2 class="font-bold mb-4">TEST 4: Form Elements</h2>
+    <form class="bg-white p-4 rounded-lg space-y-4">
+      <input type="email" placeholder="Enter email address for newsletter"
+             class="w-full px-3 sm:px-4 py-2 border rounded-lg">
+      <button type="submit"
+              class="w-full bg-blue-600 text-white py-2 px-3 sm:px-4 rounded-lg hover:bg-blue-700 transition-colors">
+        Subscribe to Newsletter
+      </button>
+    </form>
+  </div>
+
+  <!-- TEST 5: Footer Mock -->
+  <div class="test-container">
+    <h2 class="font-bold mb-4">TEST 5: Footer Layout</h2>
+    <footer class="bg-gray-900 text-white py-8 rounded-lg">
+      <div class="max-w-full mx-auto px-3 sm:px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+          <div>
+            <h4 class="text-lg font-bold mb-4 text-blue-400">SmartObzor</h4>
+            <div class="flex space-x-3 sm:space-x-4">
+              <span class="material-icons text-gray-300">facebook</span>
+              <span class="material-icons text-gray-300">twitter</span>
+              <span class="material-icons text-gray-300">instagram</span>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4 text-blue-400">Categories</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#" class="text-gray-300 hover:text-white">Mobile Tech</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white">AI & Gaming</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white">Reviews</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+function checkNuclearMode() {
+  const statusDiv = document.getElementById('overflow-status');
+  const body = document.body;
+  const html = document.documentElement;
+
+  const bodyWidth = body.scrollWidth;
+  const htmlWidth = html.scrollWidth;
+  const viewportWidth = window.innerWidth;
+
+  const maxWidth = Math.max(bodyWidth, htmlWidth);
+  const hasOverflow = maxWidth > viewportWidth;
+  const overflowAmount = hasOverflow ? maxWidth - viewportWidth : 0;
+
+  if (hasOverflow) {
+    statusDiv.className = 'overflow-status status-overflow';
+    statusDiv.innerHTML = `
+      🚫 NUCLEAR MODE FAILED<br>
+      Still ${overflowAmount}px overflow<br>
+      Body: ${bodyWidth}px<br>
+      HTML: ${htmlWidth}px<br>
+      Viewport: ${viewportWidth}px<br>
+      <small>Check console for elements</small>
+    `;
+
+    // Find overflow elements
+    const elements = document.querySelectorAll('*');
+    const overflowElements = [];
+
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.right > viewportWidth && rect.width > 5) { // Ignore tiny elements
+        overflowElements.push({
+          tag: el.tagName,
+          className: el.className,
+          width: Math.round(rect.width),
+          right: Math.round(rect.right),
+          overflow: Math.round(rect.right - viewportWidth),
+          element: el
+        });
+      }
+    });
+
+    if (overflowElements.length > 0) {
+      console.group('🚫 NUCLEAR MODE FAILED - Elements still causing overflow:');
+      overflowElements.forEach((info, i) => {
+        console.log(`${i+1}. ${info.tag}${info.className ? '.' + info.className.replace(/ /g, '.') : ''}`, {
+          width: info.width,
+          right: info.right,
+          overflow: info.overflow,
+          element: info.element
+        });
+      });
+      console.groupEnd();
+    }
+
+  } else {
+    statusDiv.className = 'overflow-status status-ok';
+    statusDiv.innerHTML = `
+      ✅ NUCLEAR MODE SUCCESS!<br>
+      No horizontal overflow<br>
+      Viewport: ${viewportWidth}px<br>
+      Body: ${bodyWidth}px<br>
+      HTML: ${htmlWidth}px<br>
+      Status: FIXED!
+    `;
+
+    console.log('✅ NUCLEAR MODE SUCCESS: No horizontal overflow detected!');
+  }
+}
+
+// Run test
+checkNuclearMode();
+window.addEventListener('resize', checkNuclearMode);
+window.addEventListener('orientationchange', () => setTimeout(checkNuclearMode, 500));
+
+// Monitor continuously
+setInterval(checkNuclearMode, 2000);
+
+console.log('🔬 Nuclear Debug Mode Test loaded. Check the indicator in top-right corner.');
+</script>
+
+</body>
+</html>
