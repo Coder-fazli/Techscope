@@ -1,7 +1,7 @@
 <!-- FOOTER -->
 <footer class="bg-gray-900 text-white py-12 mt-16">
   <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
 
       <div>
         <h4 class="text-lg font-bold mb-4 text-blue-400"><?php bloginfo('name'); ?></h4>
@@ -15,7 +15,7 @@
           }
           ?>
         </p>
-        <div class="flex space-x-4">
+        <div class="flex space-x-3 sm:space-x-4">
           <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
             <span class="material-icons">facebook</span>
           </a>
@@ -69,7 +69,7 @@
             while ($popular_posts->have_posts()) : $popular_posts->the_post();
           ?>
             <div class="flex gap-3">
-              <div class="w-12 h-12 tech-img rounded"
+              <div class="w-12 h-12 sm:w-14 sm:h-14 tech-img rounded flex-shrink-0"
                    style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'thumbnail'); ?>')">
               </div>
               <div class="flex-1">
@@ -88,7 +88,7 @@
           ?>
             <!-- Fallback content -->
             <div class="flex gap-3">
-              <div class="w-12 h-12 tech-img rounded" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+              <div class="w-12 h-12 sm:w-14 sm:h-14 tech-img rounded flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
               <div class="flex-1">
                 <h5 class="text-sm font-semibold text-gray-200 mb-1"><?php _e('AI Breakthroughs 2025', 'techscope'); ?></h5>
                 <p class="text-xs text-gray-400"><?php echo date('M j, Y'); ?></p>
@@ -106,10 +106,10 @@
             <input type="email"
                    name="newsletter_email"
                    placeholder="<?php _e('Enter your email', 'techscope'); ?>"
-                   class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
+                   class="w-full px-3 sm:px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
                    required>
             <button type="submit"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors">
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 sm:px-4 rounded-lg font-semibold transition-colors">
               <?php _e('Subscribe', 'techscope'); ?>
             </button>
             <input type="hidden" name="action" value="newsletter_subscribe">
@@ -126,11 +126,11 @@
         <div class="text-gray-400 text-sm mb-4 md:mb-0">
           © <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. <?php _e('All rights reserved.', 'techscope'); ?>
         </div>
-        <div class="flex space-x-6 text-sm">
+        <div class="flex flex-wrap gap-3 sm:gap-4 md:gap-6 text-sm justify-center md:justify-end">
           <?php
           wp_nav_menu(array(
             'theme_location' => 'footer',
-            'menu_class' => 'flex space-x-6 text-sm',
+            'menu_class' => 'flex flex-wrap gap-3 sm:gap-4 md:gap-6 text-sm justify-center md:justify-end',
             'container' => false,
             'fallback_cb' => 'techscope_footer_menu_fallback'
           ));
