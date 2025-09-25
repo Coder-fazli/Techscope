@@ -95,8 +95,12 @@ nav, header, footer, main, section, div { max-width: 100vw; }
 
 /* Mobile-specific fixes */
 @media (max-width: 640px) {
+  /* SURGICAL FIX FOR 16PX OVERFLOW */
+  html { max-width: 100vw !important; width: 100vw !important; }
+  body { max-width: calc(100vw - 1px) !important; width: calc(100vw - 1px) !important; }
+
   /* Aggressive overflow prevention */
-  * { max-width: 100vw !important; }
+  * { max-width: calc(100vw - 2px) !important; }
 
   /* Force all containers to respect mobile viewport */
   body, html { width: 100vw !important; overflow-x: hidden !important; }
@@ -197,8 +201,32 @@ nav, header, footer, main, section, div { max-width: 100vw; }
 
   /* Force button elements to respect container */
   button, input, select {
-    max-width: 100%;
+    max-width: calc(100% - 4px);
     box-sizing: border-box;
+  }
+
+  /* TARGETED 16PX OVERFLOW FIXES */
+  /* Navigation container specific fix */
+  nav .max-w-full, nav .max-w-7xl {
+    max-width: calc(100vw - 8px) !important;
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+  }
+
+  /* Rounded elements that might extend */
+  .rounded-lg, .rounded-xl, .rounded-2xl {
+    max-width: calc(100% - 2px) !important;
+  }
+
+  /* Grid and flex containers */
+  .grid, .flex {
+    max-width: calc(100vw - 4px) !important;
+  }
+
+  /* Padding compensation */
+  .px-2, .px-3, .px-4 {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
 }
 
