@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Overflow Scanner - Find Hidden Elements</title>
+  <style>
+    body {
+      font-family: monospace;
+      margin: 0;
+      padding: 20px;
+      background: #f0f0f0;
+      overflow-x: auto;
+    }
+
+    .scanner-ui {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: #000;
+      color: #0f0;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      z-index: 99999;
+      max-width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .highlight-element {
+      outline: 3px solid red !important;
+      background: rgba(255, 0, 0, 0.1) !important;
+    }
+
+    .element-info {
+      margin: 5px 0;
+      padding: 5px;
+      background: #111;
+      border-left: 3px solid #0f0;
+    }
+
+    .critical {
+      border-left-color: #f00 !important;
+      background: #220000 !important;
+    }
+
+    .test-elements {
+      margin: 20px 0;
+    }
+
+    .test-box {
+      border: 1px solid #ccc;
+      margin: 10px 0;
+      padding: 10px;
+      background: white;
+    }
+
+    /* Test problematic elements */
+    .test-wide-border {
+      width: 100%;
+      border: 10px solid red;
+      margin: 10px 0;
+      height: 50px;
+    }
+
+    .test-pseudo-element {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: blue;
+      margin: 10px 0;
+    }
+
+    .test-pseudo-element::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 0;
+      width: 40px;
+      height: 100%;
+      background: orange;
+    }
+
+    .test-pseudo-element::after {
+      content: '';
+      position: absolute;
+      right: -20px;
+      top: 0;
+      width: 40px;
+      height: 100%;
+      background: purple;
+    }
+
+    .test-transform {
+      width: 200px;
+      height: 50px;
+      background: green;
+      transform: translateX(50px) scale(1.2);
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="scanner-ui" id="scanner-ui">
+  <div style="color: #ff0; font-weight: bold;">🔍 DEEP OVERFLOW SCANNER</div>
+  <div id="viewport-info">Analyzing...</div>
+  <div id="overflow-elements">Scanning elements...</div>
+  <button onclick="scanDeep()" style="margin: 5px 0; padding: 3px 6px;">🔄 Re-scan</button>
+  <button onclick="highlightAll()" style="margin: 5px 0; padding: 3px 6px;">🔦 Highlight All</button>
+  <button onclick="clearHighlights()" style="margin: 5px 0; padding: 3px 6px;">❌ Clear</button>
+</div>
+
+<div class="test-elements">
+  <h1>DEEP OVERFLOW DETECTION TESTS</h1>
+
+  <div class="test-box">
+    <h3>TEST 1: Normal Element</h3>
+    <div style="width: 200px; height: 50px; background: #ccc;">Normal 200px element</div>
+  </div>
+
+  <div class="test-box">
+    <h3>TEST 2: Wide Border Element</h3>
+    <div class="test-wide-border">Element with thick borders</div>
+  </div>
+
+  <div class="test-box">
+    <h3>TEST 3: Pseudo Elements (::before/::after)</h3>
+    <div class="test-pseudo-element">Element with pseudo elements extending outside</div>
+  </div>
+
+  <div class="test-box">
+    <h3>TEST 4: Transform Element</h3>
+    <div class="test-transform">Transformed element</div>
+  </div>
+
+  <div class="test-box">
+    <h3>TEST 5: Box Shadow</h3>
+    <div style="width: 200px; height: 50px; background: cyan; box-shadow: 20px 0 0 red;">Element with right shadow</div>
+  </div>
+
+  <div class="test-box">
+    <h3>TEST 6: Absolute Positioned</h3>
+    <div style="position: relative; height: 60px;">
+      <div style="position: absolute; right: -30px; width: 50px; height: 50px; background: pink;">Absolute positioned outside</div>
+    </div>
+  </div>
+
+  <div class="test-box">
+    <h3>TEST 7: Text Overflow</h3>
+    <div style="width: 100%; white-space: nowrap;">VeryVeryVeryLongTextThatShouldCauseOverflowAndScrollingIssuesOnMobileDevices</div>
+  </div>
+
+</div>
+
+<script>
+let overflowElements = [];
+
+function scanDeep() {
+  console.clear();
+  console.log('🔍 STARTING DEEP OVERFLOW SCAN...');
+
+  overflowElements = [];
+  const viewportWidth = window.innerWidth;
+  const documentWidth = Math.max(
+    document.body.scrollWidth,
+    document.documentElement.scrollWidth,
+    document.body.offsetWidth,
+    document.documentElement.offsetWidth,
+    document.body.clientWidth,
+    document.documentElement.clientWidth
+  );
+
+  // Update viewport info
+  const viewportInfo = document.getElementById('viewport-info');
+  viewportInfo.innerHTML = `
+    Viewport: ${viewportWidth}px<br>
+    Document: ${documentWidth}px<br>
+    Overflow: ${documentWidth - viewportWidth}px<br>
+    Status: ${documentWidth > viewportWidth ? '<span style="color:#f00">OVERFLOW!</span>' : '<span style="color:#0f0">OK</span>'}
+  `;
+
+  // Get all elements including pseudo elements
+  const allElements = document.querySelectorAll('*');
+  const overflowInfo = document.getElementById('overflow-elements');
+  let overflowHtml = '';
+
+  console.group('🚨 OVERFLOW ANALYSIS');
+
+  allElements.forEach((element, index) => {
+    try {
+      const rect = element.getBoundingClientRect();
+      const computedStyle = window.getComputedStyle(element);
+      const pseudoBefore = window.getComputedStyle(element, '::before');
+      const pseudoAfter = window.getComputedStyle(element, '::after');
+
+      // Check element itself
+      if (rect.right > viewportWidth || rect.width > viewportWidth) {
+        const overflow = Math.max(rect.right - viewportWidth, rect.width - viewportWidth);
+
+        const elementInfo = {
+          element: element,
+          tag: element.tagName.toLowerCase(),
+          className: element.className,
+          id: element.id,
+          width: Math.round(rect.width),
+          right: Math.round(rect.right),
+          overflow: Math.round(overflow),
+          position: computedStyle.position,
+          transform: computedStyle.transform,
+          marginLeft: computedStyle.marginLeft,
+          marginRight: computedStyle.marginRight,
+          paddingLeft: computedStyle.paddingLeft,
+          paddingRight: computedStyle.paddingRight,
+          borderLeft: computedStyle.borderLeftWidth,
+          borderRight: computedStyle.borderRightWidth,
+          boxShadow: computedStyle.boxShadow,
+          reasons: []
+        };
+
+        // Identify potential causes
+        if (computedStyle.transform !== 'none') elementInfo.reasons.push('transform');
+        if (computedStyle.position === 'absolute' || computedStyle.position === 'fixed') elementInfo.reasons.push('positioning');
+        if (computedStyle.boxShadow !== 'none') elementInfo.reasons.push('box-shadow');
+        if (parseFloat(computedStyle.marginRight) < 0) elementInfo.reasons.push('negative-margin');
+        if (rect.width > viewportWidth) elementInfo.reasons.push('width-exceeds-viewport');
+
+        overflowElements.push(elementInfo);
+
+        overflowHtml += `
+          <div class="element-info critical">
+            <strong>${elementInfo.tag}${elementInfo.className ? '.' + elementInfo.className.split(' ').join('.') : ''}${elementInfo.id ? '#' + elementInfo.id : ''}</strong><br>
+            Width: ${elementInfo.width}px | Right: ${elementInfo.right}px<br>
+            Overflow: ${elementInfo.overflow}px<br>
+            Position: ${elementInfo.position}<br>
+            ${elementInfo.reasons.length ? 'Causes: ' + elementInfo.reasons.join(', ') : ''}
+          </div>
+        `;
+
+        console.log(`🚨 OVERFLOW ELEMENT #${overflowElements.length}:`, {
+          element: element,
+          tag: elementInfo.tag,
+          class: elementInfo.className,
+          width: elementInfo.width,
+          right: elementInfo.right,
+          overflow: elementInfo.overflow,
+          styles: {
+            position: elementInfo.position,
+            transform: elementInfo.transform,
+            boxShadow: elementInfo.boxShadow,
+            marginLeft: elementInfo.marginLeft,
+            marginRight: elementInfo.marginRight
+          }
+        });
+      }
+
+      // Check pseudo elements
+      if (pseudoBefore.content !== 'none' && pseudoBefore.content !== '""') {
+        console.log('::before pseudo element detected on', element);
+      }
+
+      if (pseudoAfter.content !== 'none' && pseudoAfter.content !== '""') {
+        console.log('::after pseudo element detected on', element);
+      }
+
+    } catch (error) {
+      console.warn('Error analyzing element:', element, error);
+    }
+  });
+
+  console.groupEnd();
+
+  if (overflowElements.length === 0) {
+    overflowHtml = '<div class="element-info">✅ No overflow elements found!</div>';
+  }
+
+  overflowInfo.innerHTML = overflowHtml;
+
+  console.log(`📊 SCAN COMPLETE: Found ${overflowElements.length} overflow elements`);
+  return overflowElements;
+}
+
+function highlightAll() {
+  clearHighlights();
+  overflowElements.forEach(info => {
+    info.element.classList.add('highlight-element');
+  });
+  console.log('🔦 Highlighted all overflow elements');
+}
+
+function clearHighlights() {
+  document.querySelectorAll('.highlight-element').forEach(el => {
+    el.classList.remove('highlight-element');
+  });
+}
+
+// Auto-scan on load and resize
+scanDeep();
+window.addEventListener('resize', () => {
+  setTimeout(scanDeep, 300);
+});
+
+// Continuous monitoring
+setInterval(() => {
+  const currentOverflow = Math.max(document.body.scrollWidth, document.documentElement.scrollWidth) - window.innerWidth;
+  if (currentOverflow > 0) {
+    console.log(`⚠️ Continuous monitor: ${currentOverflow}px overflow detected`);
+  }
+}, 5000);
+
+console.log('🔍 Deep Overflow Scanner loaded. Check the black panel in top-left corner.');
+</script>
+
+</body>
+</html>
