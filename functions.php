@@ -988,7 +988,7 @@ function techscope_homepage_page() {
 // Section controls page
 function techscope_sections_page() {
     // Handle form submission
-    if (isset($_POST['save_sections']) && wp_verify_nonce($_POST['_wpnonce'], 'techscope_sections')) {
+    if (isset($_POST['submit']) && wp_verify_nonce($_POST['_wpnonce'], 'techscope_sections')) {
         // Save section visibility options
         update_option('techscope_show_hero', isset($_POST['show_hero']) ? 1 : 0);
         update_option('techscope_show_trending', isset($_POST['show_trending']) ? 1 : 0);
@@ -997,7 +997,14 @@ function techscope_sections_page() {
         update_option('techscope_show_mobile', isset($_POST['show_mobile']) ? 1 : 0);
         update_option('techscope_show_ai', isset($_POST['show_ai']) ? 1 : 0);
 
-        echo '<div class="notice notice-success"><p>' . __('Section settings saved!', 'techscope') . '</p></div>';
+        // Redirect to prevent re-submission and show success message
+        wp_redirect(admin_url('admin.php?page=techscope-sections&saved=1'));
+        exit;
+    }
+
+    // Show success message if redirected after save
+    if (isset($_GET['saved'])) {
+        echo '<div class="notice notice-success is-dismissible"><p>' . __('Section settings saved successfully!', 'techscope') . '</p></div>';
     }
 
     // Get current settings
