@@ -314,46 +314,65 @@
           let currentSlide = 0;
 
           if (slider && prevBtn && nextBtn && container) {
-            const slides = slider.querySelectorAll('.trending-slide');
-            const totalSlides = slides.length;
-            const slideWidth = container.offsetWidth; // Full container width per slide
+            // Wait for images to load and get proper dimensions
+            setTimeout(() => {
+              const slides = slider.querySelectorAll('.trending-slide');
+              const totalSlides = slides.length;
 
-            console.log('Total slides:', totalSlides, 'Slide width:', slideWidth);
+              console.log('Initializing slider with', totalSlides, 'slides');
 
-            function updateSliderPosition() {
-              const translateX = -currentSlide * slideWidth;
-              slider.style.transform = `translateX(${translateX}px)`;
+              function updateSliderPosition() {
+                const slideWidth = container.offsetWidth;
+                const translateX = -currentSlide * slideWidth;
 
-              // Update button states
-              prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
-              nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
-            }
+                console.log('Moving to slide', currentSlide, 'translateX:', translateX);
 
-            nextBtn.addEventListener('click', () => {
-              if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateSliderPosition();
+                slider.style.transform = `translateX(${translateX}px)`;
+                slider.style.transition = 'transform 0.3s ease-in-out';
+
+                // Update button states
+                prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
+                prevBtn.style.pointerEvents = currentSlide === 0 ? 'none' : 'auto';
+                nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
+                nextBtn.style.pointerEvents = currentSlide === totalSlides - 1 ? 'none' : 'auto';
               }
-            });
 
-            prevBtn.addEventListener('click', () => {
-              if (currentSlide > 0) {
-                currentSlide--;
-                updateSliderPosition();
-              }
-            });
-
-            // Initialize
-            updateSliderPosition();
-
-            // Handle window resize
-            window.addEventListener('resize', () => {
-              const newSlideWidth = container.offsetWidth;
+              // Set initial slide widths
               slides.forEach(slide => {
-                slide.style.width = newSlideWidth + 'px';
+                slide.style.width = container.offsetWidth + 'px';
+                slide.style.flexShrink = '0';
               });
+
+              nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Next clicked, current slide:', currentSlide, 'total:', totalSlides);
+                if (currentSlide < totalSlides - 1) {
+                  currentSlide++;
+                  updateSliderPosition();
+                }
+              });
+
+              prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Prev clicked, current slide:', currentSlide);
+                if (currentSlide > 0) {
+                  currentSlide--;
+                  updateSliderPosition();
+                }
+              });
+
+              // Initialize
               updateSliderPosition();
-            });
+
+              // Handle window resize
+              window.addEventListener('resize', () => {
+                slides.forEach(slide => {
+                  slide.style.width = container.offsetWidth + 'px';
+                });
+                updateSliderPosition();
+              });
+
+            }, 100); // Small delay to ensure proper initialization
           }
         });
         </script>
@@ -365,14 +384,24 @@
 
         .trending-slider-container {
           position: relative;
+          width: 100%;
         }
 
-        .trending-card:hover {
-          transform: translateY(-2px);
+        .trending-slider {
+          display: flex;
+          width: 100%;
+          transition: transform 0.3s ease-in-out;
         }
 
         .trending-slide {
           min-width: 100%;
+          width: 100%;
+          flex-shrink: 0;
+          box-sizing: border-box;
+        }
+
+        .trending-card:hover {
+          transform: translateY(-2px);
         }
 
         /* Responsive grid adjustments */
