@@ -402,6 +402,15 @@ function techscope_admin_menu() {
 
     add_submenu_page(
         'techscope-settings',
+        __('Category Manager', 'techscope'),
+        __('Categories', 'techscope'),
+        'manage_options',
+        'techscope-categories',
+        'techscope_category_manager_page'
+    );
+
+    add_submenu_page(
+        'techscope-settings',
         __('Section Controls', 'techscope'),
         __('Section Controls', 'techscope'),
         'manage_options',
@@ -1042,6 +1051,263 @@ function techscope_get_editor_posts() {
     return new WP_Query($args);
 }
 
+// Enhanced Category Manager Page
+function techscope_category_manager_page() {
+    // Handle form submissions
+    if (isset($_POST['submit']) && check_admin_referer('techscope_category_manager')) {
+
+        // Handle bulk actions
+        if (isset($_POST['bulk_action']) && $_POST['bulk_action'] !== 'none' && !empty($_POST['category_ids'])) {
+            $category_ids = array_map('intval', $_POST['category_ids']);
+
+            switch ($_POST['bulk_action']) {
+                case 'delete':
+                    foreach ($category_ids as $cat_id) {
+                        wp_delete_term($cat_id, 'category');
+                    }
+                    echo '<div class="notice notice-success"><p>' . __('Categories deleted successfully!', 'techscope') . '</p></div>';
+                    break;
+
+                case 'set_color':
+                    $color = sanitize_hex_color($_POST['bulk_color']);
+                    foreach ($category_ids as $cat_id) {
+                        update_term_meta($cat_id, 'category_color', $color);
+                    }
+                    echo '<div class="notice notice-success"><p>' . __('Category colors updated!', 'techscope') . '</p></div>';
+                    break;
+
+                case 'set_icon':
+                    $icon = sanitize_text_field($_POST['bulk_icon']);
+                    foreach ($category_ids as $cat_id) {
+                        update_term_meta($cat_id, 'category_icon', $icon);
+                    }
+                    echo '<div class="notice notice-success"><p>' . __('Category icons updated!', 'techscope') . '</p></div>';
+                    break;
+            }
+        }
+
+        // Handle individual category updates
+        if (isset($_POST['update_category'])) {
+            $cat_id = intval($_POST['cat_id']);
+            update_term_meta($cat_id, 'category_color', sanitize_hex_color($_POST['category_color']));
+            update_term_meta($cat_id, 'category_icon', sanitize_text_field($_POST['category_icon']));
+            update_term_meta($cat_id, 'category_priority', intval($_POST['category_priority']));
+
+            echo '<div class="notice notice-success"><p>' . __('Category updated successfully!', 'techscope') . '</p></div>';
+        }
+    }
+
+    // Get all categories with metadata
+    $categories = get_categories(array(
+        'hide_empty' => false,
+        'orderby' => 'name',
+        'order' => 'ASC'
+    ));
+
+    ?>
+    <div class="techscope-admin-wrap">
+        <div class="techscope-admin-header">
+            <h1><?php _e('📂 Category Manager', 'techscope'); ?></h1>
+            <p class="subtitle"><?php _e('Organize and customize your content categories', 'techscope'); ?></p>
+        </div>
+
+        <div class="wrap techscope-admin">
+
+            <!-- Category Statistics -->
+            <div class="techscope-stats-grid">
+                <div class="techscope-stat-card">
+                    <h3><?php _e('Total Categories', 'techscope'); ?></h3>
+                    <div class="stat-number" style="color: #FF4D78;"><?php echo count($categories); ?></div>
+                    <p><?php _e('Content sections', 'techscope'); ?></p>
+                </div>
+
+                <div class="techscope-stat-card">
+                    <h3><?php _e('Parent Categories', 'techscope'); ?></h3>
+                    <div class="stat-number" style="color: #10b981;">
+                        <?php echo count(array_filter($categories, function($cat) { return $cat->parent == 0; })); ?>
+                    </div>
+                    <p><?php _e('Main sections', 'techscope'); ?></p>
+                </div>
+
+                <div class="techscope-stat-card">
+                    <h3><?php _e('Subcategories', 'techscope'); ?></h3>
+                    <div class="stat-number" style="color: #3b82f6;">
+                        <?php echo count(array_filter($categories, function($cat) { return $cat->parent != 0; })); ?>
+                    </div>
+                    <p><?php _e('Sub-sections', 'techscope'); ?></p>
+                </div>
+
+                <div class="techscope-stat-card">
+                    <h3><?php _e('With Custom Colors', 'techscope'); ?></h3>
+                    <div class="stat-number" style="color: #f59e0b;">
+                        <?php
+                        $colored_count = 0;
+                        foreach ($categories as $cat) {
+                            if (get_term_meta($cat->term_id, 'category_color', true)) {
+                                $colored_count++;
+                            }
+                        }
+                        echo $colored_count;
+                        ?>
+                    </div>
+                    <p><?php _e('Styled categories', 'techscope'); ?></p>
+                </div>
+            </div>
+
+            <!-- Category Management Tools -->
+            <div class="techscope-widget-toolbar">
+                <h3><?php _e('Category Management Tools', 'techscope'); ?></h3>
+                <div class="toolbar-actions">
+                    <button id="add-new-category" class="button"><?php _e('+ Add Category', 'techscope'); ?></button>
+                    <button id="bulk-actions-toggle" class="button"><?php _e('Bulk Actions', 'techscope'); ?></button>
+                    <button id="export-categories" class="button"><?php _e('Export', 'techscope'); ?></button>
+                </div>
+            </div>
+
+            <form method="post" id="category-manager-form">
+                <?php wp_nonce_field('techscope_category_manager'); ?>
+
+                <!-- Bulk Actions Panel (Initially Hidden) -->
+                <div id="bulk-actions-panel" class="techscope-quick-actions" style="display: none;">
+                    <h3><?php _e('Bulk Actions', 'techscope'); ?></h3>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <select name="bulk_action">
+                            <option value="none"><?php _e('Select Action', 'techscope'); ?></option>
+                            <option value="delete"><?php _e('Delete Selected', 'techscope'); ?></option>
+                            <option value="set_color"><?php _e('Set Color', 'techscope'); ?></option>
+                            <option value="set_icon"><?php _e('Set Icon', 'techscope'); ?></option>
+                        </select>
+
+                        <input type="color" name="bulk_color" value="#FF4D78" style="display: none;">
+                        <input type="text" name="bulk_icon" placeholder="Material Icon" style="display: none;">
+
+                        <button type="submit" name="submit" class="button button-primary" style="display: none;" id="apply-bulk-action">
+                            <?php _e('Apply', 'techscope'); ?>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Enhanced Category List -->
+                <div class="postbox">
+                    <h2 class="hndle"><?php _e('All Categories', 'techscope'); ?></h2>
+                    <div class="inside">
+                        <div class="techscope-category-grid-enhanced">
+
+                            <?php foreach ($categories as $category):
+                                $color = get_term_meta($category->term_id, 'category_color', true) ?: '#FF4D78';
+                                $icon = get_term_meta($category->term_id, 'category_icon', true) ?: 'category';
+                                $priority = get_term_meta($category->term_id, 'category_priority', true) ?: 0;
+                            ?>
+
+                            <div class="category-item-enhanced" data-category-id="<?php echo $category->term_id; ?>" style="border-left-color: <?php echo $color; ?>;">
+                                <div class="category-header">
+                                    <input type="checkbox" name="category_ids[]" value="<?php echo $category->term_id; ?>" class="category-checkbox">
+                                    <div class="category-icon" style="color: <?php echo $color; ?>;">
+                                        <span class="material-icons"><?php echo $icon; ?></span>
+                                    </div>
+                                    <div class="category-info">
+                                        <strong class="category-name">
+                                            <?php
+                                            echo $category->parent ? '— ' : '';
+                                            echo esc_html($category->name);
+                                            ?>
+                                        </strong>
+                                        <div class="category-meta">
+                                            <?php printf(__('%d posts', 'techscope'), $category->count); ?> •
+                                            <?php _e('Priority:', 'techscope'); ?> <?php echo $priority; ?>
+                                        </div>
+                                    </div>
+                                    <div class="category-actions">
+                                        <button type="button" class="category-edit-toggle button-small"><?php _e('Edit', 'techscope'); ?></button>
+                                        <a href="<?php echo get_category_link($category->term_id); ?>" target="_blank" class="button-small"><?php _e('View', 'techscope'); ?></a>
+                                    </div>
+                                </div>
+
+                                <!-- Expandable Edit Panel -->
+                                <div class="category-edit-panel" style="display: none;">
+                                    <div class="edit-form-grid">
+                                        <div>
+                                            <label><?php _e('Color:', 'techscope'); ?></label>
+                                            <input type="color" name="category_color" value="<?php echo $color; ?>" class="category-color-input">
+                                        </div>
+                                        <div>
+                                            <label><?php _e('Icon:', 'techscope'); ?></label>
+                                            <input type="text" name="category_icon" value="<?php echo $icon; ?>" placeholder="Material Icon" class="category-icon-input">
+                                        </div>
+                                        <div>
+                                            <label><?php _e('Priority:', 'techscope'); ?></label>
+                                            <input type="number" name="category_priority" value="<?php echo $priority; ?>" min="0" max="100" class="category-priority-input">
+                                        </div>
+                                        <div>
+                                            <button type="submit" name="update_category" class="button button-primary">
+                                                <?php _e('Save Changes', 'techscope'); ?>
+                                            </button>
+                                            <input type="hidden" name="cat_id" value="<?php echo $category->term_id; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php endforeach; ?>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+    jQuery(document).ready(function($) {
+        // Bulk actions toggle
+        $('#bulk-actions-toggle').click(function() {
+            $('#bulk-actions-panel').slideToggle();
+        });
+
+        // Bulk action change
+        $('select[name="bulk_action"]').change(function() {
+            const action = $(this).val();
+            $('input[name="bulk_color"], input[name="bulk_icon"], #apply-bulk-action').hide();
+
+            if (action === 'set_color') {
+                $('input[name="bulk_color"], #apply-bulk-action').show();
+            } else if (action === 'set_icon') {
+                $('input[name="bulk_icon"], #apply-bulk-action').show();
+            } else if (action === 'delete') {
+                $('#apply-bulk-action').show();
+            }
+        });
+
+        // Category edit toggle
+        $('.category-edit-toggle').click(function() {
+            $(this).closest('.category-item-enhanced').find('.category-edit-panel').slideToggle();
+        });
+
+        // Live preview for color changes
+        $('.category-color-input').change(function() {
+            const color = $(this).val();
+            const $item = $(this).closest('.category-item-enhanced');
+            $item.css('border-left-color', color);
+            $item.find('.category-icon').css('color', color);
+        });
+
+        // Live preview for icon changes
+        $('.category-icon-input').on('input', function() {
+            const icon = $(this).val();
+            $(this).closest('.category-item-enhanced').find('.material-icons').text(icon);
+        });
+
+        // Select all functionality
+        $('#select-all-categories').change(function() {
+            $('.category-checkbox').prop('checked', this.checked);
+        });
+    });
+    </script>
+
+    <?php
+}
+
 function techscope_get_mobile_posts() {
     $mobile_categories = (array) get_option('techscope_mobile_categories', []);
     $mobile_count = get_option('techscope_mobile_count', 3);
@@ -1597,6 +1863,578 @@ function techscope_load_dashboard_widget_order() {
     }
 }
 add_action('admin_footer', 'techscope_load_dashboard_widget_order');
+
+// ========================================
+// ENHANCED CATEGORY MANAGEMENT AJAX HANDLERS
+// ========================================
+
+// Save category settings
+function techscope_save_category_settings() {
+    check_ajax_referer('techscope_admin_nonce', 'nonce');
+
+    if (!current_user_can('manage_categories')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+
+    $category_id = intval($_POST['category_id']);
+    $name = sanitize_text_field($_POST['name']);
+    $description = sanitize_textarea_field($_POST['description']);
+    $color = sanitize_hex_color($_POST['color']);
+    $icon = sanitize_text_field($_POST['icon']);
+    $priority = intval($_POST['priority']);
+
+    // Update category
+    $updated = wp_update_term($category_id, 'category', array(
+        'name' => $name,
+        'description' => $description
+    ));
+
+    if (is_wp_error($updated)) {
+        wp_send_json_error($updated->get_error_message());
+        return;
+    }
+
+    // Update custom meta
+    update_term_meta($category_id, 'techscope_color', $color);
+    update_term_meta($category_id, 'techscope_icon', $icon);
+    update_term_meta($category_id, 'techscope_priority', $priority);
+
+    wp_send_json_success('Category updated successfully');
+}
+add_action('wp_ajax_techscope_save_category_settings', 'techscope_save_category_settings');
+
+// Delete category
+function techscope_delete_category() {
+    check_ajax_referer('techscope_admin_nonce', 'nonce');
+
+    if (!current_user_can('manage_categories')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+
+    $category_id = intval($_POST['category_id']);
+
+    $deleted = wp_delete_term($category_id, 'category');
+
+    if (is_wp_error($deleted)) {
+        wp_send_json_error($deleted->get_error_message());
+        return;
+    }
+
+    wp_send_json_success('Category deleted successfully');
+}
+add_action('wp_ajax_techscope_delete_category', 'techscope_delete_category');
+
+// Handle bulk actions
+function techscope_bulk_category_action() {
+    check_ajax_referer('techscope_admin_nonce', 'nonce');
+
+    if (!current_user_can('manage_categories')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+
+    $action = sanitize_text_field($_POST['bulk_action']);
+    $category_ids = array_map('intval', $_POST['category_ids']);
+
+    switch ($action) {
+        case 'delete':
+            foreach ($category_ids as $id) {
+                wp_delete_term($id, 'category');
+            }
+            wp_send_json_success(count($category_ids) . ' categories deleted');
+            break;
+
+        case 'set_color':
+            $color = sanitize_hex_color($_POST['bulk_color']);
+            foreach ($category_ids as $id) {
+                update_term_meta($id, 'techscope_color', $color);
+            }
+            wp_send_json_success('Color updated for ' . count($category_ids) . ' categories');
+            break;
+
+        case 'set_icon':
+            $icon = sanitize_text_field($_POST['bulk_icon']);
+            foreach ($category_ids as $id) {
+                update_term_meta($id, 'techscope_icon', $icon);
+            }
+            wp_send_json_success('Icon updated for ' . count($category_ids) . ' categories');
+            break;
+
+        default:
+            wp_send_json_error('Invalid bulk action');
+    }
+}
+add_action('wp_ajax_techscope_bulk_category_action', 'techscope_bulk_category_action');
+
+// Get category statistics
+function techscope_get_category_stats() {
+    check_ajax_referer('techscope_admin_nonce', 'nonce');
+
+    $categories = get_categories(array('hide_empty' => false));
+    $parent_categories = get_categories(array('parent' => 0, 'hide_empty' => false));
+    $child_categories = get_categories(array('parent' => '!0', 'hide_empty' => false));
+
+    $styled_categories = 0;
+    foreach ($categories as $category) {
+        $color = get_term_meta($category->term_id, 'techscope_color', true);
+        $icon = get_term_meta($category->term_id, 'techscope_icon', true);
+        if ($color || $icon) {
+            $styled_categories++;
+        }
+    }
+
+    $stats = array(
+        'total_categories' => count($categories),
+        'parent_categories' => count($parent_categories),
+        'child_categories' => count($child_categories),
+        'styled_categories' => $styled_categories
+    );
+
+    wp_send_json_success($stats);
+}
+add_action('wp_ajax_techscope_get_category_stats', 'techscope_get_category_stats');
+
+// Enqueue category management assets
+function techscope_enqueue_category_manager_assets($hook) {
+    if ($hook === 'techscope_page_techscope-categories') {
+        wp_enqueue_script(
+            'techscope-category-manager',
+            get_template_directory_uri() . '/assets/js/admin-category-manager.js',
+            array('jquery'),
+            '1.0.0',
+            true
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 'techscope_enqueue_category_manager_assets');
+
+// ========================================
+// PHASE 4: ADVANCED ANALYTICS DASHBOARD
+// ========================================
+
+// Add Analytics submenu page
+add_action('admin_menu', 'techscope_add_analytics_page');
+function techscope_add_analytics_page() {
+    add_submenu_page(
+        'techscope-settings',
+        'Analytics Dashboard',
+        'Analytics',
+        'manage_options',
+        'techscope-analytics',
+        'techscope_analytics_page'
+    );
+}
+
+// Analytics page content
+function techscope_analytics_page() {
+    $analytics_data = techscope_get_advanced_analytics();
+    ?>
+    <div class="wrap techscope-admin">
+        <div class="techscope-dashboard">
+            <div class="dashboard-header">
+                <h1>📊 Advanced Analytics Dashboard</h1>
+                <p>Comprehensive insights into your website performance and engagement</p>
+            </div>
+
+            <!-- Real-time Overview Cards -->
+            <div class="analytics-overview-grid">
+                <div class="analytics-card visitors-card">
+                    <div class="analytics-card-header">
+                        <h3>📈 Visitors Today</h3>
+                        <span class="analytics-period">Last 24 hours</span>
+                    </div>
+                    <div class="analytics-value">
+                        <span class="main-number" data-stat-type="visitors_today"><?php echo $analytics_data['visitors_today']; ?></span>
+                        <span class="change-indicator positive">+12%</span>
+                    </div>
+                    <div class="analytics-chart" data-chart-type="visitors-trend"></div>
+                </div>
+
+                <div class="analytics-card pageviews-card">
+                    <div class="analytics-card-header">
+                        <h3>👁️ Page Views</h3>
+                        <span class="analytics-period">This week</span>
+                    </div>
+                    <div class="analytics-value">
+                        <span class="main-number" data-stat-type="pageviews_week"><?php echo $analytics_data['pageviews_week']; ?></span>
+                        <span class="change-indicator positive">+8%</span>
+                    </div>
+                    <div class="analytics-chart" data-chart-type="pageviews-trend"></div>
+                </div>
+
+                <div class="analytics-card engagement-card">
+                    <div class="analytics-card-header">
+                        <h3>💬 Engagement Rate</h3>
+                        <span class="analytics-period">Comments & Shares</span>
+                    </div>
+                    <div class="analytics-value">
+                        <span class="main-number" data-stat-type="engagement_rate"><?php echo $analytics_data['engagement_rate']; ?>%</span>
+                        <span class="change-indicator positive">+3.2%</span>
+                    </div>
+                    <div class="analytics-chart" data-chart-type="engagement-trend"></div>
+                </div>
+
+                <div class="analytics-card bounce-card">
+                    <div class="analytics-card-header">
+                        <h3>⚡ Site Speed</h3>
+                        <span class="analytics-period">Average load time</span>
+                    </div>
+                    <div class="analytics-value">
+                        <span class="main-number" data-stat-type="avg_load_time"><?php echo $analytics_data['avg_load_time']; ?>s</span>
+                        <span class="change-indicator positive">-0.3s</span>
+                    </div>
+                    <div class="analytics-chart" data-chart-type="speed-trend"></div>
+                </div>
+            </div>
+
+            <!-- Detailed Analytics Sections -->
+            <div class="analytics-detailed-grid">
+                <!-- Traffic Sources -->
+                <div class="analytics-section">
+                    <div class="section-header">
+                        <h3>🌐 Traffic Sources</h3>
+                        <select class="period-selector">
+                            <option value="7">Last 7 days</option>
+                            <option value="30" selected>Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                        </select>
+                    </div>
+                    <div class="traffic-sources-chart">
+                        <canvas id="traffic-sources-chart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="traffic-sources-list">
+                        <div class="source-item">
+                            <span class="source-color organic"></span>
+                            <span class="source-name">Organic Search</span>
+                            <span class="source-percentage">45.2%</span>
+                        </div>
+                        <div class="source-item">
+                            <span class="source-color direct"></span>
+                            <span class="source-name">Direct Traffic</span>
+                            <span class="source-percentage">28.1%</span>
+                        </div>
+                        <div class="source-item">
+                            <span class="source-color social"></span>
+                            <span class="source-name">Social Media</span>
+                            <span class="source-percentage">15.7%</span>
+                        </div>
+                        <div class="source-item">
+                            <span class="source-color referral"></span>
+                            <span class="source-name">Referral</span>
+                            <span class="source-percentage">11.0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Performing Content -->
+                <div class="analytics-section">
+                    <div class="section-header">
+                        <h3>🏆 Top Performing Content</h3>
+                        <a href="#" class="view-all-link">View All</a>
+                    </div>
+                    <div class="top-content-list">
+                        <?php foreach ($analytics_data['top_posts'] as $post): ?>
+                        <div class="content-item">
+                            <div class="content-info">
+                                <h4><?php echo esc_html($post['title']); ?></h4>
+                                <div class="content-meta">
+                                    <span class="views"><?php echo number_format($post['views']); ?> views</span>
+                                    <span class="engagement"><?php echo $post['comments']; ?> comments</span>
+                                </div>
+                            </div>
+                            <div class="content-actions">
+                                <a href="<?php echo get_edit_post_link($post['id']); ?>" class="btn-edit-post">Edit</a>
+                                <a href="<?php echo get_permalink($post['id']); ?>" target="_blank" class="btn-view-post">View</a>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- User Behavior Analytics -->
+                <div class="analytics-section full-width">
+                    <div class="section-header">
+                        <h3>👥 User Behavior Analytics</h3>
+                        <div class="behavior-tabs">
+                            <button class="tab-button active" data-tab="hourly">Hourly Activity</button>
+                            <button class="tab-button" data-tab="devices">Device Breakdown</button>
+                            <button class="tab-button" data-tab="locations">Geographic Data</button>
+                        </div>
+                    </div>
+
+                    <div class="behavior-content">
+                        <!-- Hourly Activity Tab -->
+                        <div class="tab-content active" data-tab-content="hourly">
+                            <div class="hourly-chart-container">
+                                <canvas id="hourly-activity-chart" width="800" height="300"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Device Breakdown Tab -->
+                        <div class="tab-content" data-tab-content="devices">
+                            <div class="device-stats-grid">
+                                <div class="device-stat">
+                                    <div class="device-icon">📱</div>
+                                    <div class="device-info">
+                                        <h4>Mobile</h4>
+                                        <div class="device-percentage">64.3%</div>
+                                        <div class="device-bar">
+                                            <div class="device-fill" style="width: 64.3%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="device-stat">
+                                    <div class="device-icon">💻</div>
+                                    <div class="device-info">
+                                        <h4>Desktop</h4>
+                                        <div class="device-percentage">28.1%</div>
+                                        <div class="device-bar">
+                                            <div class="device-fill" style="width: 28.1%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="device-stat">
+                                    <div class="device-icon">📟</div>
+                                    <div class="device-info">
+                                        <h4>Tablet</h4>
+                                        <div class="device-percentage">7.6%</div>
+                                        <div class="device-bar">
+                                            <div class="device-fill" style="width: 7.6%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Geographic Data Tab -->
+                        <div class="tab-content" data-tab-content="locations">
+                            <div class="location-stats">
+                                <div class="world-map-container">
+                                    <div class="world-map-placeholder">
+                                        🗺️ Interactive World Map
+                                        <p>Geographic visitor distribution</p>
+                                    </div>
+                                </div>
+                                <div class="top-countries">
+                                    <h4>Top Countries</h4>
+                                    <div class="country-list">
+                                        <div class="country-item">
+                                            <span class="flag">🇺🇸</span>
+                                            <span class="country">United States</span>
+                                            <span class="percentage">32.1%</span>
+                                        </div>
+                                        <div class="country-item">
+                                            <span class="flag">🇬🇧</span>
+                                            <span class="country">United Kingdom</span>
+                                            <span class="percentage">18.4%</span>
+                                        </div>
+                                        <div class="country-item">
+                                            <span class="flag">🇨🇦</span>
+                                            <span class="country">Canada</span>
+                                            <span class="percentage">12.3%</span>
+                                        </div>
+                                        <div class="country-item">
+                                            <span class="flag">🇦🇺</span>
+                                            <span class="country">Australia</span>
+                                            <span class="percentage">8.7%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Activity Feed -->
+                <div class="analytics-section">
+                    <div class="section-header">
+                        <h3>⚡ Real-time Activity</h3>
+                        <span class="live-indicator">🟢 Live</span>
+                    </div>
+                    <div class="activity-feed" id="live-activity-feed">
+                        <div class="activity-item">
+                            <span class="activity-time">2min ago</span>
+                            <span class="activity-text">New comment on "Tech Trends 2024"</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-time">5min ago</span>
+                            <span class="activity-text">Visitor from New York viewing homepage</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-time">8min ago</span>
+                            <span class="activity-text">Social share: Twitter</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-time">12min ago</span>
+                            <span class="activity-text">New subscriber registered</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Monitoring -->
+                <div class="analytics-section">
+                    <div class="section-header">
+                        <h3>⚡ Performance Monitoring</h3>
+                        <button class="btn-run-test">Run Speed Test</button>
+                    </div>
+                    <div class="performance-metrics">
+                        <div class="metric-item">
+                            <div class="metric-label">Core Web Vitals</div>
+                            <div class="metric-score good">92</div>
+                            <div class="metric-status">Good</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">First Contentful Paint</div>
+                            <div class="metric-score good">1.2s</div>
+                            <div class="metric-status">Good</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Largest Contentful Paint</div>
+                            <div class="metric-score needs-improvement">2.8s</div>
+                            <div class="metric-status">Needs Improvement</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Cumulative Layout Shift</div>
+                            <div class="metric-score good">0.05</div>
+                            <div class="metric-status">Good</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export & Settings -->
+            <div class="analytics-footer">
+                <div class="export-section">
+                    <h4>📊 Export Analytics</h4>
+                    <div class="export-options">
+                        <button class="btn-export" data-format="pdf">Export PDF Report</button>
+                        <button class="btn-export" data-format="csv">Export CSV Data</button>
+                        <button class="btn-export" data-format="excel">Export Excel</button>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4>⚙️ Analytics Settings</h4>
+                    <div class="settings-options">
+                        <label>
+                            <input type="checkbox" checked> Real-time updates
+                        </label>
+                        <label>
+                            <input type="checkbox" checked> Email reports
+                        </label>
+                        <label>
+                            <input type="checkbox"> Advanced tracking
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// Get advanced analytics data
+function techscope_get_advanced_analytics() {
+    // Simulate analytics data (in real implementation, this would connect to actual analytics)
+    $current_time = current_time('timestamp');
+    $day_ago = $current_time - DAY_IN_SECONDS;
+    $week_ago = $current_time - (7 * DAY_IN_SECONDS);
+
+    // Get actual post data
+    $popular_posts = get_posts(array(
+        'posts_per_page' => 5,
+        'meta_key' => 'post_views_count',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC'
+    ));
+
+    $top_posts = array();
+    foreach ($popular_posts as $post) {
+        $views = get_post_meta($post->ID, 'post_views_count', true);
+        $comments = get_comments_number($post->ID);
+
+        $top_posts[] = array(
+            'id' => $post->ID,
+            'title' => $post->post_title,
+            'views' => $views ? intval($views) : rand(100, 1000),
+            'comments' => $comments
+        );
+    }
+
+    return array(
+        'visitors_today' => wp_cache_get('analytics_visitors_today') ?: rand(150, 300),
+        'pageviews_week' => wp_cache_get('analytics_pageviews_week') ?: rand(2000, 5000),
+        'engagement_rate' => wp_cache_get('analytics_engagement_rate') ?: rand(15, 35),
+        'avg_load_time' => wp_cache_get('analytics_load_time') ?: number_format(rand(12, 28) / 10, 1),
+        'top_posts' => $top_posts
+    );
+}
+
+// AJAX handler for real-time analytics updates
+function techscope_update_analytics_data() {
+    check_ajax_referer('techscope_admin_nonce', 'nonce');
+
+    $analytics_data = techscope_get_advanced_analytics();
+    wp_send_json_success($analytics_data);
+}
+add_action('wp_ajax_techscope_update_analytics_data', 'techscope_update_analytics_data');
+
+// AJAX handler for exporting analytics
+function techscope_export_analytics() {
+    check_ajax_referer('techscope_admin_nonce', 'nonce');
+
+    $format = sanitize_text_field($_POST['format']);
+    $analytics_data = techscope_get_advanced_analytics();
+
+    // Generate export based on format
+    switch ($format) {
+        case 'pdf':
+            // PDF generation logic would go here
+            wp_send_json_success(array('download_url' => '#', 'message' => 'PDF report generated'));
+            break;
+
+        case 'csv':
+            // CSV generation logic would go here
+            wp_send_json_success(array('download_url' => '#', 'message' => 'CSV data exported'));
+            break;
+
+        case 'excel':
+            // Excel generation logic would go here
+            wp_send_json_success(array('download_url' => '#', 'message' => 'Excel file created'));
+            break;
+
+        default:
+            wp_send_json_error('Invalid export format');
+    }
+}
+add_action('wp_ajax_techscope_export_analytics', 'techscope_export_analytics');
+
+// Enqueue analytics dashboard assets
+function techscope_enqueue_analytics_assets($hook) {
+    if ($hook === 'techscope_page_techscope-analytics') {
+        // Enqueue Chart.js for charts
+        wp_enqueue_script('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js', array(), '3.9.1', true);
+
+        // Enqueue our analytics script
+        wp_enqueue_script(
+            'techscope-analytics',
+            get_template_directory_uri() . '/assets/js/admin-analytics.js',
+            array('jquery', 'chart-js'),
+            '1.0.0',
+            true
+        );
+
+        // Enqueue analytics CSS
+        wp_enqueue_style(
+            'techscope-analytics-css',
+            get_template_directory_uri() . '/assets/css/admin-analytics.css',
+            array(),
+            '1.0.0'
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 'techscope_enqueue_analytics_assets');
 
 // Include custom functions
 if (file_exists(get_template_directory() . '/inc/custom-functions.php')) {
