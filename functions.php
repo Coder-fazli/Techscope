@@ -96,6 +96,17 @@ function techscope_enqueue_scripts() {
         true
     );
 
+    // --- Admin Dashboard JS ---
+    if (is_admin()) {
+        wp_enqueue_script(
+            'techscope-admin-dashboard',
+            get_template_directory_uri() . '/assets/js/admin-dashboard.js',
+            array('jquery', 'jquery-ui-sortable'),
+            wp_get_theme()->get('Version'),
+            true
+        );
+    }
+
     // --- AJAX data ---
     wp_localize_script('techscope-script', 'techscope_ajax', array(
         'ajax_url' => admin_url('admin-ajax.php'),
@@ -1457,6 +1468,135 @@ function techscope_fallback_mobile_menu() {
         echo '</a>';
     }
 }
+
+// AJAX Handlers for Enhanced Dashboard
+
+// Update dashboard statistics
+function techscope_update_dashboard_stats() {
+    check_ajax_referer('techscope_nonce', 'nonce');
+
+    $stats = techscope_get_dashboard_stats();
+
+    wp_send_json_success(array(
+        'total_posts' => $stats['total_posts'],
+        'total_comments' => $stats['total_comments'],
+        'total_categories' => $stats['total_categories'],
+        'draft_posts' => $stats['draft_posts']
+    ));
+}
+add_action('wp_ajax_techscope_update_dashboard_stats', 'techscope_update_dashboard_stats');
+
+// Save widget order
+function techscope_save_widget_order() {
+    check_ajax_referer('techscope_nonce', 'nonce');
+
+    if (isset($_POST['widget_order'])) {
+        $widget_order = json_decode(stripslashes($_POST['widget_order']), true);
+        update_user_meta(get_current_user_id(), 'techscope_dashboard_widget_order', $widget_order);
+        wp_send_json_success();
+    }
+
+    wp_send_json_error();
+}
+add_action('wp_ajax_techscope_save_widget_order', 'techscope_save_widget_order');
+
+// Get categories for quick edit modal
+function techscope_get_categories_quick_edit() {
+    check_ajax_referer('techscope_nonce', 'nonce');
+
+    $categories = get_categories(array('hide_empty' => false));
+
+    $output = '<div class="techscope-category-quick-edit">';
+    $output .= '<h3>Manage Categories</h3>';
+    $output .= '<div class="category-list">';
+
+    foreach ($categories as $category) {
+        $post_count = $category->count;
+        $edit_link = admin_url('term.php?taxonomy=category&tag_ID=' . $category->term_id);
+
+        $output .= '<div class="category-item">';
+        $output .= '<div class="category-info">';
+        $output .= '<strong>' . esc_html($category->name) . '</strong>';
+        $output .= '<span class="post-count">(' . $post_count . ' posts)</span>';
+        $output .= '</div>';
+        $output .= '<div class="category-actions">';
+        $output .= '<a href="' . $edit_link . '" class="button-small">Edit</a>';
+        $output .= '</div>';
+        $output .= '</div>';
+    }
+
+    $output .= '</div>';
+    $output .= '<div class="quick-edit-footer">';
+    $output .= '<a href="' . admin_url('edit-tags.php?taxonomy=category') . '" class="button button-primary">Manage All Categories</a>';
+    $output .= '</div>';
+    $output .= '</div>';
+
+    $output .= '<style>
+        .techscope-category-quick-edit h3 { margin-top: 0; }
+        .category-list { max-height: 300px; overflow-y: auto; }
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #FFE6EE;
+        }
+        .category-item:last-child { border-bottom: none; }
+        .category-info strong { color: #1F1F1F; }
+        .post-count {
+            font-size: 12px;
+            color: #6B7280;
+            margin-left: 8px;
+        }
+        .button-small {
+            background: #FFB6C7;
+            border: 1px solid #FF4D78;
+            color: #1F1F1F;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .button-small:hover {
+            background: #FFA6BA;
+        }
+        .quick-edit-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>';
+
+    wp_send_json_success($output);
+}
+add_action('wp_ajax_techscope_get_categories_quick_edit', 'techscope_get_categories_quick_edit');
+
+// Enhanced admin body class
+function techscope_admin_body_class($classes) {
+    $classes .= ' techscope-enhanced-admin';
+    return $classes;
+}
+add_filter('admin_body_class', 'techscope_admin_body_class');
+
+// Load saved widget order
+function techscope_load_dashboard_widget_order() {
+    $user_id = get_current_user_id();
+    $widget_order = get_user_meta($user_id, 'techscope_dashboard_widget_order', true);
+
+    if ($widget_order) {
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply saved widget order
+            if (typeof jQuery !== 'undefined') {
+                var savedOrder = <?php echo json_encode($widget_order); ?>;
+                // Widget order restoration logic would go here
+            }
+        });
+        </script>
+        <?php
+    }
+}
+add_action('admin_footer', 'techscope_load_dashboard_widget_order');
 
 // Include custom functions
 if (file_exists(get_template_directory() . '/inc/custom-functions.php')) {
