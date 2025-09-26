@@ -997,13 +997,12 @@ function techscope_sections_page() {
         update_option('techscope_show_mobile', isset($_POST['show_mobile']) ? 1 : 0);
         update_option('techscope_show_ai', isset($_POST['show_ai']) ? 1 : 0);
 
-        // Redirect to prevent re-submission and show success message
-        wp_redirect(admin_url('admin.php?page=techscope-sections&saved=1'));
-        exit;
+        // Set a flag to show success message
+        $settings_saved = true;
     }
 
-    // Show success message if redirected after save
-    if (isset($_GET['saved'])) {
+    // Show success message if form was submitted
+    if (isset($settings_saved) && $settings_saved) {
         echo '<div class="notice notice-success is-dismissible"><p>' . __('Section settings saved successfully!', 'techscope') . '</p></div>';
     }
 
