@@ -174,29 +174,41 @@
               </div>
             </div>
           <?php else : ?>
-            <!-- Compact Trending Posts -->
-            <div class="flex items-center gap-3 p-2 rounded-lg bg-white shadow-sm border border-pink-100 hover:shadow-md transition-all duration-200">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 rounded-lg overflow-hidden">
-                  <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'thumbnail'); ?>"
-                       alt="<?php the_title_attribute(); ?>"
-                       class="w-full h-full object-cover">
+            <!-- Enhanced Trending Posts with Superdesign -->
+            <div class="bg-white rounded-2xl p-4 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 card-hover">
+              <div class="flex items-start gap-4">
+                <!-- Improved Image Container -->
+                <div class="flex-shrink-0">
+                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+                    <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'thumbnail'); ?>"
+                         alt="<?php the_title_attribute(); ?>"
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                  </div>
                 </div>
-              </div>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">#<?php echo $post_counter; ?></span>
-                </div>
-                <h4 class="font-semibold text-xs mb-1 line-clamp-2">
-                  <a href="<?php the_permalink(); ?>" class="text-gray-800 hover:text-pink-600 transition-colors">
-                    <?php echo techscope_truncate_text(get_the_title(), 40); ?>
-                  </a>
-                </h4>
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-gray-500"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')); ?> ago</span>
-                  <div class="flex items-center gap-1 text-pink-500">
-                    <span class="material-icons text-xs">visibility</span>
-                    <span class="font-medium"><?php echo $view_count; ?></span>
+
+                <!-- Content Area -->
+                <div class="flex-1 min-w-0">
+                  <!-- Badge -->
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-sm">
+                      #<?php echo $post_counter; ?>
+                    </span>
+                  </div>
+
+                  <!-- Title with Better Typography -->
+                  <h4 class="font-bold text-sm leading-tight mb-2 text-gray-900">
+                    <a href="<?php the_permalink(); ?>" class="hover:text-pink-600 transition-colors duration-200 line-clamp-2">
+                      <?php echo techscope_truncate_text(get_the_title(), 50); ?>
+                    </a>
+                  </h4>
+
+                  <!-- Meta Information -->
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="text-gray-500 font-medium"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')); ?> ago</span>
+                    <div class="flex items-center gap-1 text-pink-500">
+                      <span class="material-icons text-xs">visibility</span>
+                      <span class="font-bold"><?php echo $view_count; ?></span>
+                    </div>
                   </div>
                 </div>
               </div>
