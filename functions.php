@@ -652,6 +652,12 @@ function techscope_homepage_page() {
         }
         update_option('techscope_trending_layout', sanitize_text_field($_POST['trending_layout']));
 
+        // Hero Trending Sidebar Settings
+        if (isset($_POST['hero_trending_categories'])) {
+            update_option('techscope_hero_trending_categories', array_map('intval', $_POST['hero_trending_categories']));
+        }
+        update_option('techscope_hero_trending_count', intval($_POST['hero_trending_count']));
+
         // Editor's Choice Settings
         if (isset($_POST['editor_categories'])) {
             update_option('techscope_editor_categories', array_map('intval', $_POST['editor_categories']));
@@ -693,6 +699,9 @@ function techscope_homepage_page() {
 
     $trending_count = get_option('techscope_trending_count', 4);
     $trending_layout = get_option('techscope_trending_layout', '2x2');
+
+    $hero_trending_count = get_option('techscope_hero_trending_count', 4);
+
     $editor_secondary_count = get_option('techscope_editor_secondary_count', 4);
 
     $mobile_count = get_option('techscope_mobile_count', 3);
@@ -831,6 +840,28 @@ function techscope_homepage_page() {
                                     <option value="1x4" <?php selected($trending_layout, '1x4'); ?>><?php _e('1x4 Row', 'techscope'); ?></option>
                                     <option value="4x1" <?php selected($trending_layout, '4x1'); ?>><?php _e('4x1 Column', 'techscope'); ?></option>
                                 </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="postbox">
+                <h2 class="hndle"><?php _e("🔥 Hero Trending Sidebar Settings", 'techscope'); ?></h2>
+                <div class="inside">
+                    <table class="form-table">
+                        <tr>
+                            <th scope="row"><?php _e('Number of Posts', 'techscope'); ?></th>
+                            <td>
+                                <input type="number" name="hero_trending_count" value="<?php echo $hero_trending_count; ?>" min="2" max="8" />
+                                <p class="description"><?php _e('Number of posts to show in hero trending sidebar (2-8)', 'techscope'); ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?php _e('Categories', 'techscope'); ?></th>
+                            <td>
+                                <?php techscope_display_category_checkboxes('techscope_hero_trending_categories'); ?>
+                                <p class="description"><?php _e('Select categories to show posts from. Leave empty to show from all categories.', 'techscope'); ?></p>
                             </td>
                         </tr>
                     </table>

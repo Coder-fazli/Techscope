@@ -127,14 +127,22 @@
         </div>
         <div class="space-y-4">
           <?php
-          $trending_count = get_option('techscope_trending_count', 4);
-          $hero_trending_posts = new WP_Query(array(
-            'posts_per_page' => $trending_count,
+          $hero_trending_count = get_option('techscope_hero_trending_count', 4);
+          $hero_trending_categories = (array) get_option('techscope_hero_trending_categories', []);
+
+          $args = array(
+            'posts_per_page' => $hero_trending_count,
             'meta_key' => '_techscope_post_views',
             'orderby' => 'meta_value_num',
             'order' => 'DESC',
             'post_status' => 'publish'
-          ));
+          );
+
+          if (!empty($hero_trending_categories)) {
+            $args['category__in'] = $hero_trending_categories;
+          }
+
+          $hero_trending_posts = new WP_Query($args);
 
           if ($hero_trending_posts->have_posts()) :
             $post_counter = 0;
