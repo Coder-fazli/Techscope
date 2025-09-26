@@ -87,23 +87,40 @@ Text Domain: techscope
 /* Global layout tweaks */
 * { box-sizing: border-box; }
 
-/* Desktop: Allow normal scrolling */
+/* Desktop: Fix vertical scroll in main HTML */
 @media (min-width: 641px) {
-  html, body {
+  html {
     overflow-x: auto;
     overflow-y: auto;
     width: 100%;
-    position: relative;
+    height: 100%;
+  }
+
+  body {
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100%;
     height: auto;
+    min-height: 100vh;
+    position: relative;
   }
 }
 
 /* Mobile: Allow horizontal scroll with auto */
 @media (max-width: 640px) {
-  html, body {
+  html {
     overflow-x: auto;
     overflow-y: auto;
     width: 100%;
+    height: 100%;
+  }
+
+  body {
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
     position: relative;
   }
 }
