@@ -987,6 +987,26 @@ function techscope_homepage_page() {
 
 // Section controls page
 function techscope_sections_page() {
+    // Handle form submission
+    if (isset($_POST['save_sections']) && wp_verify_nonce($_POST['_wpnonce'], 'techscope_sections')) {
+        // Save section visibility options
+        update_option('techscope_show_hero', isset($_POST['show_hero']) ? 1 : 0);
+        update_option('techscope_show_trending', isset($_POST['show_trending']) ? 1 : 0);
+        update_option('techscope_show_editor', isset($_POST['show_editor']) ? 1 : 0);
+        update_option('techscope_show_hot', isset($_POST['show_hot']) ? 1 : 0);
+        update_option('techscope_show_mobile', isset($_POST['show_mobile']) ? 1 : 0);
+        update_option('techscope_show_ai', isset($_POST['show_ai']) ? 1 : 0);
+
+        echo '<div class="notice notice-success"><p>' . __('Section settings saved!', 'techscope') . '</p></div>';
+    }
+
+    // Get current settings
+    $show_hero = get_option('techscope_show_hero', 1);
+    $show_trending = get_option('techscope_show_trending', 1);
+    $show_editor = get_option('techscope_show_editor', 1);
+    $show_hot = get_option('techscope_show_hot', 1);
+    $show_mobile = get_option('techscope_show_mobile', 1);
+    $show_ai = get_option('techscope_show_ai', 1);
     ?>
     <div class="wrap">
         <h1><?php _e('Section Controls', 'techscope'); ?></h1>
@@ -1003,7 +1023,7 @@ function techscope_sections_page() {
                         <th scope="row"><?php _e('Hero Slider', 'techscope'); ?></th>
                         <td>
                             <label>
-                                <input type="checkbox" name="show_hero" value="1" checked />
+                                <input type="checkbox" name="show_hero" value="1" <?php checked($show_hero, 1); ?> />
                                 <?php _e('Show Hero Slider', 'techscope'); ?>
                             </label>
                         </td>
@@ -1012,7 +1032,7 @@ function techscope_sections_page() {
                         <th scope="row"><?php _e('Trending Tech', 'techscope'); ?></th>
                         <td>
                             <label>
-                                <input type="checkbox" name="show_trending" value="1" checked />
+                                <input type="checkbox" name="show_trending" value="1" <?php checked($show_trending, 1); ?> />
                                 <?php _e('Show Trending Tech Section', 'techscope'); ?>
                             </label>
                         </td>
@@ -1021,7 +1041,7 @@ function techscope_sections_page() {
                         <th scope="row"><?php _e("Editor's Choice", 'techscope'); ?></th>
                         <td>
                             <label>
-                                <input type="checkbox" name="show_editor" value="1" checked />
+                                <input type="checkbox" name="show_editor" value="1" <?php checked($show_editor, 1); ?> />
                                 <?php _e("Show Editor's Choice Section", 'techscope'); ?>
                             </label>
                         </td>
@@ -1030,7 +1050,7 @@ function techscope_sections_page() {
                         <th scope="row"><?php _e('HOT STORIES', 'techscope'); ?></th>
                         <td>
                             <label>
-                                <input type="checkbox" name="show_hot" value="1" checked />
+                                <input type="checkbox" name="show_hot" value="1" <?php checked($show_hot, 1); ?> />
                                 <?php _e('Show HOT STORIES Section', 'techscope'); ?>
                             </label>
                         </td>
@@ -1039,7 +1059,7 @@ function techscope_sections_page() {
                         <th scope="row"><?php _e('Mobile Tech', 'techscope'); ?></th>
                         <td>
                             <label>
-                                <input type="checkbox" name="show_mobile" value="1" checked />
+                                <input type="checkbox" name="show_mobile" value="1" <?php checked($show_mobile, 1); ?> />
                                 <?php _e('Show Mobile Tech Section', 'techscope'); ?>
                             </label>
                         </td>
@@ -1048,7 +1068,7 @@ function techscope_sections_page() {
                         <th scope="row"><?php _e('AI & Gaming', 'techscope'); ?></th>
                         <td>
                             <label>
-                                <input type="checkbox" name="show_ai" value="1" checked />
+                                <input type="checkbox" name="show_ai" value="1" <?php checked($show_ai, 1); ?> />
                                 <?php _e('Show AI & Gaming Section', 'techscope'); ?>
                             </label>
                         </td>

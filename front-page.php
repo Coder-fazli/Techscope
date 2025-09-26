@@ -42,6 +42,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- HERO SLIDER -->
+    <?php if (get_option('techscope_show_hero', 1)) : ?>
     <div class="lg:col-span-2 relative hero-slider section-animate">
       <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover p-3">
         <div class="w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden relative">
@@ -116,8 +117,10 @@
         </div>
       </div>
     </div>
+    <?php endif; ?>
 
     <!-- TRENDING WIDGET - Right side of hero -->
+    <?php if (get_option('techscope_show_trending', 1)) : ?>
     <div class="lg:col-span-1 section-animate stagger-2">
       <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-4 shadow-lg border border-pink-100 h-full">
         <div class="flex items-center justify-center mb-4">
@@ -161,7 +164,7 @@
               <div class="absolute inset-0 opacity-70">
                 <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
                      alt="<?php the_title_attribute(); ?>"
-                     class="w-full h-full object-cover">
+                     class="w-full h-full object-contain">
               </div>
               <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
               <div class="absolute bottom-0 left-0 right-0 p-3">
@@ -234,6 +237,7 @@
         </div>
       </div>
     </div>
+    <?php endif; ?>
 
     <!-- MAIN CONTENT SECTIONS -->
     <div class="lg:col-span-3 space-y-6 lg:space-y-8">
