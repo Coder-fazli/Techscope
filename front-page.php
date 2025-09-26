@@ -236,47 +236,69 @@
         </div>
 
         <div class="trending-slider-container overflow-hidden px-2">
-          <div class="trending-slider flex gap-8 transition-transform duration-300 ease-in-out py-4">
+          <div class="trending-slider flex transition-transform duration-300 ease-in-out py-4">
             <?php
             $trending_posts = techscope_get_featured_posts();
             if ($trending_posts->have_posts()) :
+              // Group posts into chunks of 4
+              $posts_array = [];
               while ($trending_posts->have_posts()) : $trending_posts->the_post();
-                $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
+                $posts_array[] = [
+                  'id' => get_the_ID(),
+                  'title' => get_the_title(),
+                  'permalink' => get_the_permalink(),
+                  'author' => get_the_author(),
+                  'date' => get_the_date('M j'),
+                  'image' => techscope_get_responsive_image(get_the_ID(), 'featured-card'),
+                  'view_count' => techscope_format_view_count(techscope_get_post_views(get_the_ID()))
+                ];
+              endwhile;
+              wp_reset_postdata();
+
+              // Create slides with 4 posts each
+              $post_chunks = array_chunk($posts_array, 4);
+              foreach ($post_chunks as $chunk) :
             ?>
-              <div class="trending-card flex-shrink-0 w-72 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 card-hover mx-2">
-                <div class="trending-card-image w-full h-48 relative overflow-hidden">
-                  <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
-                       alt="<?php the_title_attribute(); ?>"
-                       class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                  <div class="absolute top-3 left-3">
-                    <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-semibold">
-                      🔥 TRENDING
-                    </span>
-                  </div>
-                </div>
-                <div class="p-6">
-                  <h4 class="font-bold text-lg mb-3 leading-tight">
-                    <a href="<?php the_permalink(); ?>" class="text-gray-900 hover:text-blue-600 transition-colors">
-                      <?php echo techscope_truncate_text(get_the_title(), 60); ?>
-                    </a>
-                  </h4>
-                  <div class="flex items-center justify-between text-sm">
-                    <div class="flex items-center gap-2 text-gray-600">
-                      <span class="font-medium">BY <?php echo strtoupper(get_the_author()); ?></span>
+              <!-- SLIDE with 4 posts -->
+              <div class="trending-slide flex-shrink-0 w-full">
+                <div class="grid grid-cols-4 gap-6">
+                  <?php foreach ($chunk as $post_data) : ?>
+                    <div class="trending-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 card-hover">
+                      <div class="trending-card-image w-full h-48 relative overflow-hidden">
+                        <img src="<?php echo $post_data['image']; ?>"
+                             alt="<?php echo esc_attr($post_data['title']); ?>"
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        <div class="absolute top-3 left-3">
+                          <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-semibold">
+                            🔥 TRENDING
+                          </span>
+                        </div>
+                      </div>
+                      <div class="p-6">
+                        <h4 class="font-bold text-lg mb-3 leading-tight">
+                          <a href="<?php echo $post_data['permalink']; ?>" class="text-gray-900 hover:text-blue-600 transition-colors">
+                            <?php echo techscope_truncate_text($post_data['title'], 60); ?>
+                          </a>
+                        </h4>
+                        <div class="flex items-center justify-between text-sm">
+                          <div class="flex items-center gap-2 text-gray-600">
+                            <span class="font-medium">BY <?php echo strtoupper($post_data['author']); ?></span>
+                          </div>
+                          <div class="flex items-center gap-3 text-gray-500">
+                            <span class="flex items-center gap-1">
+                              <span class="material-icons text-sm text-orange-500">visibility</span>
+                              <?php echo $post_data['view_count']; ?>
+                            </span>
+                            <span><?php echo $post_data['date']; ?></span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="flex items-center gap-3 text-gray-500">
-                      <span class="flex items-center gap-1">
-                        <span class="material-icons text-sm text-orange-500">visibility</span>
-                        <?php echo $view_count; ?>
-                      </span>
-                      <span><?php echo get_the_date('M j'); ?></span>
-                    </div>
-                  </div>
+                  <?php endforeach; ?>
                 </div>
               </div>
             <?php
-              endwhile;
-              wp_reset_postdata();
+              endforeach;
             endif;
             ?>
           </div>
@@ -289,30 +311,48 @@
           const prevBtn = document.querySelector('.trending-slider-prev');
           const nextBtn = document.querySelector('.trending-slider-next');
           const container = document.querySelector('.trending-slider-container');
-          let currentPosition = 0;
+          let currentSlide = 0;
 
           if (slider && prevBtn && nextBtn && container) {
-            const cardWidth = 288 + 32 + 16; // w-72 (288px) + gap + margins
-            const visibleCards = 4; // Always show exactly 4 cards
-            const totalCards = slider.children.length;
-            const slideDistance = cardWidth * visibleCards; // Move by 4 cards at a time
+            const slides = slider.querySelectorAll('.trending-slide');
+            const totalSlides = slides.length;
+            const slideWidth = container.offsetWidth; // Full container width per slide
 
-            // Calculate max position to ensure last set of cards is fully visible
-            const maxSlides = Math.ceil(totalCards / visibleCards);
-            const maxPosition = -(maxSlides - 1) * slideDistance;
+            console.log('Total slides:', totalSlides, 'Slide width:', slideWidth);
+
+            function updateSliderPosition() {
+              const translateX = -currentSlide * slideWidth;
+              slider.style.transform = `translateX(${translateX}px)`;
+
+              // Update button states
+              prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
+              nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
+            }
 
             nextBtn.addEventListener('click', () => {
-              if (currentPosition > maxPosition) {
-                currentPosition -= slideDistance;
-                slider.style.transform = `translateX(${currentPosition}px)`;
+              if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSliderPosition();
               }
             });
 
             prevBtn.addEventListener('click', () => {
-              if (currentPosition < 0) {
-                currentPosition += slideDistance;
-                slider.style.transform = `translateX(${currentPosition}px)`;
+              if (currentSlide > 0) {
+                currentSlide--;
+                updateSliderPosition();
               }
+            });
+
+            // Initialize
+            updateSliderPosition();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+              const newSlideWidth = container.offsetWidth;
+              slides.forEach(slide => {
+                slide.style.width = newSlideWidth + 'px';
+              });
+              updateSliderPosition();
             });
           }
         });
@@ -331,21 +371,29 @@
           transform: translateY(-2px);
         }
 
-        @media (max-width: 1200px) {
-          .trending-card {
-            width: 16rem; /* w-64 - 256px for smaller screens but still 4 cards */
+        .trending-slide {
+          min-width: 100%;
+        }
+
+        /* Responsive grid adjustments */
+        @media (max-width: 1024px) {
+          .trending-slide .grid {
+            grid-template-columns: repeat(3, 1fr); /* 3 cards on tablet */
+            gap: 1rem;
           }
         }
 
         @media (max-width: 768px) {
-          .trending-card {
-            width: 14rem; /* w-56 - 224px for tablets */
+          .trending-slide .grid {
+            grid-template-columns: repeat(2, 1fr); /* 2 cards on small tablet */
+            gap: 1rem;
           }
         }
 
         @media (max-width: 640px) {
-          .trending-card {
-            width: 12rem; /* w-48 - 192px for mobile */
+          .trending-slide .grid {
+            grid-template-columns: 1fr; /* 1 card on mobile */
+            gap: 1rem;
           }
         }
         </style>
