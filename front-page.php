@@ -157,29 +157,29 @@
               $category_name = !empty($categories) ? esc_html($categories[0]->name) : 'TRENDING';
           ?>
             <!-- Featured Trending Post Design for All Posts -->
-            <div class="relative overflow-hidden rounded-xl shadow-lg bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white card-hover min-h-[200px]">
+            <div class="relative overflow-hidden rounded-xl shadow-lg bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white card-hover h-[140px]">
               <div class="absolute inset-0 opacity-70">
                 <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
                      alt="<?php the_title_attribute(); ?>"
                      class="w-full h-full object-cover">
               </div>
-              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-              <div class="relative p-4 h-full flex flex-col justify-end">
-                <div class="flex items-center gap-2 mb-3">
-                  <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-3">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-2 py-0.5 rounded-full font-bold shadow-lg">
                     <?php echo $category_name; ?>
                   </span>
                   <span class="text-pink-200 text-xs font-medium">TRENDING</span>
                 </div>
-                <h4 class="font-bold text-base mb-3 leading-tight">
+                <h4 class="font-bold text-sm mb-1 leading-tight">
                   <a href="<?php the_permalink(); ?>" class="text-white hover:text-pink-200 transition-colors duration-200">
-                    <?php echo techscope_truncate_text(get_the_title(), 60); ?>
+                    <?php echo techscope_truncate_text(get_the_title(), 50); ?>
                   </a>
                 </h4>
 
                 <!-- Short Description -->
-                <p class="text-gray-200 text-sm mb-3 line-clamp-2 leading-relaxed">
-                  <?php echo techscope_truncate_text(get_the_excerpt() ?: wp_trim_words(get_the_content(), 15), 100); ?>
+                <p class="text-gray-200 text-xs mb-2 line-clamp-1 leading-relaxed">
+                  <?php echo techscope_truncate_text(get_the_excerpt() ?: wp_trim_words(get_the_content(), 10), 60); ?>
                 </p>
 
                 <div class="flex items-center justify-between text-xs">
