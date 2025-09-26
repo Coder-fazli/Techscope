@@ -127,7 +127,12 @@
         </div>
         <div class="space-y-4">
           <?php
-          $hero_trending_count = get_option('techscope_hero_trending_count', 4);
+          // Ensure default value is set if option doesn't exist
+          $hero_trending_count = get_option('techscope_hero_trending_count');
+          if ($hero_trending_count === false) {
+            $hero_trending_count = 4;
+            update_option('techscope_hero_trending_count', 4);
+          }
           $hero_trending_categories = (array) get_option('techscope_hero_trending_categories', []);
 
           $args = array(
