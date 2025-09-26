@@ -43,7 +43,8 @@
 
     <!-- HERO SLIDER -->
     <div class="lg:col-span-2 relative hero-slider section-animate">
-      <div class="w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[600px] rounded-xl shadow-lg overflow-hidden card-hover relative">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover p-3">
+        <div class="w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden relative">
           <?php
           $hero_posts = techscope_get_hero_posts();
           $slide_count = 0;
@@ -113,6 +114,7 @@
             <?php endfor; ?>
           </div>
         </div>
+      </div>
     </div>
 
     <!-- TRENDING WIDGET - Right side of hero -->
