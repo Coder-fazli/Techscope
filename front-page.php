@@ -236,7 +236,7 @@
         </div>
 
         <div class="trending-slider-container overflow-hidden px-2">
-          <div class="trending-slider flex transition-transform duration-300 ease-in-out py-4">
+          <div class="trending-slider flex gap-8 transition-transform duration-300 ease-in-out py-4">
             <?php
             $trending_posts = techscope_get_featured_posts();
             if ($trending_posts->have_posts()) :
@@ -324,7 +324,8 @@
                 isAnimating = true;
 
                 const slideWidth = container.offsetWidth;
-                const translateX = -currentSlide * slideWidth;
+                const gapSize = 32; // 8 * 4px = 32px gap between slides
+                const translateX = -currentSlide * (slideWidth + gapSize);
 
                 // Modern superdesign animation
                 slider.style.transition = smooth ?
@@ -440,7 +441,8 @@
                 currentX = e.touches[0].clientX;
                 const diffX = currentX - startX;
                 const slideWidth = container.offsetWidth;
-                const currentTranslateX = -currentSlide * slideWidth;
+                const gapSize = 32;
+                const currentTranslateX = -currentSlide * (slideWidth + gapSize);
                 slider.style.transform = `translateX(${currentTranslateX + diffX}px) translateZ(0)`;
               });
 
@@ -513,6 +515,11 @@
           flex-shrink: 0;
           box-sizing: border-box;
           transform: translateZ(0);
+          margin-right: 2rem; /* Add spacing between slides */
+        }
+
+        .trending-slide:last-child {
+          margin-right: 0; /* Remove margin from last slide */
         }
 
         /* Enhanced Card Hover Effects with Superdesign */
