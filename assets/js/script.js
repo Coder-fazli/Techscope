@@ -77,19 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  // --- Section reveal animations (IntersectionObserver) ---
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-  );
-
+  // --- Section reveal animations (REMOVED - CAUSED SCROLL ISSUES) ---
+  // The IntersectionObserver was causing dynamic scroll bar behavior
+  // Simply show all sections immediately instead of animating on scroll
   document
     .querySelectorAll('.section-animate')
-    .forEach((section) => observer.observe(section));
+    .forEach((section) => section.classList.add('visible'));
 
   // --- Simulated loading: swap skeleton -> main content ---
   setTimeout(() => {
@@ -110,17 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.minHeight = 'auto';
     }, 300);
 
-    // Kick initial visible states with a small stagger
-    setTimeout(() => {
-      document
-        .querySelectorAll('.section-animate')
-        .forEach((section, idx) => {
-          setTimeout(() => {
-            if (section.getBoundingClientRect().top < window.innerHeight) {
-              section.classList.add('visible');
-            }
-          }, idx * 100);
-        });
-    }, 600);
+    // All sections already made visible above - no need for complex checks
   }, 800);
 });

@@ -87,8 +87,7 @@ function techscope_enqueue_scripts() {
         wp_get_theme()->get('Version')
     );
 
-    // --- Theme JS (TEMPORARILY DISABLED FOR TESTING) ---
-    /*
+    // --- Theme JS (FIXED - REMOVED SCROLL ANIMATIONS) ---
     wp_enqueue_script(
         'techscope-script',
         get_template_directory_uri() . '/assets/js/script.js',
@@ -96,7 +95,6 @@ function techscope_enqueue_scripts() {
         wp_get_theme()->get('Version'),
         true
     );
-    */
 
     // --- AJAX data ---
     wp_localize_script('techscope-script', 'techscope_ajax', array(
