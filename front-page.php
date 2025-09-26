@@ -235,15 +235,15 @@
           </div>
         </div>
 
-        <div class="trending-slider-container overflow-hidden">
-          <div class="trending-slider flex gap-6 transition-transform duration-300 ease-in-out">
+        <div class="trending-slider-container overflow-hidden px-2">
+          <div class="trending-slider flex gap-8 transition-transform duration-300 ease-in-out py-4">
             <?php
             $trending_posts = techscope_get_featured_posts();
             if ($trending_posts->have_posts()) :
               while ($trending_posts->have_posts()) : $trending_posts->the_post();
                 $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
             ?>
-              <div class="trending-card flex-shrink-0 w-80 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 card-hover">
+              <div class="trending-card flex-shrink-0 w-80 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 card-hover mx-2">
                 <div class="trending-card-image w-full h-48 relative overflow-hidden">
                   <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
                        alt="<?php the_title_attribute(); ?>"
@@ -288,14 +288,21 @@
           const slider = document.querySelector('.trending-slider');
           const prevBtn = document.querySelector('.trending-slider-prev');
           const nextBtn = document.querySelector('.trending-slider-next');
-          const cardWidth = 320 + 24; // card width + gap
+          const container = document.querySelector('.trending-slider-container');
           let currentPosition = 0;
 
-          if (slider && prevBtn && nextBtn) {
-            const maxPosition = -(slider.children.length - 3) * cardWidth; // Show 3 cards at once
+          if (slider && prevBtn && nextBtn && container) {
+            const cardWidth = 320 + 32 + 16; // card width + gap + margins
+            const containerWidth = container.offsetWidth;
+            const visibleCards = Math.floor(containerWidth / cardWidth);
+            const totalCards = slider.children.length;
+            const maxPosition = -(totalCards - visibleCards) * cardWidth;
+
+            // Ensure we don't scroll past the last card
+            const safeMaxPosition = Math.min(maxPosition, -(totalCards - 1) * cardWidth + containerWidth - cardWidth);
 
             nextBtn.addEventListener('click', () => {
-              if (currentPosition > maxPosition) {
+              if (currentPosition > safeMaxPosition) {
                 currentPosition -= cardWidth;
                 slider.style.transform = `translateX(${currentPosition}px)`;
               }
