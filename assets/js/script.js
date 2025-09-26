@@ -97,9 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = document.getElementById('main-content');
     if (!loading || !main) return;
 
-    loading.style.display = 'none';
-    main.classList.remove('hidden');
-    main.classList.add('fade-in');
+    // Smooth transition without affecting scroll
+    loading.style.opacity = '0';
+    loading.style.transition = 'opacity 0.3s ease';
+
+    setTimeout(() => {
+      loading.style.display = 'none';
+      main.classList.remove('hidden');
+      main.classList.add('fade-in');
+
+      // Reset body height calculation
+      document.body.style.minHeight = 'auto';
+    }, 300);
 
     // Kick initial visible states with a small stagger
     setTimeout(() => {
@@ -112,6 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }, idx * 100);
         });
-    }, 300);
+    }, 600);
   }, 800);
 });

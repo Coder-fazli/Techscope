@@ -87,27 +87,14 @@ Text Domain: techscope
 /* Global layout tweaks */
 * { box-sizing: border-box; }
 
-/* Desktop: Fix vertical scroll in main HTML */
+/* Desktop: Allow normal scrolling */
 @media (min-width: 641px) {
-  html {
+  html, body {
     overflow-x: auto;
-    overflow-y: scroll;  /* Force scroll bar to always be visible */
+    overflow-y: auto;
     width: 100%;
-    height: 100%;
-  }
-
-  body {
-    overflow-x: auto;
-    overflow-y: visible;
-    width: 100%;
-    height: auto;
-    min-height: 100vh;
     position: relative;
-  }
-
-  /* Prevent dynamic content switching from affecting scroll */
-  #loading-content, #main-content {
-    min-height: 100vh;
+    height: auto;
   }
 }
 
