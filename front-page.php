@@ -243,7 +243,7 @@
               while ($trending_posts->have_posts()) : $trending_posts->the_post();
                 $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
             ?>
-              <div class="trending-card flex-shrink-0 w-80 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 card-hover mx-2">
+              <div class="trending-card flex-shrink-0 w-72 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 card-hover mx-2">
                 <div class="trending-card-image w-full h-48 relative overflow-hidden">
                   <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
                        alt="<?php the_title_attribute(); ?>"
@@ -292,25 +292,25 @@
           let currentPosition = 0;
 
           if (slider && prevBtn && nextBtn && container) {
-            const cardWidth = 320 + 32 + 16; // card width + gap + margins
-            const containerWidth = container.offsetWidth;
-            const visibleCards = Math.floor(containerWidth / cardWidth);
+            const cardWidth = 288 + 32 + 16; // w-72 (288px) + gap + margins
+            const visibleCards = 4; // Always show exactly 4 cards
             const totalCards = slider.children.length;
-            const maxPosition = -(totalCards - visibleCards) * cardWidth;
+            const slideDistance = cardWidth * visibleCards; // Move by 4 cards at a time
 
-            // Ensure we don't scroll past the last card
-            const safeMaxPosition = Math.min(maxPosition, -(totalCards - 1) * cardWidth + containerWidth - cardWidth);
+            // Calculate max position to ensure last set of cards is fully visible
+            const maxSlides = Math.ceil(totalCards / visibleCards);
+            const maxPosition = -(maxSlides - 1) * slideDistance;
 
             nextBtn.addEventListener('click', () => {
-              if (currentPosition > safeMaxPosition) {
-                currentPosition -= cardWidth;
+              if (currentPosition > maxPosition) {
+                currentPosition -= slideDistance;
                 slider.style.transform = `translateX(${currentPosition}px)`;
               }
             });
 
             prevBtn.addEventListener('click', () => {
               if (currentPosition < 0) {
-                currentPosition += cardWidth;
+                currentPosition += slideDistance;
                 slider.style.transform = `translateX(${currentPosition}px)`;
               }
             });
@@ -331,15 +331,21 @@
           transform: translateY(-2px);
         }
 
+        @media (max-width: 1200px) {
+          .trending-card {
+            width: 16rem; /* w-64 - 256px for smaller screens but still 4 cards */
+          }
+        }
+
         @media (max-width: 768px) {
           .trending-card {
-            width: 280px;
+            width: 14rem; /* w-56 - 224px for tablets */
           }
         }
 
         @media (max-width: 640px) {
           .trending-card {
-            width: 260px;
+            width: 12rem; /* w-48 - 192px for mobile */
           }
         }
         </style>
