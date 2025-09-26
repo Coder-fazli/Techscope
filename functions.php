@@ -401,6 +401,51 @@ function techscope_admin_menu() {
 add_action('admin_menu', 'techscope_admin_menu');
 
 // Main admin page
+// Dashboard statistics function
+function techscope_get_dashboard_stats() {
+    global $wpdb;
+
+    // Get post statistics
+    $post_counts = wp_count_posts();
+    $total_posts = $post_counts->publish + $post_counts->draft + $post_counts->pending;
+
+    // Get comment statistics
+    $comment_counts = wp_count_comments();
+
+    // Get category statistics
+    $categories = get_categories(array('hide_empty' => false));
+
+    // Get recent activity
+    $recent_posts = get_posts(array(
+        'numberposts' => 5,
+        'post_status' => array('publish', 'draft', 'pending')
+    ));
+
+    // Get today's stats
+    $today_posts = get_posts(array(
+        'date_query' => array(
+            array(
+                'after' => '1 day ago'
+            )
+        ),
+        'post_status' => 'publish',
+        'numberposts' => -1
+    ));
+
+    return array(
+        'total_posts' => $total_posts,
+        'published_posts' => $post_counts->publish,
+        'draft_posts' => $post_counts->draft,
+        'pending_posts' => $post_counts->pending,
+        'total_comments' => $comment_counts->total_comments,
+        'pending_comments' => $comment_counts->moderated,
+        'total_categories' => count($categories),
+        'recent_posts' => $recent_posts,
+        'today_posts' => count($today_posts),
+        'last_updated' => current_time('mysql')
+    );
+}
+
 function techscope_admin_page() {
     if (isset($_POST['submit'])) {
         check_admin_referer('techscope_settings');
@@ -414,14 +459,122 @@ function techscope_admin_page() {
 
     $theme_color = get_option('techscope_theme_color', 'blue');
     $layout_mode = get_option('techscope_layout_mode', 'standard');
+    $dashboard_stats = techscope_get_dashboard_stats();
     ?>
-    <div class="wrap">
-        <h1><?php _e('TechScope Theme Settings', 'techscope'); ?></h1>
+    <div class="techscope-admin-wrap">
+        <!-- Enhanced Dashboard Header -->
+        <div class="techscope-admin-header">
+            <h1><?php _e('SmartObzor Dashboard', 'techscope'); ?></h1>
+            <p class="subtitle"><?php _e('Manage your technology news website with ease', 'techscope'); ?></p>
+        </div>
 
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <h2><?php _e('General Settings', 'techscope'); ?></h2>
-            <form method="post">
-                <?php wp_nonce_field('techscope_settings'); ?>
+        <div class="wrap techscope-admin">
+            <!-- Dashboard Statistics Grid -->
+            <div class="techscope-stats-grid">
+                <div class="techscope-stat-card">
+                    <h3><?php _e('Total Posts', 'techscope'); ?></h3>
+                    <div class="stat-number" style="color: #FF4D78;"><?php echo $dashboard_stats['total_posts']; ?></div>
+                    <p><?php printf(__('%d published today', 'techscope'), $dashboard_stats['today_posts']); ?></p>
+                </div>
+
+                <div class="techscope-stat-card">
+                    <h3><?php _e('Comments', 'techscope'); ?></h3>
+                    <div class="stat-number" style="color: #10b981;"><?php echo $dashboard_stats['total_comments']; ?></div>
+                    <p><?php printf(__('%d pending moderation', 'techscope'), $dashboard_stats['pending_comments']); ?></p>
+                </div>
+
+                <div class="techscope-stat-card">
+                    <h3><?php _e('Categories', 'techscope'); ?></h3>
+                    <div class="stat-number" style="color: #3b82f6;"><?php echo $dashboard_stats['total_categories']; ?></div>
+                    <p><?php _e('Content sections', 'techscope'); ?></p>
+                </div>
+
+                <div class="techscope-stat-card">
+                    <h3><?php _e('Draft Posts', 'techscope'); ?></h3>
+                    <div class="stat-number" style="color: #f59e0b;"><?php echo $dashboard_stats['draft_posts']; ?></div>
+                    <p><?php printf(__('%d pending review', 'techscope'), $dashboard_stats['pending_posts']); ?></p>
+                </div>
+            </div>
+
+            <!-- Quick Actions Panel -->
+            <div class="techscope-quick-actions">
+                <h3><?php _e('Quick Actions', 'techscope'); ?></h3>
+                <a href="<?php echo admin_url('post-new.php'); ?>" class="button button-primary">
+                    <span class="dashicons dashicons-plus-alt"></span> <?php _e('Add New Post', 'techscope'); ?>
+                </a>
+                <a href="<?php echo admin_url('edit-tags.php?taxonomy=category'); ?>" class="button button-secondary">
+                    <span class="dashicons dashicons-category"></span> <?php _e('Manage Categories', 'techscope'); ?>
+                </a>
+                <a href="<?php echo admin_url('edit-comments.php'); ?>" class="button button-secondary">
+                    <span class="dashicons dashicons-admin-comments"></span> <?php _e('View Comments', 'techscope'); ?>
+                </a>
+                <a href="<?php echo admin_url('admin.php?page=techscope-homepage'); ?>" class="button button-secondary">
+                    <span class="dashicons dashicons-admin-customizer"></span> <?php _e('Homepage Settings', 'techscope'); ?>
+                </a>
+            </div>
+
+            <div class="postbox-container" style="width: 100%;">
+                <div class="meta-box-sortables">
+
+                    <!-- Recent Activity Widget -->
+                    <div class="postbox">
+                        <h2 class="hndle"><?php _e('Recent Activity', 'techscope'); ?></h2>
+                        <div class="inside">
+                            <?php if (!empty($dashboard_stats['recent_posts'])): ?>
+                                <ul class="techscope-activity-list">
+                                    <?php foreach ($dashboard_stats['recent_posts'] as $post): ?>
+                                        <li>
+                                            <strong><?php echo esc_html($post->post_title); ?></strong>
+                                            <span class="activity-meta">
+                                                <?php echo get_post_status($post->ID); ?> •
+                                                <?php echo human_time_diff(strtotime($post->post_modified), current_time('timestamp')) . ' ago'; ?>
+                                            </span>
+                                            <div class="activity-actions">
+                                                <a href="<?php echo get_edit_post_link($post->ID); ?>"><?php _e('Edit', 'techscope'); ?></a>
+                                                <?php if ($post->post_status == 'publish'): ?>
+                                                    | <a href="<?php echo get_permalink($post->ID); ?>" target="_blank"><?php _e('View', 'techscope'); ?></a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php else: ?>
+                                <p><?php _e('No recent activity found.', 'techscope'); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- System Status Widget -->
+                    <div class="postbox">
+                        <h2 class="hndle"><?php _e('System Status', 'techscope'); ?></h2>
+                        <div class="inside">
+                            <table class="techscope-status-table">
+                                <tr>
+                                    <td><strong><?php _e('WordPress Version', 'techscope'); ?></strong></td>
+                                    <td><?php echo get_bloginfo('version'); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong><?php _e('Theme Version', 'techscope'); ?></strong></td>
+                                    <td><?php echo wp_get_theme()->get('Version'); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong><?php _e('PHP Version', 'techscope'); ?></strong></td>
+                                    <td><?php echo PHP_VERSION; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong><?php _e('Last Updated', 'techscope'); ?></strong></td>
+                                    <td><?php echo human_time_diff(strtotime($dashboard_stats['last_updated']), current_time('timestamp')) . ' ago'; ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Theme Settings -->
+                    <div class="postbox">
+                        <h2 class="hndle"><?php _e('Theme Settings', 'techscope'); ?></h2>
+                        <div class="inside">
+                            <form method="post">
+                                <?php wp_nonce_field('techscope_settings'); ?>
 
                 <table class="form-table">
                     <tr>
@@ -447,8 +600,13 @@ function techscope_admin_page() {
                     </tr>
                 </table>
 
-                <?php submit_button(); ?>
-            </form>
+                                <?php submit_button(); ?>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
     <?php
