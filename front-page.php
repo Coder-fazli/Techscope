@@ -304,7 +304,7 @@
           </div>
         </div>
 
-        <!-- Slider JavaScript -->
+        <!-- Modern Slider JavaScript with Superdesign Aesthetics -->
         <script>
         document.addEventListener('DOMContentLoaded', function() {
           const slider = document.querySelector('.trending-slider');
@@ -312,41 +312,99 @@
           const nextBtn = document.querySelector('.trending-slider-next');
           const container = document.querySelector('.trending-slider-container');
           let currentSlide = 0;
+          let isAnimating = false;
 
           if (slider && prevBtn && nextBtn && container) {
-            // Wait for images to load and get proper dimensions
             setTimeout(() => {
               const slides = slider.querySelectorAll('.trending-slide');
               const totalSlides = slides.length;
 
-              console.log('Initializing slider with', totalSlides, 'slides');
+              function updateSliderPosition(smooth = true) {
+                if (isAnimating) return;
+                isAnimating = true;
 
-              function updateSliderPosition() {
                 const slideWidth = container.offsetWidth;
                 const translateX = -currentSlide * slideWidth;
 
-                console.log('Moving to slide', currentSlide, 'translateX:', translateX);
+                // Modern superdesign animation
+                slider.style.transition = smooth ?
+                  'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+                slider.style.transform = `translateX(${translateX}px) translateZ(0)`;
 
-                slider.style.transform = `translateX(${translateX}px)`;
-                slider.style.transition = 'transform 0.3s ease-in-out';
+                // Smooth button state transitions
+                updateButtonStates();
 
-                // Update button states
-                prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
-                prevBtn.style.pointerEvents = currentSlide === 0 ? 'none' : 'auto';
-                nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
-                nextBtn.style.pointerEvents = currentSlide === totalSlides - 1 ? 'none' : 'auto';
+                // Add subtle card animations during slide
+                if (smooth) {
+                  animateCards();
+                }
+
+                setTimeout(() => {
+                  isAnimating = false;
+                }, smooth ? 800 : 0);
               }
 
-              // Set initial slide widths
-              slides.forEach(slide => {
+              function updateButtonStates() {
+                // Smooth button transitions with superdesign style
+                prevBtn.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                nextBtn.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+                if (currentSlide === 0) {
+                  prevBtn.style.opacity = '0.3';
+                  prevBtn.style.transform = 'scale(0.9)';
+                  prevBtn.style.pointerEvents = 'none';
+                } else {
+                  prevBtn.style.opacity = '1';
+                  prevBtn.style.transform = 'scale(1)';
+                  prevBtn.style.pointerEvents = 'auto';
+                }
+
+                if (currentSlide === totalSlides - 1) {
+                  nextBtn.style.opacity = '0.3';
+                  nextBtn.style.transform = 'scale(0.9)';
+                  nextBtn.style.pointerEvents = 'none';
+                } else {
+                  nextBtn.style.opacity = '1';
+                  nextBtn.style.transform = 'scale(1)';
+                  nextBtn.style.pointerEvents = 'auto';
+                }
+              }
+
+              function animateCards() {
+                // Subtle card animations during transition
+                const currentSlideElement = slides[currentSlide];
+                if (currentSlideElement) {
+                  const cards = currentSlideElement.querySelectorAll('.trending-card');
+                  cards.forEach((card, index) => {
+                    card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.opacity = '0.7';
+
+                    setTimeout(() => {
+                      card.style.transform = 'translateY(0)';
+                      card.style.opacity = '1';
+                    }, 200 + (index * 100));
+                  });
+                }
+              }
+
+              // Set initial slide widths with proper flexbox
+              slides.forEach((slide, index) => {
                 slide.style.width = container.offsetWidth + 'px';
                 slide.style.flexShrink = '0';
+                slide.style.willChange = 'transform';
               });
 
+              // Modern button interactions
               nextBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                console.log('Next clicked, current slide:', currentSlide, 'total:', totalSlides);
-                if (currentSlide < totalSlides - 1) {
+                if (!isAnimating && currentSlide < totalSlides - 1) {
+                  // Add button press animation
+                  nextBtn.style.transform = 'scale(0.95)';
+                  setTimeout(() => {
+                    nextBtn.style.transform = currentSlide === totalSlides - 2 ? 'scale(0.9)' : 'scale(1)';
+                  }, 100);
+
                   currentSlide++;
                   updateSliderPosition();
                 }
@@ -354,25 +412,73 @@
 
               prevBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                console.log('Prev clicked, current slide:', currentSlide);
-                if (currentSlide > 0) {
+                if (!isAnimating && currentSlide > 0) {
+                  // Add button press animation
+                  prevBtn.style.transform = 'scale(0.95)';
+                  setTimeout(() => {
+                    prevBtn.style.transform = currentSlide === 1 ? 'scale(0.9)' : 'scale(1)';
+                  }, 100);
+
                   currentSlide--;
                   updateSliderPosition();
                 }
               });
 
-              // Initialize
-              updateSliderPosition();
+              // Add touch/swipe support for modern feel
+              let startX = 0;
+              let currentX = 0;
+              let isDragging = false;
 
-              // Handle window resize
-              window.addEventListener('resize', () => {
-                slides.forEach(slide => {
-                  slide.style.width = container.offsetWidth + 'px';
-                });
+              slider.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+                slider.style.transition = 'none';
+              });
+
+              slider.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                currentX = e.touches[0].clientX;
+                const diffX = currentX - startX;
+                const slideWidth = container.offsetWidth;
+                const currentTranslateX = -currentSlide * slideWidth;
+                slider.style.transform = `translateX(${currentTranslateX + diffX}px) translateZ(0)`;
+              });
+
+              slider.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                const diffX = currentX - startX;
+                const threshold = container.offsetWidth * 0.2;
+
+                if (Math.abs(diffX) > threshold) {
+                  if (diffX > 0 && currentSlide > 0) {
+                    currentSlide--;
+                  } else if (diffX < 0 && currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                  }
+                }
                 updateSliderPosition();
               });
 
-            }, 100); // Small delay to ensure proper initialization
+              // Initialize with smooth entrance
+              updateSliderPosition(false);
+              setTimeout(() => {
+                animateCards();
+              }, 100);
+
+              // Responsive resize with debouncing
+              let resizeTimeout;
+              window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                  slides.forEach(slide => {
+                    slide.style.width = container.offsetWidth + 'px';
+                  });
+                  updateSliderPosition(false);
+                }, 150);
+              });
+
+            }, 100);
           }
         });
         </script>
@@ -382,15 +488,23 @@
           background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
 
+        /* Modern Superdesign Slider Styles */
         .trending-slider-container {
           position: relative;
           width: 100%;
+          overflow: hidden;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #FFEFF3 0%, #f8fafc 100%);
+          padding: 8px;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         .trending-slider {
           display: flex;
           width: 100%;
-          transition: transform 0.3s ease-in-out;
+          will-change: transform;
+          backface-visibility: hidden;
+          perspective: 1000px;
         }
 
         .trending-slide {
@@ -398,10 +512,53 @@
           width: 100%;
           flex-shrink: 0;
           box-sizing: border-box;
+          transform: translateZ(0);
+        }
+
+        /* Enhanced Card Hover Effects with Superdesign */
+        .trending-card {
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          will-change: transform, box-shadow;
+          backface-visibility: hidden;
         }
 
         .trending-card:hover {
-          transform: translateY(-2px);
+          transform: translateY(-8px) scale(1.02);
+          box-shadow:
+            0 20px 25px -5px rgba(255, 77, 120, 0.15),
+            0 10px 10px -5px rgba(0, 0, 0, 0.04),
+            0 4px 12px rgba(255, 77, 120, 0.1);
+        }
+
+        .trending-card:hover .trending-card-image img {
+          transform: scale(1.05);
+        }
+
+        /* Modern Button Styles with Superdesign Aesthetic */
+        .trending-slider-prev,
+        .trending-slider-next {
+          background: linear-gradient(135deg, #FF80A5 0%, #FF3366 100%);
+          border: none;
+          box-shadow:
+            0 4px 6px -1px rgba(255, 77, 120, 0.25),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          backdrop-filter: blur(10px);
+        }
+
+        .trending-slider-prev:hover,
+        .trending-slider-next:hover {
+          background: linear-gradient(135deg, #FF3366 0%, #FF1744 100%);
+          transform: scale(1.1);
+          box-shadow:
+            0 8px 12px -2px rgba(255, 77, 120, 0.35),
+            0 4px 8px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .trending-slider-prev .material-icons,
+        .trending-slider-next .material-icons {
+          color: white;
+          font-weight: bold;
         }
 
         /* Responsive grid adjustments */
