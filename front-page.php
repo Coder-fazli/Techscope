@@ -219,55 +219,123 @@
     <!-- MAIN CONTENT SECTIONS -->
     <div class="lg:col-span-3 space-y-6 lg:space-y-8">
 
-      <!-- TRENDING TECH -->
+      <!-- TRENDING TECH SLIDER -->
       <section class="section-animate stagger-1">
-        <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider mb-3 md:mb-4 text-purple-800">
-          🔥 <?php echo techscope_get_section_title('trending'); ?>
-        </h3>
-        <?php
-        $trending_posts = techscope_get_featured_posts();
-        $trending_count = get_option('techscope_trending_count', 4);
-        $trending_grid_class = 'grid gap-3 md:gap-6 ';
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider text-purple-800">
+            🔥 <?php echo techscope_get_section_title('trending'); ?>
+          </h3>
+          <div class="flex items-center gap-2">
+            <button class="trending-slider-prev w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+              <span class="material-icons text-sm">chevron_left</span>
+            </button>
+            <button class="trending-slider-next w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+              <span class="material-icons text-sm">chevron_right</span>
+            </button>
+          </div>
+        </div>
 
-        // Dynamic grid based on post count - Mobile-first approach
-        if ($trending_count <= 2) {
-          $trending_grid_class .= 'grid-cols-1 sm:grid-cols-2';
-        } elseif ($trending_count == 3) {
-          $trending_grid_class .= 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3';
-        } else {
-          $trending_grid_class .= 'grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4';
-        }
-        ?>
-        <div class="<?php echo $trending_grid_class; ?>">
-          <?php if ($trending_posts->have_posts()) :
-            while ($trending_posts->have_posts()) : $trending_posts->the_post();
-              $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
-              $rating = techscope_get_post_rating(get_the_ID());
-          ?>
-            <div class="bg-white rounded-lg lg:rounded-xl shadow-sm overflow-hidden card-hover">
-              <div class="w-full h-32 md:h-32 tech-img"
-                   style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
-              </div>
-              <div class="p-3 md:p-3">
-                <h4 class="font-semibold text-sm md:text-sm mb-2 leading-tight">
-                  <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors">
-                    <?php echo techscope_truncate_text(get_the_title(), 40); ?>
-                  </a>
-                </h4>
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-orange-500">🔥 <?php echo $view_count; ?></span>
-                  <?php if ($rating > 0) : ?>
-                    <span class="text-yellow-500">⭐ <?php echo number_format($rating, 1); ?></span>
-                  <?php endif; ?>
+        <div class="trending-slider-container overflow-hidden">
+          <div class="trending-slider flex gap-6 transition-transform duration-300 ease-in-out">
+            <?php
+            $trending_posts = techscope_get_featured_posts();
+            if ($trending_posts->have_posts()) :
+              while ($trending_posts->have_posts()) : $trending_posts->the_post();
+                $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
+            ?>
+              <div class="trending-card flex-shrink-0 w-80 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 card-hover">
+                <div class="trending-card-image w-full h-48 relative overflow-hidden">
+                  <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
+                       alt="<?php the_title_attribute(); ?>"
+                       class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                  <div class="absolute top-3 left-3">
+                    <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-semibold">
+                      🔥 TRENDING
+                    </span>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <h4 class="font-bold text-lg mb-3 leading-tight">
+                    <a href="<?php the_permalink(); ?>" class="text-gray-900 hover:text-blue-600 transition-colors">
+                      <?php echo techscope_truncate_text(get_the_title(), 60); ?>
+                    </a>
+                  </h4>
+                  <div class="flex items-center justify-between text-sm">
+                    <div class="flex items-center gap-2 text-gray-600">
+                      <span class="font-medium">BY <?php echo strtoupper(get_the_author()); ?></span>
+                    </div>
+                    <div class="flex items-center gap-3 text-gray-500">
+                      <span class="flex items-center gap-1">
+                        <span class="material-icons text-sm text-orange-500">visibility</span>
+                        <?php echo $view_count; ?>
+                      </span>
+                      <span><?php echo get_the_date('M j'); ?></span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          <?php
-            endwhile;
-            wp_reset_postdata();
-          endif;
-          ?>
+            <?php
+              endwhile;
+              wp_reset_postdata();
+            endif;
+            ?>
+          </div>
         </div>
+
+        <!-- Slider JavaScript -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const slider = document.querySelector('.trending-slider');
+          const prevBtn = document.querySelector('.trending-slider-prev');
+          const nextBtn = document.querySelector('.trending-slider-next');
+          const cardWidth = 320 + 24; // card width + gap
+          let currentPosition = 0;
+
+          if (slider && prevBtn && nextBtn) {
+            const maxPosition = -(slider.children.length - 3) * cardWidth; // Show 3 cards at once
+
+            nextBtn.addEventListener('click', () => {
+              if (currentPosition > maxPosition) {
+                currentPosition -= cardWidth;
+                slider.style.transform = `translateX(${currentPosition}px)`;
+              }
+            });
+
+            prevBtn.addEventListener('click', () => {
+              if (currentPosition < 0) {
+                currentPosition += cardWidth;
+                slider.style.transform = `translateX(${currentPosition}px)`;
+              }
+            });
+          }
+        });
+        </script>
+
+        <style>
+        .trending-card-image {
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .trending-slider-container {
+          position: relative;
+        }
+
+        .trending-card:hover {
+          transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+          .trending-card {
+            width: 280px;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .trending-card {
+            width: 260px;
+          }
+        }
+        </style>
       </section>
 
     </div>
