@@ -653,8 +653,10 @@ function techscope_homepage_page() {
         update_option('techscope_trending_layout', sanitize_text_field($_POST['trending_layout']));
 
         // Hero Trending Sidebar Settings
-        if (isset($_POST['hero_trending_categories'])) {
+        if (isset($_POST['hero_trending_categories']) && is_array($_POST['hero_trending_categories'])) {
             update_option('techscope_hero_trending_categories', array_map('intval', $_POST['hero_trending_categories']));
+        } else {
+            update_option('techscope_hero_trending_categories', []);
         }
         update_option('techscope_hero_trending_count', intval($_POST['hero_trending_count']));
 

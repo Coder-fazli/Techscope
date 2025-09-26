@@ -127,11 +127,10 @@
         </div>
         <div class="space-y-4">
           <?php
-          // Ensure default value is set if option doesn't exist
-          $hero_trending_count = get_option('techscope_hero_trending_count');
-          if ($hero_trending_count === false) {
+          // Get admin settings with proper defaults
+          $hero_trending_count = intval(get_option('techscope_hero_trending_count', 4));
+          if ($hero_trending_count <= 0) {
             $hero_trending_count = 4;
-            update_option('techscope_hero_trending_count', 4);
           }
           $hero_trending_categories = (array) get_option('techscope_hero_trending_categories', []);
 
@@ -250,11 +249,24 @@
           <?php endif; ?>
 
           <!-- See More Button -->
-          <?php if ($hero_trending_posts->have_posts()) : ?>
+          <?php if ($hero_trending_posts->have_posts()) :
+            // Determine the link URL based on selected categories
+            $see_more_url = get_permalink(get_option('page_for_posts')); // Default to blog page
+            $see_more_text = 'See More Trending';
+
+            if (!empty($hero_trending_categories) && count($hero_trending_categories) == 1) {
+              // If only one category is selected, link to that category
+              $category = get_category($hero_trending_categories[0]);
+              if ($category) {
+                $see_more_url = get_category_link($category->term_id);
+                $see_more_text = 'See More ' . $category->name;
+              }
+            }
+          ?>
             <div class="text-center mt-4">
-              <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>"
+              <a href="<?php echo esc_url($see_more_url); ?>"
                  class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-6 py-3 rounded-full font-bold text-sm hover:from-pink-600 hover:to-rose-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                <span>See More Trending</span>
+                <span><?php echo esc_html($see_more_text); ?></span>
                 <span class="material-icons text-sm">arrow_forward</span>
               </a>
             </div>
