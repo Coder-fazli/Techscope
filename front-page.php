@@ -153,89 +153,49 @@
             while ($hero_trending_posts->have_posts()) : $hero_trending_posts->the_post();
               $post_counter++;
               $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
-
-              if ($post_counter === 1) :
+              $categories = get_the_category();
+              $category_name = !empty($categories) ? esc_html($categories[0]->name) : 'TRENDING';
           ?>
-            <!-- Featured Trending Post -->
-            <div class="relative overflow-hidden rounded-lg shadow-md bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
-              <div class="absolute inset-0 opacity-60">
+            <!-- Featured Trending Post Design for All Posts -->
+            <div class="relative overflow-hidden rounded-xl shadow-lg bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white card-hover min-h-[200px]">
+              <div class="absolute inset-0 opacity-70">
                 <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
                      alt="<?php the_title_attribute(); ?>"
                      class="w-full h-full object-cover">
               </div>
-              <div class="relative p-3">
-                <div class="flex items-center gap-2 mb-2">
-                  <span class="bg-pink-500 text-white text-xs px-2 py-1 rounded-full font-semibold">#<?php echo $post_counter; ?></span>
-                  <span class="text-pink-200 text-xs">TRENDING</span>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+              <div class="relative p-4 h-full flex flex-col justify-end">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">
+                    <?php echo $category_name; ?>
+                  </span>
+                  <span class="text-pink-200 text-xs font-medium">TRENDING</span>
                 </div>
-                <h4 class="font-bold text-sm mb-2 leading-tight">
-                  <a href="<?php the_permalink(); ?>" class="text-white hover:text-pink-200 transition-colors">
-                    <?php echo techscope_truncate_text(get_the_title(), 45); ?>
+                <h4 class="font-bold text-base mb-3 leading-tight">
+                  <a href="<?php the_permalink(); ?>" class="text-white hover:text-pink-200 transition-colors duration-200">
+                    <?php echo techscope_truncate_text(get_the_title(), 60); ?>
                   </a>
                 </h4>
+
+                <!-- Short Description -->
+                <p class="text-gray-200 text-sm mb-3 line-clamp-2 leading-relaxed">
+                  <?php echo techscope_truncate_text(get_the_excerpt() ?: wp_trim_words(get_the_content(), 15), 100); ?>
+                </p>
+
                 <div class="flex items-center justify-between text-xs">
                   <div class="flex items-center gap-2 text-gray-300">
-                    <span><?php echo get_the_date('M j'); ?></span>
+                    <span class="font-medium"><?php echo get_the_date('M j, Y'); ?></span>
                     <span>•</span>
                     <span><?php the_author(); ?></span>
                   </div>
                   <div class="flex items-center gap-1 text-pink-300">
                     <span class="material-icons text-xs">visibility</span>
-                    <span><?php echo $view_count; ?></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php else : ?>
-            <!-- Enhanced Trending Posts with Superdesign -->
-            <div class="bg-white rounded-2xl p-4 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 card-hover">
-              <div class="flex items-start gap-4">
-                <!-- Larger Image Container -->
-                <div class="flex-shrink-0">
-                  <div class="w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-                    <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'thumbnail'); ?>"
-                         alt="<?php the_title_attribute(); ?>"
-                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                  </div>
-                </div>
-
-                <!-- Content Area -->
-                <div class="flex-1 min-w-0">
-                  <!-- Category/Topic Title -->
-                  <div class="mb-2">
-                    <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-sm">
-                      <?php
-                      $categories = get_the_category();
-                      echo !empty($categories) ? esc_html($categories[0]->name) : 'TRENDING';
-                      ?>
-                    </span>
-                  </div>
-
-                  <!-- Title with Better Typography -->
-                  <h4 class="font-bold text-sm leading-tight mb-2 text-gray-900">
-                    <a href="<?php the_permalink(); ?>" class="hover:text-pink-600 transition-colors duration-200 line-clamp-2">
-                      <?php echo techscope_truncate_text(get_the_title(), 45); ?>
-                    </a>
-                  </h4>
-
-                  <!-- Short Description -->
-                  <p class="text-xs text-gray-600 mb-2 line-clamp-2 leading-relaxed">
-                    <?php echo techscope_truncate_text(get_the_excerpt() ?: wp_trim_words(get_the_content(), 15), 80); ?>
-                  </p>
-
-                  <!-- Meta Information -->
-                  <div class="flex items-center justify-between text-xs">
-                    <span class="text-gray-500 font-medium"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')); ?> ago</span>
-                    <div class="flex items-center gap-1 text-pink-500">
-                      <span class="material-icons text-xs">visibility</span>
-                      <span class="font-bold"><?php echo $view_count; ?></span>
-                    </div>
+                    <span class="font-bold"><?php echo $view_count; ?></span>
                   </div>
                 </div>
               </div>
             </div>
           <?php
-              endif;
             endwhile;
             wp_reset_postdata();
           else :
