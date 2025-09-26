@@ -127,8 +127,9 @@
         </div>
         <div class="space-y-4">
           <?php
+          $trending_count = get_option('techscope_trending_count', 4);
           $hero_trending_posts = new WP_Query(array(
-            'posts_per_page' => 5,
+            'posts_per_page' => $trending_count,
             'meta_key' => '_techscope_post_views',
             'orderby' => 'meta_value_num',
             'order' => 'DESC',
