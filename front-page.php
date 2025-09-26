@@ -38,7 +38,7 @@
 </div>
 
 <!-- MAIN LAYOUT (Initially hidden) -->
-<div id="main-content" class="hidden max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 overflow-x-hidden w-full">
+<div id="main-content" class="hidden max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- MAIN CONTENT -->
