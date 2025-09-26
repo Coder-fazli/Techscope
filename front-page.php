@@ -125,10 +125,10 @@
             🔥 TRENDING
           </div>
         </div>
-        <div class="space-y-3">
+        <div class="space-y-4">
           <?php
           $hero_trending_posts = new WP_Query(array(
-            'posts_per_page' => 3,
+            'posts_per_page' => 5,
             'meta_key' => '_techscope_post_views',
             'orderby' => 'meta_value_num',
             'order' => 'DESC',
@@ -177,9 +177,9 @@
             <!-- Enhanced Trending Posts with Superdesign -->
             <div class="bg-white rounded-2xl p-4 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 card-hover">
               <div class="flex items-start gap-4">
-                <!-- Improved Image Container -->
+                <!-- Larger Image Container -->
                 <div class="flex-shrink-0">
-                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+                  <div class="w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                     <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'thumbnail'); ?>"
                          alt="<?php the_title_attribute(); ?>"
                          class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
@@ -188,19 +188,27 @@
 
                 <!-- Content Area -->
                 <div class="flex-1 min-w-0">
-                  <!-- Badge -->
-                  <div class="flex items-center gap-2 mb-2">
+                  <!-- Category/Topic Title -->
+                  <div class="mb-2">
                     <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-sm">
-                      #<?php echo $post_counter; ?>
+                      <?php
+                      $categories = get_the_category();
+                      echo !empty($categories) ? esc_html($categories[0]->name) : 'TRENDING';
+                      ?>
                     </span>
                   </div>
 
                   <!-- Title with Better Typography -->
                   <h4 class="font-bold text-sm leading-tight mb-2 text-gray-900">
                     <a href="<?php the_permalink(); ?>" class="hover:text-pink-600 transition-colors duration-200 line-clamp-2">
-                      <?php echo techscope_truncate_text(get_the_title(), 50); ?>
+                      <?php echo techscope_truncate_text(get_the_title(), 45); ?>
                     </a>
                   </h4>
+
+                  <!-- Short Description -->
+                  <p class="text-xs text-gray-600 mb-2 line-clamp-2 leading-relaxed">
+                    <?php echo techscope_truncate_text(get_the_excerpt() ?: wp_trim_words(get_the_content(), 15), 80); ?>
+                  </p>
 
                   <!-- Meta Information -->
                   <div class="flex items-center justify-between text-xs">
@@ -224,6 +232,17 @@
                 <span class="material-icons text-pink-400 text-sm">trending_up</span>
               </div>
               <p class="text-xs"><?php _e('No trending posts yet.', 'techscope'); ?></p>
+            </div>
+          <?php endif; ?>
+
+          <!-- See More Button -->
+          <?php if ($hero_trending_posts->have_posts()) : ?>
+            <div class="text-center mt-4">
+              <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>"
+                 class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-6 py-3 rounded-full font-bold text-sm hover:from-pink-600 hover:to-rose-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                <span>See More Trending</span>
+                <span class="material-icons text-sm">arrow_forward</span>
+              </a>
             </div>
           <?php endif; ?>
         </div>
