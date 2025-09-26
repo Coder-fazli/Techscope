@@ -39,16 +39,14 @@
 
 <!-- MAIN LAYOUT (Initially hidden) -->
 <div id="main-content" class="hidden max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
-  <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- MAIN CONTENT -->
-    <div class="lg:col-span-3 space-y-6 lg:space-y-8">
+    <div class="lg:col-span-2 space-y-6 lg:space-y-8">
 
       <!-- HERO SLIDER -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 section-animate">
-        <!-- HERO SLIDER -->
-        <div class="lg:col-span-2 relative hero-slider">
-          <div class="w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[600px] rounded-lg lg:rounded-xl relative overflow-hidden">
+      <div class="relative hero-slider section-animate">
+        <div class="w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[600px] rounded-lg lg:rounded-xl relative overflow-hidden">
           <?php
           $hero_posts = techscope_get_hero_posts();
           $slide_count = 0;
@@ -116,107 +114,6 @@
             <?php for ($i = 0; $i < max($slide_count, 3); $i++) : ?>
               <div class="hero-dot <?php echo $i === 0 ? 'active' : ''; ?>" data-slide="<?php echo $i; ?>"></div>
             <?php endfor; ?>
-          </div>
-        </div>
-
-        <!-- TRENDING WIDGET - Right side of hero -->
-        <div class="lg:col-span-1">
-          <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-4 shadow-lg border border-pink-100 h-full">
-            <div class="flex items-center justify-center mb-4">
-              <div class="bg-gradient-to-r from-pink-500 to-rose-500 text-white px-3 py-2 rounded-full text-xs font-bold tracking-wide">
-                🔥 TRENDING
-              </div>
-            </div>
-            <div class="space-y-3">
-              <?php
-              $hero_trending_posts = new WP_Query(array(
-                'posts_per_page' => 3,
-                'meta_key' => '_techscope_post_views',
-                'orderby' => 'meta_value_num',
-                'order' => 'DESC',
-                'post_status' => 'publish'
-              ));
-
-              if ($hero_trending_posts->have_posts()) :
-                $post_counter = 0;
-                while ($hero_trending_posts->have_posts()) : $hero_trending_posts->the_post();
-                  $post_counter++;
-                  $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
-
-                  if ($post_counter === 1) :
-              ?>
-                <!-- Featured Trending Post -->
-                <div class="relative overflow-hidden rounded-lg shadow-md bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
-                  <div class="absolute inset-0 opacity-60">
-                    <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
-                         alt="<?php the_title_attribute(); ?>"
-                         class="w-full h-full object-cover">
-                  </div>
-                  <div class="relative p-3">
-                    <div class="flex items-center gap-2 mb-2">
-                      <span class="bg-pink-500 text-white text-xs px-2 py-1 rounded-full font-semibold">#<?php echo $post_counter; ?></span>
-                      <span class="text-pink-200 text-xs">TRENDING</span>
-                    </div>
-                    <h4 class="font-bold text-sm mb-2 leading-tight">
-                      <a href="<?php the_permalink(); ?>" class="text-white hover:text-pink-200 transition-colors">
-                        <?php echo techscope_truncate_text(get_the_title(), 45); ?>
-                      </a>
-                    </h4>
-                    <div class="flex items-center justify-between text-xs">
-                      <div class="flex items-center gap-2 text-gray-300">
-                        <span><?php echo get_the_date('M j'); ?></span>
-                        <span>•</span>
-                        <span><?php the_author(); ?></span>
-                      </div>
-                      <div class="flex items-center gap-1 text-pink-300">
-                        <span class="material-icons text-xs">visibility</span>
-                        <span><?php echo $view_count; ?></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <?php else : ?>
-                <!-- Compact Trending Posts -->
-                <div class="flex items-center gap-3 p-2 rounded-lg bg-white shadow-sm border border-pink-100 hover:shadow-md transition-all duration-200">
-                  <div class="flex-shrink-0">
-                    <div class="w-12 h-12 rounded-lg overflow-hidden">
-                      <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'thumbnail'); ?>"
-                           alt="<?php the_title_attribute(); ?>"
-                           class="w-full h-full object-cover">
-                    </div>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">#<?php echo $post_counter; ?></span>
-                    </div>
-                    <h4 class="font-semibold text-xs mb-1 line-clamp-2">
-                      <a href="<?php the_permalink(); ?>" class="text-gray-800 hover:text-pink-600 transition-colors">
-                        <?php echo techscope_truncate_text(get_the_title(), 40); ?>
-                      </a>
-                    </h4>
-                    <div class="flex items-center justify-between text-xs">
-                      <span class="text-gray-500"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')); ?> ago</span>
-                      <div class="flex items-center gap-1 text-pink-500">
-                        <span class="material-icons text-xs">visibility</span>
-                        <span class="font-medium"><?php echo $view_count; ?></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <?php
-                  endif;
-                endwhile;
-                wp_reset_postdata();
-              else :
-              ?>
-                <div class="text-center text-gray-500 py-4">
-                  <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-pink-100 flex items-center justify-center">
-                    <span class="material-icons text-pink-400 text-sm">trending_up</span>
-                  </div>
-                  <p class="text-xs"><?php _e('No trending posts yet.', 'techscope'); ?></p>
-                </div>
-              <?php endif; ?>
-            </div>
           </div>
         </div>
       </div>
