@@ -466,43 +466,42 @@ div[class*="col-span-2"] .card-hover {
   border-radius: 12px;
 }
 
-/* SIDEBAR SPECIFIC STYLING - SuperDesign Inspired - TARGET EXACT ELEMENTS */
-.lg\:col-span-1 .bg-white.rounded-xl,
-.lg\:col-span-1 div[class*="bg-white"] {
-  /* Modern sidebar cards with superdesign gentle shadows */
+/* SIDEBAR CARDS - EXACT TARGETING FOR VISIBLE CHANGES */
+.lg\:col-span-1 .bg-white.rounded-xl.overflow-hidden,
+.lg\:col-span-1 .bg-white.rounded-xl {
+  /* VERY visible modern card styling */
   background: #FFFFFF !important;
-  border-radius: 18px !important;
+  border-radius: 20px !important;
   border: none !important;
 
-  /* SuperDesign VERY visible layered shadows for depth */
+  /* DRAMATIC shadows that will definitely be visible */
   box-shadow:
-    0 2px 8px 0px hsl(0 0% 0% / 0.15),
-    0 4px 16px 0px hsl(0 0% 0% / 0.12),
-    0 8px 32px 0px hsl(0 0% 0% / 0.08),
-    0 16px 64px 0px hsl(0 0% 0% / 0.04) !important;
+    0 4px 12px 0px rgba(0, 0, 0, 0.18),
+    0 8px 24px 0px rgba(0, 0, 0, 0.12),
+    0 16px 48px 0px rgba(0, 0, 0, 0.08) !important;
 
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
 
-.lg\:col-span-1 .bg-white.rounded-xl:hover,
-.lg\:col-span-1 div[class*="bg-white"]:hover {
-  /* Enhanced hover with superdesign principles */
-  transform: translateY(-6px) scale(1.02) !important;
+.lg\:col-span-1 .bg-white.rounded-xl:hover {
+  /* DRAMATIC hover effect */
+  transform: translateY(-8px) scale(1.03) !important;
 
-  /* MUCH more prominent shadows on hover */
+  /* VERY OBVIOUS shadows on hover */
   box-shadow:
-    0 4px 16px 0px hsl(0 0% 0% / 0.20),
-    0 8px 32px 0px hsl(0 0% 0% / 0.15),
-    0 16px 64px 0px hsl(0 0% 0% / 0.10),
-    0 32px 96px 0px hsl(0 0% 0% / 0.05) !important;
+    0 8px 24px 0px rgba(0, 0, 0, 0.25),
+    0 16px 48px 0px rgba(0, 0, 0, 0.18),
+    0 32px 96px 0px rgba(0, 0, 0, 0.12) !important;
 }
 
-/* Sidebar image containers - smooth top corners matching card radius */
+/* SIDEBAR IMAGE CONTAINERS - EXACT CLASS TARGETING */
+.lg\:col-span-1 .w-full.h-\[140px\].tech-img,
 .lg\:col-span-1 .tech-img {
-  border-radius: 18px 18px 0 0 !important;
+  border-radius: 20px 20px 0 0 !important;
   margin: 0 !important;
   background-size: cover !important;
   background-position: center !important;
+  overflow: hidden !important;
 }
 
 /* Sidebar container tighter spacing */
