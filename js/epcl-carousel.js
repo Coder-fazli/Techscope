@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
     // Initialize EPCL Carousel with exact template settings
     $('.epcl-carousel').slick({
       infinite: true,
-      slidesToShow: 5,
+      slidesToShow: 4,
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 3000,
@@ -24,21 +24,21 @@ jQuery(document).ready(function($) {
         {
           breakpoint: 1200,
           settings: {
-            slidesToShow: 4,
+            slidesToShow: 3,
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 768,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: 2,
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: 2,
+            slidesToShow: 1,
             slidesToScroll: 1
           }
         }
