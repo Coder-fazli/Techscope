@@ -221,154 +221,210 @@
       </div>
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
-      <!-- ========== EPCL CAROUSEL - EXACT TEMPLATE COPY ========== -->
-      <section class="epcl-carousel slick-slider section outer-arrows slides-5" data-show="5" data-rtl="" data-aos="fade">
-        <div class="epcl-carousel-container">
-          <div class="epcl-carousel-track" id="carousel-track">
-            <?php
-            $trending_posts = techscope_get_featured_posts();
-            if ($trending_posts->have_posts()) :
-              while ($trending_posts->have_posts()) : $trending_posts->the_post();
-                $post_image = techscope_get_responsive_image(get_the_ID(), 'featured-card');
-                $post_date = get_the_date('F j, Y');
-                $post_datetime = get_the_date('Y-m-d');
-                $author_name = get_the_author();
-                $author_url = get_author_posts_url(get_the_author_meta('ID'));
-                $author_avatar = get_avatar_url(get_the_author_meta('ID'));
-            ?>
-              <div class="item">
-                <article>
-                  <div class="img cover" role="img" alt="<?php echo esc_attr(get_the_title()); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>" style="background: url(<?php echo esc_url($post_image); ?>);"></div>
-                  <div class="info border-effect">
-                    <time datetime="<?php echo esc_attr($post_datetime); ?>">
+      <!-- ========== WORKING EPCL CAROUSEL ========== -->
+      <div class="epcl-carousel-wrapper" style="position: relative; margin: 2rem 0;">
+        <div class="epcl-carousel" id="epcl-carousel">
+          <?php
+          $trending_posts = techscope_get_featured_posts();
+          if ($trending_posts->have_posts()) :
+            while ($trending_posts->have_posts()) : $trending_posts->the_post();
+              $post_image = techscope_get_responsive_image(get_the_ID(), 'featured-card');
+              $post_date = get_the_date('F j, Y');
+              $post_datetime = get_the_date('Y-m-d');
+              $author_name = get_the_author();
+              $author_url = get_author_posts_url(get_the_author_meta('ID'));
+              $author_avatar = get_avatar_url(get_the_author_meta('ID'));
+          ?>
+            <div class="carousel-item">
+              <article class="carousel-card">
+                <div class="card-image" style="background-image: url('<?php echo esc_url($post_image); ?>');">
+                  <div class="card-overlay"></div>
+                  <div class="card-content">
+                    <time class="card-date" datetime="<?php echo esc_attr($post_datetime); ?>">
                       <?php echo esc_html($post_date); ?>
                     </time>
-                    <h2 class="title white"><?php echo esc_html(get_the_title()); ?></h2>
+                    <h2 class="card-title"><?php echo esc_html(get_the_title()); ?></h2>
                   </div>
-                  <div class="clear"></div>
-                  <footer class="author-meta">
-                    <a href="<?php echo esc_url($author_url); ?>" title="<?php echo esc_attr($author_name); ?>">
-                      <span class="author-image cover" style="background-image: url('<?php echo esc_url($author_avatar); ?>');"></span>
+                  <footer class="card-author">
+                    <a href="<?php echo esc_url($author_url); ?>" class="author-link">
+                      <div class="author-avatar" style="background-image: url('<?php echo esc_url($author_avatar); ?>');"></div>
                       <span class="author-name"><?php echo esc_html($author_name); ?></span>
                     </a>
-                    <div class="clear"></div>
                   </footer>
-                  <a href="<?php echo esc_url(get_the_permalink()); ?>" class="full-link" aria-label="<?php echo esc_attr(get_the_title()); ?>">
-                    <span style="display:none;"><?php echo esc_html(get_the_title()); ?></span>
-                  </a>
-                  <div class="overlay"></div>
-                </article>
-              </div>
-            <?php
-              endwhile;
-              wp_reset_postdata();
-            endif;
-            ?>
-          </div>
-
-          <!-- Red Navigation Arrows -->
-          <button class="epcl-carousel-nav prev" id="carousel-prev" type="button">
-            <svg viewBox="0 0 24 24">
-              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-            </svg>
-          </button>
-          <button class="epcl-carousel-nav next" id="carousel-next" type="button">
-            <svg viewBox="0 0 24 24">
-              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-            </svg>
-          </button>
+                  <a href="<?php echo esc_url(get_the_permalink()); ?>" class="card-link"></a>
+                </div>
+              </article>
+            </div>
+          <?php
+            endwhile;
+            wp_reset_postdata();
+          endif;
+          ?>
         </div>
 
-        <!-- Carousel JavaScript -->
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const track = document.getElementById('carousel-track');
-          const prevBtn = document.getElementById('carousel-prev');
-          const nextBtn = document.getElementById('carousel-next');
-          const items = track ? track.querySelectorAll('.item') : [];
+        <!-- Navigation Buttons -->
+        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </button>
 
-          if (!track || !prevBtn || !nextBtn || items.length === 0) {
-            console.log('Carousel elements not found');
-            return;
-          }
+        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </button>
+      </div>
 
-          let currentIndex = 0;
-          let itemsToShow = getItemsToShow();
-          let maxIndex = Math.max(0, items.length - itemsToShow);
+      <!-- Simple Working JavaScript -->
+      <script>
+      let currentSlide = 0;
+      const carousel = document.getElementById('epcl-carousel');
+      const items = carousel.querySelectorAll('.carousel-item');
+      const totalItems = items.length;
+      const itemsPerView = window.innerWidth >= 1200 ? 5 : (window.innerWidth >= 768 ? 4 : 2);
+      const maxSlides = Math.max(0, totalItems - itemsPerView);
 
-          function getItemsToShow() {
-            if (window.innerWidth >= 1200) return 5;
-            if (window.innerWidth >= 768) return 4;
-            if (window.innerWidth >= 480) return 2;
-            return 1;
-          }
+      function moveCarousel(direction) {
+        currentSlide += direction;
 
-          function updateCarousel() {
-            if (items.length === 0) return;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide > maxSlides) currentSlide = maxSlides;
 
-            const containerWidth = track.parentElement.offsetWidth;
-            const itemWidth = containerWidth / itemsToShow;
-            const gap = 24; // 1.5rem gap
-            const translateX = currentIndex * itemWidth;
+        const itemWidth = 100 / itemsPerView;
+        const translateX = -(currentSlide * itemWidth);
+        carousel.style.transform = `translateX(${translateX}%)`;
 
-            track.style.transform = `translateX(-${translateX}px)`;
+        console.log('Moving carousel:', direction, 'Current slide:', currentSlide);
+      }
 
-            // Update button states
-            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex >= maxIndex;
-          }
+      // Initialize carousel
+      carousel.style.display = 'flex';
+      carousel.style.transition = 'transform 0.3s ease';
+      items.forEach(item => {
+        item.style.flex = `0 0 ${100/itemsPerView}%`;
+        item.style.padding = '0 10px';
+      });
+      </script>
 
-          function goToPrev() {
-            if (currentIndex > 0) {
-              currentIndex--;
-              updateCarousel();
-            }
-          }
+      <!-- Carousel Styles -->
+      <style>
+      .epcl-carousel {
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+      }
 
-          function goToNext() {
-            if (currentIndex < maxIndex) {
-              currentIndex++;
-              updateCarousel();
-            }
-          }
+      .carousel-item {
+        flex: 0 0 20%;
+        padding: 0 10px;
+      }
 
-          // Event listeners
-          prevBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            goToPrev();
-          });
+      .carousel-card {
+        width: 100%;
+        height: 350px;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+      }
 
-          nextBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            goToNext();
-          });
+      .card-image {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
 
-          // Handle window resize
-          let resizeTimeout;
-          window.addEventListener('resize', function() {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
-              itemsToShow = getItemsToShow();
-              maxIndex = Math.max(0, items.length - itemsToShow);
+      .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+        z-index: 1;
+      }
 
-              if (currentIndex > maxIndex) {
-                currentIndex = maxIndex;
-              }
+      .card-content {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        text-align: center;
+        z-index: 2;
+        padding: 1rem;
+      }
 
-              updateCarousel();
-            }, 100);
-          });
+      .card-date {
+        display: block;
+        color: rgba(255,255,255,0.9);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
 
-          // Initialize after a short delay to ensure proper layout
-          setTimeout(function() {
-            updateCarousel();
-          }, 100);
-        });
-        </script>
-      </section>
-      <!-- ========== END EPCL CAROUSEL ========== -->
+      .card-title {
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.3;
+        margin: 0;
+      }
+
+      .card-author {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        z-index: 2;
+      }
+
+      .author-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: white;
+        text-decoration: none;
+      }
+
+      .author-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .author-name {
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .card-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+      }
+
+      .carousel-btn:hover {
+        background: #e02946 !important;
+        transform: translateY(-50%) scale(1.1) !important;
+      }
+
+      @media (max-width: 1200px) {
+        .carousel-item { flex: 0 0 25%; }
+      }
+
+      @media (max-width: 768px) {
+        .carousel-item { flex: 0 0 50%; }
+      }
+      </style>
+      <!-- ========== END WORKING CAROUSEL ========== -->
 
     </div>
 
