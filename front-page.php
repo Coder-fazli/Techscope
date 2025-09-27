@@ -222,8 +222,8 @@
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
       <!-- ========== WORKING EPCL CAROUSEL ========== -->
-      <div class="epcl-carousel-wrapper" style="position: relative; margin: 2rem 0; overflow: hidden; padding: 0 50px;">
-        <div class="epcl-carousel" id="epcl-carousel" style="display: flex; transition: transform 0.3s ease;">
+      <div class="epcl-carousel-wrapper" style="position: relative; margin: 2rem 0; width: 100%;">
+        <div class="epcl-carousel" id="epcl-carousel" style="display: flex; transition: transform 0.3s ease; width: 100%;">
           <?php
           $trending_posts = techscope_get_featured_posts();
           if ($trending_posts->have_posts()) :
@@ -235,7 +235,7 @@
               $author_url = get_author_posts_url(get_the_author_meta('ID'));
               $author_avatar = get_avatar_url(get_the_author_meta('ID'));
           ?>
-            <div class="carousel-item" style="flex: 0 0 22%; padding: 0 6px;">
+            <div class="carousel-item" style="flex: 0 0 22%; padding: 0 4px;">
               <article class="carousel-card" style="width: 100%; height: 280px; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
                 <div class="card-image" style="background-image: url('<?php echo esc_url($post_image); ?>'); width: 100%; height: 100%; background-size: cover; background-position: center; position: relative;">
                   <div class="card-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1;"></div>
@@ -263,13 +263,13 @@
         </div>
 
         <!-- Navigation Buttons -->
-        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
+        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.3);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
           </svg>
         </button>
 
-        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
+        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.3);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
           </svg>
@@ -305,16 +305,16 @@
         let itemWidth, padding;
         if (window.innerWidth >= 1200) {
           itemWidth = '22%';
-          padding = '0 6px';
+          padding = '0 4px';
         } else if (window.innerWidth >= 768) {
           itemWidth = '28%';
-          padding = '0 8px';
+          padding = '0 6px';
         } else if (window.innerWidth >= 480) {
           itemWidth = '45%';
-          padding = '0 10px';
+          padding = '0 8px';
         } else {
           itemWidth = '90%';
-          padding = '0 15px';
+          padding = '0 10px';
         }
 
         items.forEach(item => {
