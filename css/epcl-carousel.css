@@ -3,7 +3,7 @@
 /* EPCL Carousel Base Styles - FULL WIDTH */
 .epcl-carousel {
   margin: 40px 0 !important;
-  padding: 0 100px !important;
+  padding: 0 120px !important;
   width: 100vw !important;
   position: relative !important;
   left: 50% !important;
@@ -164,11 +164,11 @@
 }
 
 .epcl-carousel .slick-prev {
-  left: 20px !important;
+  left: 50px !important;
 }
 
 .epcl-carousel .slick-next {
-  right: 20px !important;
+  right: 50px !important;
 }
 
 .epcl-carousel .slick-prev::before {
@@ -190,7 +190,13 @@
 /* Responsive Design */
 @media (max-width: 1200px) {
   .epcl-carousel {
-    padding: 0 80px !important;
+    padding: 0 100px !important;
+  }
+  .epcl-carousel .slick-prev {
+    left: 40px !important;
+  }
+  .epcl-carousel .slick-next {
+    right: 40px !important;
   }
   .epcl-carousel .info .title.white {
     font-size: 15px;
@@ -199,7 +205,13 @@
 
 @media (max-width: 768px) {
   .epcl-carousel {
-    padding: 0 60px !important;
+    padding: 0 80px !important;
+  }
+  .epcl-carousel .slick-prev {
+    left: 30px !important;
+  }
+  .epcl-carousel .slick-next {
+    right: 30px !important;
   }
   .epcl-carousel .info .title.white {
     font-size: 14px;
@@ -217,7 +229,13 @@
 
 @media (max-width: 480px) {
   .epcl-carousel {
-    padding: 0 40px !important;
+    padding: 0 60px !important;
+  }
+  .epcl-carousel .slick-prev {
+    left: 20px !important;
+  }
+  .epcl-carousel .slick-next {
+    right: 20px !important;
   }
   .epcl-carousel .info .title.white {
     font-size: 13px;
