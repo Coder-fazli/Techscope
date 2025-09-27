@@ -229,14 +229,14 @@
     overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
-    left: 22px !important;
+    left: 18px !important;
     width: 32px !important;
     height: 32px !important;
     line-height: 32px !important;
     border-radius: 16px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
-    right: 22px !important;
+    right: 18px !important;
     width: 32px !important;
     height: 32px !important;
     line-height: 32px !important;
@@ -258,7 +258,7 @@
     border-radius: 30px !important;
   }
   .epcl-carousel .item {
-    padding: 0 45px;
+    padding: 0 38px;
   }
 }
 
@@ -268,14 +268,14 @@
     overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
-    left: 20px !important;
+    left: 15px !important;
     width: 28px !important;
     height: 28px !important;
     line-height: 28px !important;
     border-radius: 14px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
-    right: 20px !important;
+    right: 15px !important;
     width: 28px !important;
     height: 28px !important;
     line-height: 28px !important;
@@ -300,6 +300,6 @@
     border-radius: 35px !important;
   }
   .epcl-carousel .item {
-    padding: 0 35px;
+    padding: 0 28px;
   }
 }
