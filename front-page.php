@@ -235,8 +235,8 @@
               $author_url = get_author_posts_url(get_the_author_meta('ID'));
               $author_avatar = get_avatar_url(get_the_author_meta('ID'));
           ?>
-            <div class="carousel-item" style="flex: 0 0 20%; padding: 0 10px;">
-              <article class="carousel-card" style="width: 100%; height: 250px; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+            <div class="carousel-item" style="flex: 0 0 18%; padding: 0 8px;">
+              <article class="carousel-card" style="width: 100%; height: 280px; border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
                 <div class="card-image" style="background-image: url('<?php echo esc_url($post_image); ?>'); width: 100%; height: 100%; background-size: cover; background-position: center; position: relative;">
                   <div class="card-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1;"></div>
                   <div class="card-content" style="position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); text-align: center; z-index: 2; padding: 1rem;">
@@ -286,22 +286,23 @@
       let maxSlides = Math.max(0, totalItems - itemsPerView);
 
       function getItemsPerView() {
-        if (window.innerWidth >= 1200) return 5;
-        if (window.innerWidth >= 768) return 4;
-        if (window.innerWidth >= 480) return 2;
-        return 1;
+        if (window.innerWidth >= 1200) return 5.5; // Show 5.5 items so it doesn't slide out
+        if (window.innerWidth >= 768) return 4.5;
+        if (window.innerWidth >= 480) return 2.5;
+        return 1.5;
       }
 
       function updateLayout() {
         itemsPerView = getItemsPerView();
-        maxSlides = Math.max(0, totalItems - itemsPerView);
+        maxSlides = Math.max(0, totalItems - Math.floor(itemsPerView));
 
         // Reset slide if needed
         if (currentSlide > maxSlides) currentSlide = maxSlides;
 
-        // Update item widths
+        // Update item widths to match the 18% from inline styles
         items.forEach(item => {
-          item.style.flex = `0 0 ${100/itemsPerView}%`;
+          item.style.flex = `0 0 18%`;
+          item.style.padding = '0 8px';
         });
 
         moveCarousel(0); // Refresh position
@@ -313,11 +314,12 @@
         if (currentSlide < 0) currentSlide = 0;
         if (currentSlide > maxSlides) currentSlide = maxSlides;
 
-        const itemWidth = 100 / itemsPerView;
-        const translateX = -(currentSlide * itemWidth);
+        // Calculate movement based on item width (18% + padding)
+        const itemWidthPercent = 18;
+        const translateX = -(currentSlide * itemWidthPercent);
         carousel.style.transform = `translateX(${translateX}%)`;
 
-        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Items per view:', itemsPerView);
+        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Max slides:', maxSlides);
       }
 
       // Initialize carousel
