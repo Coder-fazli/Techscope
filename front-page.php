@@ -212,15 +212,12 @@
     <div class="lg:col-span-3 space-y-6 lg:space-y-8">
 
       <!-- ========== TRENDING TECH SECTION - EDIT DIVIDER HERE ========== -->
-      <div class="flex items-center gap-4 mb-6 mt-8">
-        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-purple-300/60 to-transparent rounded-full"></div>
-        <div class="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-purple-100/50 shadow-sm">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-purple-700 flex items-center gap-2">
-            <span class="text-purple-500">📱</span>
-            <?php echo techscope_get_section_title('trending'); ?>
-          </h3>
-        </div>
-        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-purple-300/60 to-transparent rounded-full"></div>
+      <div class="mb-8 mt-12">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <span class="text-purple-500">📱</span>
+          <?php echo techscope_get_section_title('trending'); ?>
+        </h3>
+        <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
       </div>
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
@@ -585,15 +582,12 @@
     </div>
 
     <!-- ========== EDITOR'S CHOICE SECTION - EDIT DIVIDER HERE ========== -->
-    <div class="flex items-center gap-4 mb-8 mt-12">
-      <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-amber-300/60 to-transparent rounded-full"></div>
-      <div class="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-amber-100/50 shadow-sm">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-amber-700 flex items-center gap-2">
-          <span class="text-amber-500">⭐</span>
-          <?php echo techscope_get_section_title('editor'); ?>
-        </h3>
-      </div>
-      <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-amber-300/60 to-transparent rounded-full"></div>
+    <div class="mb-8 mt-12">
+      <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <span class="text-amber-500">⭐</span>
+        <?php echo techscope_get_section_title('editor'); ?>
+      </h3>
+      <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
     </div>
     <!-- ========== END EDITOR'S CHOICE DIVIDER ========== -->
 
@@ -714,15 +708,12 @@
     <div class="lg:col-span-2 space-y-6 lg:space-y-8">
 
       <!-- ========== HOT STORIES SECTION - EDIT DIVIDER HERE ========== -->
-      <div class="flex items-center gap-4 mb-6 mt-8">
-        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-red-300/60 to-transparent rounded-full"></div>
-        <div class="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-red-100/50 shadow-sm">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-red-700 flex items-center gap-2">
-            <span class="text-red-500">🔥</span>
-            <?php echo techscope_get_section_title('hot'); ?>
-          </h3>
-        </div>
-        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-red-300/60 to-transparent rounded-full"></div>
+      <div class="mb-8 mt-12">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <span class="text-red-500">🔥</span>
+          <?php echo techscope_get_section_title('hot'); ?>
+        </h3>
+        <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
       </div>
       <!-- ========== END HOT STORIES DIVIDER ========== -->
 
@@ -776,15 +767,12 @@
       </section>
 
       <!-- ========== MOBILE TECH SECTION - EDIT DIVIDER HERE ========== -->
-      <div class="flex items-center gap-4 mb-6 mt-8">
-        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-blue-300/60 to-transparent rounded-full"></div>
-        <div class="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-blue-100/50 shadow-sm">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-blue-700 flex items-center gap-2">
-            <span class="text-blue-500">📱</span>
-            <?php echo techscope_get_section_title('mobile'); ?>
-          </h3>
-        </div>
-        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-blue-300/60 to-transparent rounded-full"></div>
+      <div class="mb-8 mt-12">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <span class="text-blue-500">📱</span>
+          <?php echo techscope_get_section_title('mobile'); ?>
+        </h3>
+        <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
       </div>
       <!-- ========== END MOBILE TECH DIVIDER ========== -->
 
@@ -835,15 +823,12 @@
       </section>
 
       <!-- ========== AI & GAMING SECTION - EDIT DIVIDER HERE ========== -->
-      <div class="flex items-center gap-4 mb-6 mt-8">
-        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-green-300/60 to-transparent rounded-full"></div>
-        <div class="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-green-100/50 shadow-sm">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-green-700 flex items-center gap-2">
-            <span class="text-green-500">🤖</span>
-            <?php echo techscope_get_section_title('ai'); ?>
-          </h3>
-        </div>
-        <div class="flex-1 h-0.5 bg-gradient-to-r from-transparent via-green-300/60 to-transparent rounded-full"></div>
+      <div class="mb-8 mt-12">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <span class="text-green-500">🤖</span>
+          <?php echo techscope_get_section_title('ai'); ?>
+        </h3>
+        <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
       </div>
       <!-- ========== END AI & GAMING DIVIDER ========== -->
 
