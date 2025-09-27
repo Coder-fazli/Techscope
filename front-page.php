@@ -296,16 +296,10 @@
       function updateLayout() {
         itemsPerView = getItemsPerView();
 
-        // Calculate max slides - stop when all remaining items are visible
-        maxSlides = Math.max(0, totalItems - itemsPerView);
+        // Allow infinite sliding - no max slides limit
+        maxSlides = totalItems; // Can slide through all items infinitely
 
-        // If we have 5 or fewer items and can show 4+, don't allow sliding
-        if (totalItems <= itemsPerView) {
-          maxSlides = 0;
-        }
-
-        // Reset slide if needed
-        if (currentSlide > maxSlides) currentSlide = maxSlides;
+        // Don't reset slide position
 
         // Update item widths responsively
         let itemWidth, padding;
@@ -334,8 +328,9 @@
       function moveCarousel(direction) {
         currentSlide += direction;
 
-        if (currentSlide < 0) currentSlide = 0;
-        if (currentSlide > maxSlides) currentSlide = maxSlides;
+        // Create infinite loop - when reaching end, go to beginning
+        if (currentSlide < 0) currentSlide = totalItems - 1;
+        if (currentSlide >= totalItems) currentSlide = 0;
 
         // Calculate movement based on responsive item width
         let itemWidthPercent;
@@ -352,12 +347,12 @@
         const translateX = -(currentSlide * itemWidthPercent);
         carousel.style.transform = `translateX(${translateX}%)`;
 
-        // Update button states
+        // Buttons always active for infinite loop
         const prevBtn = document.querySelector('.carousel-prev');
         const nextBtn = document.querySelector('.carousel-next');
 
-        if (prevBtn) prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
-        if (nextBtn) nextBtn.style.opacity = currentSlide >= maxSlides ? '0.5' : '1';
+        if (prevBtn) prevBtn.style.opacity = '1';
+        if (nextBtn) nextBtn.style.opacity = '1';
 
         console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Max slides:', maxSlides, 'Total items:', totalItems, 'Items per view:', itemsPerView);
       }
