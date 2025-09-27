@@ -222,8 +222,7 @@
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
       <!-- ========== WORKING EPCL CAROUSEL ========== -->
-      <div class="epcl-carousel-wrapper" style="position: relative; margin: 2rem 0; width: 100%; overflow: hidden;">
-        <div class="epcl-carousel" id="epcl-carousel" style="display: flex; transition: transform 0.3s ease; width: fit-content;">
+      <div class="epcl-carousel" id="epcl-carousel" style="position: relative; display: flex; transition: transform 0.3s ease; width: fit-content; margin: 2rem 0; overflow: visible;">
           <?php
           $trending_posts = techscope_get_featured_posts();
           $all_posts = array(); // Store all posts for duplication
@@ -273,16 +272,15 @@
             endfor;
           endif;
           ?>
-        </div>
 
         <!-- Navigation Buttons -->
-        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.5);">
+        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.5);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
           </svg>
         </button>
 
-        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.5);">
+        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.5);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
           </svg>
@@ -317,10 +315,10 @@
       }
 
       function getItemsPerView() {
-        // Calculate based on container width and item width (280px + 16px padding)
-        const containerWidth = carousel.parentElement.offsetWidth;
+        // Calculate based on viewport width and item width (280px + 16px padding)
+        const viewportWidth = window.innerWidth;
         const itemTotalWidth = 296; // 280px + 16px padding
-        return Math.floor(containerWidth / itemTotalWidth);
+        return Math.floor(viewportWidth / itemTotalWidth);
       }
 
       function updateLayout() {
