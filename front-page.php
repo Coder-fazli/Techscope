@@ -279,11 +279,33 @@
       <!-- Simple Working JavaScript -->
       <script>
       let currentSlide = 0;
+      let itemsPerView = getItemsPerView();
       const carousel = document.getElementById('epcl-carousel');
       const items = carousel.querySelectorAll('.carousel-item');
       const totalItems = items.length;
-      const itemsPerView = window.innerWidth >= 1200 ? 5 : (window.innerWidth >= 768 ? 4 : 2);
-      const maxSlides = Math.max(0, totalItems - itemsPerView);
+      let maxSlides = Math.max(0, totalItems - itemsPerView);
+
+      function getItemsPerView() {
+        if (window.innerWidth >= 1200) return 5;
+        if (window.innerWidth >= 768) return 4;
+        if (window.innerWidth >= 480) return 2;
+        return 1;
+      }
+
+      function updateLayout() {
+        itemsPerView = getItemsPerView();
+        maxSlides = Math.max(0, totalItems - itemsPerView);
+
+        // Reset slide if needed
+        if (currentSlide > maxSlides) currentSlide = maxSlides;
+
+        // Update item widths
+        items.forEach(item => {
+          item.style.flex = `0 0 ${100/itemsPerView}%`;
+        });
+
+        moveCarousel(0); // Refresh position
+      }
 
       function moveCarousel(direction) {
         currentSlide += direction;
@@ -295,16 +317,16 @@
         const translateX = -(currentSlide * itemWidth);
         carousel.style.transform = `translateX(${translateX}%)`;
 
-        console.log('Moving carousel:', direction, 'Current slide:', currentSlide);
+        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Items per view:', itemsPerView);
       }
 
       // Initialize carousel
       carousel.style.display = 'flex';
       carousel.style.transition = 'transform 0.3s ease';
-      items.forEach(item => {
-        item.style.flex = `0 0 ${100/itemsPerView}%`;
-        item.style.padding = '0 10px';
-      });
+      updateLayout();
+
+      // Handle window resize
+      window.addEventListener('resize', updateLayout);
       </script>
 
       <!-- Carousel Styles -->
@@ -322,7 +344,7 @@
 
       .carousel-card {
         width: 100%;
-        height: 350px;
+        height: 280px;
         border-radius: 8px;
         overflow: hidden;
         position: relative;
@@ -418,10 +440,17 @@
 
       @media (max-width: 1200px) {
         .carousel-item { flex: 0 0 25%; }
+        .carousel-card { height: 260px; }
       }
 
       @media (max-width: 768px) {
         .carousel-item { flex: 0 0 50%; }
+        .carousel-card { height: 240px; }
+      }
+
+      @media (max-width: 480px) {
+        .carousel-item { flex: 0 0 100%; }
+        .carousel-card { height: 200px; }
       }
       </style>
       <!-- ========== END WORKING CAROUSEL ========== -->
