@@ -221,197 +221,188 @@
       </div>
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
-      <!-- ========== WORKING EPCL CAROUSEL ========== -->
-      <div class="epcl-carousel" id="epcl-carousel" style="position: relative; display: flex; transition: transform 0.3s ease; width: fit-content; margin: 2rem 0; overflow: visible;">
-          <?php
-          $trending_posts = techscope_get_featured_posts();
-          $all_posts = array(); // Store all posts for duplication
-
-          if ($trending_posts->have_posts()) :
-            // First, collect all posts
-            while ($trending_posts->have_posts()) : $trending_posts->the_post();
-              $all_posts[] = array(
-                'image' => techscope_get_responsive_image(get_the_ID(), 'featured-card'),
-                'date' => get_the_date('F j, Y'),
-                'datetime' => get_the_date('Y-m-d'),
-                'title' => get_the_title(),
-                'author_name' => get_the_author(),
-                'author_url' => get_author_posts_url(get_the_author_meta('ID')),
-                'author_avatar' => get_avatar_url(get_the_author_meta('ID')),
-                'permalink' => get_the_permalink()
-              );
-            endwhile;
-            wp_reset_postdata();
-
-            // Display posts 3 times for seamless loop
-            for ($loop = 0; $loop < 3; $loop++) :
-              foreach ($all_posts as $post_data) :
-          ?>
-            <div class="carousel-item" style="flex: 0 0 280px; padding: 0 8px;">
-              <article class="carousel-card" style="width: 280px; height: 280px; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
-                <div class="card-image" style="background-image: url('<?php echo esc_url($post_data['image']); ?>'); width: 100%; height: 100%; background-size: cover; background-position: center; position: relative;">
-                  <div class="card-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1;"></div>
-                  <div class="card-content" style="position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); text-align: center; z-index: 2; padding: 1rem;">
-                    <time class="card-date" datetime="<?php echo esc_attr($post_data['datetime']); ?>" style="display: block; color: rgba(255,255,255,0.9); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 0.5rem;">
-                      <?php echo esc_html($post_data['date']); ?>
-                    </time>
-                    <h2 class="card-title" style="color: white; font-size: 1rem; font-weight: 700; line-height: 1.3; margin: 0;"><?php echo esc_html($post_data['title']); ?></h2>
-                  </div>
-                  <footer class="card-author" style="position: absolute; bottom: 1rem; left: 1rem; right: 1rem; z-index: 2;">
-                    <a href="<?php echo esc_url($post_data['author_url']); ?>" class="author-link" style="display: flex; align-items: center; gap: 0.5rem; color: white; text-decoration: none;">
-                      <div class="author-avatar" style="width: 24px; height: 24px; border-radius: 50%; background-size: cover; background-position: center; background-image: url('<?php echo esc_url($post_data['author_avatar']); ?>');"></div>
-                      <span class="author-name" style="font-size: 0.75rem; font-weight: 500;"><?php echo esc_html($post_data['author_name']); ?></span>
-                    </a>
-                  </footer>
-                  <a href="<?php echo esc_url($post_data['permalink']); ?>" class="card-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3;"></a>
+      <!-- ========== EXACT EPCL CAROUSEL - ORIGINAL TEMPLATE STRUCTURE ========== -->
+      <section class="epcl-carousel slick-slider section outer-arrows slides-5" data-show="5" data-rtl="" data-aos="fade">
+        <?php
+        $trending_posts = techscope_get_featured_posts();
+        if ($trending_posts->have_posts()) :
+          while ($trending_posts->have_posts()) : $trending_posts->the_post();
+        ?>
+          <div class="item">
+            <article>
+              <div class="img cover" role="img" alt="<?php echo esc_attr(get_the_title()); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>" style="background: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>');">
+                <div class="info border-effect">
+                  <time datetime="<?php echo get_the_date('Y-m-d'); ?>">
+                    <?php echo get_the_date('F j, Y'); ?>
+                  </time>
+                  <h2 class="title white"><?php the_title(); ?></h2>
                 </div>
-              </article>
-            </div>
-          <?php
-              endforeach;
-            endfor;
-          endif;
-          ?>
+                <div class="clear"></div>
+                <footer class="author-meta">
+                  <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>" title="<?php the_author(); ?>">
+                    <span class="author-image cover" style="background-image: url('<?php echo get_avatar_url(get_the_author_meta('ID')); ?>');"></span>
+                    <span class="author-name"><?php the_author(); ?></span>
+                  </a>
+                  <div class="clear"></div>
+                </footer>
+                <a href="<?php the_permalink(); ?>" class="full-link" aria-label="<?php echo esc_attr(get_the_title()); ?>">
+                  <span style="display:none;"><?php the_title(); ?></span>
+                </a>
+                <div class="overlay"></div>
+              </div>
+            </article>
+          </div>
+        <?php
+          endwhile;
+          wp_reset_postdata();
+        endif;
+        ?>
+      </section>
 
-        <!-- Navigation Buttons -->
-        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.5);">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-          </svg>
-        </button>
+      <!-- Slick Slider CSS and JS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
-        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.5);">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Simple Working JavaScript -->
+      <!-- Initialize Exact EPCL Carousel -->
       <script>
-      let currentSlide = 0;
-      let itemsPerView = 4;
-      let carousel, items, totalItems, maxSlides;
-
-      function initCarousel() {
-        carousel = document.getElementById('epcl-carousel');
-        if (!carousel) {
-          console.log('Carousel not found, retrying...');
-          setTimeout(initCarousel, 100);
-          return;
-        }
-
-        items = carousel.querySelectorAll('.carousel-item');
-        totalItems = items.length;
-
-        // Calculate original posts count (totalItems / 3 since we display 3 times)
-        const originalCount = Math.floor(totalItems / 3);
-
-        // Start at the middle set of posts to allow seamless backward/forward
-        currentSlide = originalCount;
-
-        console.log('Carousel initialized with', totalItems, 'items (', originalCount, 'originals x 3)');
-        updateLayout();
-      }
-
-      function getItemsPerView() {
-        // Calculate based on viewport width and item width (280px + 16px padding)
-        const viewportWidth = window.innerWidth;
-        const itemTotalWidth = 296; // 280px + 16px padding
-        return Math.floor(viewportWidth / itemTotalWidth);
-      }
-
-      function updateLayout() {
-        if (!carousel || !items) return;
-
-        itemsPerView = getItemsPerView();
-
-        // Allow infinite sliding - no max slides limit
-        maxSlides = totalItems; // Can slide through all items infinitely
-
-        // Set all items to fixed width
-        items.forEach(item => {
-          item.style.flex = `0 0 280px`;
-          item.style.padding = '0 8px';
+      jQuery(document).ready(function($) {
+        $('.epcl-carousel').slick({
+          infinite: true,
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 3000,
+          arrows: true,
+          dots: false,
+          centerMode: false,
+          variableWidth: false,
+          responsive: [
+            {
+              breakpoint: 1200,
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+              }
+            }
+          ]
         });
-
-        moveCarousel(0); // Refresh position
-      }
-
-      function moveCarousel(direction) {
-        if (!carousel || !items || totalItems === 0) {
-          console.log('Carousel not ready');
-          return;
-        }
-
-        currentSlide += direction;
-
-        const originalCount = Math.floor(totalItems / 3);
-
-        // Handle seamless looping with tripled posts
-        if (currentSlide < 0) {
-          // Jump to the end of the middle set
-          currentSlide = originalCount * 2 - 1;
-        } else if (currentSlide >= originalCount * 2) {
-          // Jump to the beginning of the middle set
-          currentSlide = originalCount;
-        }
-
-        // Calculate movement based on fixed item width (280px + 16px padding = 296px)
-        const itemTotalWidth = 296;
-        const translateX = -(currentSlide * itemTotalWidth);
-        carousel.style.transform = `translateX(${translateX}px)`;
-
-        // Buttons always active for infinite loop
-        const prevBtn = document.querySelector('.carousel-prev');
-        const nextBtn = document.querySelector('.carousel-next');
-
-        if (prevBtn) prevBtn.style.opacity = '1';
-        if (nextBtn) nextBtn.style.opacity = '1';
-
-        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Translate:', translateX + 'px', 'Original count:', originalCount);
-      }
-
-      // Initialize when DOM is ready
-      document.addEventListener('DOMContentLoaded', initCarousel);
-
-      // Handle window resize
-      window.addEventListener('resize', function() {
-        if (carousel) updateLayout();
       });
       </script>
 
-      <!-- Carousel Styles - Force Refresh -->
-      <style id="carousel-styles-v2">
+      <!-- EPCL Carousel Styles - Original Template Structure -->
+      <style>
+      /* EPCL Carousel Base Styles */
       .epcl-carousel {
-        display: flex;
-        width: 100%;
-        overflow: hidden;
+        margin: 0;
+        padding: 0;
       }
 
-      .carousel-item {
-        flex: 0 0 20%;
+      .epcl-carousel .item {
         padding: 0 10px;
+        box-sizing: border-box;
       }
 
-      .carousel-card {
-        width: 100% !important;
-        height: 250px !important;
-        border-radius: 8px;
-        overflow: hidden;
+      .epcl-carousel .item article {
         position: relative;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        height: 300px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
       }
 
-      .card-image {
+      .epcl-carousel .item article:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      }
+
+      .epcl-carousel .img.cover {
         width: 100%;
         height: 100%;
-        background-size: cover;
-        background-position: center;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
         position: relative;
       }
 
-      .card-overlay {
+      .epcl-carousel .info {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        text-align: center;
+        z-index: 2;
+        padding: 20px;
+      }
+
+      .epcl-carousel .info time {
+        display: block;
+        color: rgba(255,255,255,0.9);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .epcl-carousel .info .title.white {
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      }
+
+      .epcl-carousel .author-meta {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        z-index: 2;
+      }
+
+      .epcl-carousel .author-meta a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: white;
+        text-decoration: none;
+      }
+
+      .epcl-carousel .author-image.cover {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        border: 2px solid rgba(255,255,255,0.3);
+      }
+
+      .epcl-carousel .author-name {
+        font-size: 13px;
+        font-weight: 500;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      }
+
+      .epcl-carousel .overlay {
         position: absolute;
         top: 0;
         left: 0;
@@ -421,92 +412,115 @@
         z-index: 1;
       }
 
-      .card-content {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        transform: translateY(-50%);
-        text-align: center;
-        z-index: 2;
-        padding: 1rem;
-      }
-
-      .card-date {
-        display: block;
-        color: rgba(255,255,255,0.9);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        margin-bottom: 0.5rem;
-      }
-
-      .card-title {
-        color: white;
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 1.3;
-        margin: 0;
-      }
-
-      .card-author {
-        position: absolute;
-        bottom: 1rem;
-        left: 1rem;
-        right: 1rem;
-        z-index: 2;
-      }
-
-      .author-link {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: white;
-        text-decoration: none;
-      }
-
-      .author-avatar {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background-size: cover;
-        background-position: center;
-      }
-
-      .author-name {
-        font-size: 0.75rem;
-        font-weight: 500;
-      }
-
-      .card-link {
+      .epcl-carousel .full-link {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         z-index: 3;
+        text-decoration: none;
       }
 
-      .carousel-btn:hover {
-        background: #e02946 !important;
-        transform: translateY(-50%) scale(1.1) !important;
+      .epcl-carousel .clear {
+        clear: both;
       }
 
+      /* Slick Navigation Arrows */
+      .epcl-carousel.slick-slider .slick-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+      }
+
+      .epcl-carousel.slick-slider .slick-arrow:hover {
+        background: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+
+      .epcl-carousel.slick-slider .slick-prev {
+        left: -50px;
+      }
+
+      .epcl-carousel.slick-slider .slick-next {
+        right: -50px;
+      }
+
+      .epcl-carousel.slick-slider .slick-arrow:before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+      }
+
+      .epcl-carousel.slick-slider .slick-prev:before {
+        border-width: 6px 8px 6px 0;
+        border-color: transparent #333 transparent transparent;
+        margin-left: -2px;
+      }
+
+      .epcl-carousel.slick-slider .slick-next:before {
+        border-width: 6px 0 6px 8px;
+        border-color: transparent transparent transparent #333;
+        margin-left: 2px;
+      }
+
+      /* Responsive Design */
       @media (max-width: 1200px) {
-        .carousel-item { flex: 0 0 25% !important; }
-        .carousel-card { height: 230px !important; }
+        .epcl-carousel .item article {
+          height: 280px;
+        }
+        .epcl-carousel .info .title.white {
+          font-size: 15px;
+        }
       }
 
       @media (max-width: 768px) {
-        .carousel-item { flex: 0 0 50% !important; }
-        .carousel-card { height: 210px !important; }
+        .epcl-carousel .item article {
+          height: 250px;
+        }
+        .epcl-carousel .info .title.white {
+          font-size: 14px;
+        }
+        .epcl-carousel.slick-slider .slick-prev {
+          left: -30px;
+        }
+        .epcl-carousel.slick-slider .slick-next {
+          right: -30px;
+        }
       }
 
       @media (max-width: 480px) {
-        .carousel-item { flex: 0 0 100% !important; }
-        .carousel-card { height: 180px !important; }
+        .epcl-carousel .item article {
+          height: 220px;
+        }
+        .epcl-carousel .info .title.white {
+          font-size: 13px;
+        }
+        .epcl-carousel .info {
+          padding: 15px;
+        }
+        .epcl-carousel.slick-slider .slick-arrow {
+          width: 35px;
+          height: 35px;
+        }
       }
       </style>
-      <!-- ========== END WORKING CAROUSEL ========== -->
+      <!-- ========== END EXACT EPCL CAROUSEL ========== -->
 
     </div>
 
