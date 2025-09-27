@@ -49,7 +49,7 @@
             // Increment view count
             techscope_increment_post_views(get_the_ID());
           ?>
-            <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+            <article class="bg-white rounded-xl overflow-hidden card-hover">
 
               <!-- Featured Image -->
               <?php if (has_post_thumbnail()) : ?>
@@ -61,20 +61,6 @@
 
               <!-- Post Content -->
               <div class="p-4">
-                <!-- Categories -->
-                <?php
-                $categories = get_the_category();
-                if ($categories) :
-                ?>
-                  <div class="mb-2">
-                    <?php foreach ($categories as $category) : ?>
-                      <a href="<?php echo esc_url(get_category_link($category->term_id)); ?>"
-                         class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mr-2 hover:bg-blue-200 transition-colors">
-                        <?php echo esc_html($category->name); ?>
-                      </a>
-                    <?php endforeach; ?>
-                  </div>
-                <?php endif; ?>
 
                 <!-- Title -->
                 <h2 class="font-bold text-lg mb-3 leading-tight">
@@ -92,8 +78,6 @@
                 <div class="flex items-center justify-between text-sm text-gray-500">
                   <div class="flex items-center gap-3">
                     <span><?php echo get_the_date('M j, Y'); ?></span>
-                    <span>•</span>
-                    <span><?php the_author(); ?></span>
                   </div>
 
                   <div class="flex items-center gap-3">
