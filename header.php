@@ -45,6 +45,30 @@
   <meta name="yandex-verification" content="003691d1a0a98324" />
 
   <?php wp_head(); ?>
+
+  <!-- SIDEBAR CARD STYLING - DIRECT HEAD CSS FOR MAXIMUM PRIORITY -->
+  <style>
+    .lg\:col-span-1 .sidebar-card {
+      background-color: #FFFFFF !important;
+      border-radius: 20px !important;
+      border: none !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important, 0 8px 24px rgba(0, 0, 0, 0.12) !important, 0 16px 48px rgba(0, 0, 0, 0.08) !important;
+      transition: all 0.4s ease !important;
+    }
+
+    .lg\:col-span-1 .sidebar-card:hover {
+      transform: translateY(-8px) scale(1.03) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important, 0 16px 48px rgba(0, 0, 0, 0.18) !important, 0 32px 96px rgba(0, 0, 0, 0.12) !important;
+    }
+
+    .lg\:col-span-1 .sidebar-image {
+      border-radius: 20px 20px 0 0 !important;
+      margin: 0 !important;
+      background-size: cover !important;
+      background-position: center !important;
+      overflow: hidden !important;
+    }
+  </style>
 </head>
 <body <?php body_class('bg-gray-100 font-inter'); ?>>
 
