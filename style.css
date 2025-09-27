@@ -466,36 +466,38 @@ div[class*="col-span-2"] .card-hover {
   border-radius: 12px;
 }
 
-/* SIDEBAR SPECIFIC STYLING - Modern and Clean */
+/* SIDEBAR SPECIFIC STYLING - SuperDesign Inspired */
 .lg\:col-span-1 .bg-white {
-  /* Modern sidebar cards with soft corners and subtle depth */
+  /* Modern sidebar cards with superdesign gentle shadows */
   background: #FFFFFF !important;
-  border-radius: 14px !important;
+  border-radius: 16px !important;
   border: none !important;
 
-  /* Gentle 3D shadow for visual lift */
+  /* SuperDesign gentle layered shadows for depth */
   box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.04),
-    0 2px 6px rgba(0, 0, 0, 0.03),
-    0 4px 12px rgba(0, 0, 0, 0.02) !important;
+    0 1px 3px 0px hsl(0 0% 0% / 0.03),
+    0 2px 6px 0px hsl(0 0% 0% / 0.02),
+    0 4px 12px 0px hsl(0 0% 0% / 0.01),
+    0 8px 24px 0px hsl(0 0% 0% / 0.01) !important;
 
-  transition: all 0.3s ease !important;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
 
 .lg\:col-span-1 .bg-white:hover {
-  /* Enhanced hover with subtle lift */
-  transform: translateY(-3px) !important;
+  /* Enhanced hover with superdesign principles */
+  transform: translateY(-4px) scale(1.01) !important;
 
-  /* Slightly deeper shadow on hover */
+  /* Deeper layered shadows on hover */
   box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.06),
-    0 4px 12px rgba(0, 0, 0, 0.04),
-    0 8px 20px rgba(0, 0, 0, 0.03) !important;
+    0 2px 6px 0px hsl(0 0% 0% / 0.04),
+    0 4px 12px 0px hsl(0 0% 0% / 0.03),
+    0 8px 24px 0px hsl(0 0% 0% / 0.02),
+    0 16px 32px 0px hsl(0 0% 0% / 0.01) !important;
 }
 
-/* Sidebar image containers - edge to edge with soft top corners */
+/* Sidebar image containers - smooth top corners matching card radius */
 .lg\:col-span-1 .tech-img {
-  border-radius: 14px 14px 0 0 !important;
+  border-radius: 16px 16px 0 0 !important;
   margin: 0 !important;
   background-size: cover !important;
   background-position: center !important;
@@ -506,14 +508,15 @@ div[class*="col-span-2"] .card-hover {
   margin-top: 0.5rem !important;
 }
 
-/* Sidebar main container styling */
+/* Sidebar main container styling with superdesign principles */
 .lg\:col-span-1 .bg-gradient-to-br {
-  /* Slightly softer corners for main container */
-  border-radius: 16px !important;
-  border: 1px solid rgba(255, 192, 203, 0.2) !important;
+  /* Smooth modern corners */
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 192, 203, 0.15) !important;
 
-  /* Very subtle shadow for the main container */
+  /* SuperDesign container shadow */
   box-shadow:
-    0 2px 8px rgba(255, 192, 203, 0.08),
-    0 4px 16px rgba(0, 0, 0, 0.02) !important;
+    0 2px 8px 0px hsl(338 100% 94% / 0.12),
+    0 4px 16px 0px hsl(0 0% 0% / 0.02),
+    0 8px 32px 0px hsl(0 0% 0% / 0.01) !important;
 }
