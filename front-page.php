@@ -226,38 +226,51 @@
         <div class="epcl-carousel" id="epcl-carousel" style="display: flex; transition: transform 0.3s ease; width: fit-content;">
           <?php
           $trending_posts = techscope_get_featured_posts();
+          $all_posts = array(); // Store all posts for duplication
+
           if ($trending_posts->have_posts()) :
+            // First, collect all posts
             while ($trending_posts->have_posts()) : $trending_posts->the_post();
-              $post_image = techscope_get_responsive_image(get_the_ID(), 'featured-card');
-              $post_date = get_the_date('F j, Y');
-              $post_datetime = get_the_date('Y-m-d');
-              $author_name = get_the_author();
-              $author_url = get_author_posts_url(get_the_author_meta('ID'));
-              $author_avatar = get_avatar_url(get_the_author_meta('ID'));
+              $all_posts[] = array(
+                'image' => techscope_get_responsive_image(get_the_ID(), 'featured-card'),
+                'date' => get_the_date('F j, Y'),
+                'datetime' => get_the_date('Y-m-d'),
+                'title' => get_the_title(),
+                'author_name' => get_the_author(),
+                'author_url' => get_author_posts_url(get_the_author_meta('ID')),
+                'author_avatar' => get_avatar_url(get_the_author_meta('ID')),
+                'permalink' => get_the_permalink()
+              );
+            endwhile;
+            wp_reset_postdata();
+
+            // Display posts 3 times for seamless loop
+            for ($loop = 0; $loop < 3; $loop++) :
+              foreach ($all_posts as $post_data) :
           ?>
             <div class="carousel-item" style="flex: 0 0 280px; padding: 0 8px;">
               <article class="carousel-card" style="width: 280px; height: 280px; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
-                <div class="card-image" style="background-image: url('<?php echo esc_url($post_image); ?>'); width: 100%; height: 100%; background-size: cover; background-position: center; position: relative;">
+                <div class="card-image" style="background-image: url('<?php echo esc_url($post_data['image']); ?>'); width: 100%; height: 100%; background-size: cover; background-position: center; position: relative;">
                   <div class="card-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1;"></div>
                   <div class="card-content" style="position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); text-align: center; z-index: 2; padding: 1rem;">
-                    <time class="card-date" datetime="<?php echo esc_attr($post_datetime); ?>" style="display: block; color: rgba(255,255,255,0.9); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 0.5rem;">
-                      <?php echo esc_html($post_date); ?>
+                    <time class="card-date" datetime="<?php echo esc_attr($post_data['datetime']); ?>" style="display: block; color: rgba(255,255,255,0.9); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+                      <?php echo esc_html($post_data['date']); ?>
                     </time>
-                    <h2 class="card-title" style="color: white; font-size: 1rem; font-weight: 700; line-height: 1.3; margin: 0;"><?php echo esc_html(get_the_title()); ?></h2>
+                    <h2 class="card-title" style="color: white; font-size: 1rem; font-weight: 700; line-height: 1.3; margin: 0;"><?php echo esc_html($post_data['title']); ?></h2>
                   </div>
                   <footer class="card-author" style="position: absolute; bottom: 1rem; left: 1rem; right: 1rem; z-index: 2;">
-                    <a href="<?php echo esc_url($author_url); ?>" class="author-link" style="display: flex; align-items: center; gap: 0.5rem; color: white; text-decoration: none;">
-                      <div class="author-avatar" style="width: 24px; height: 24px; border-radius: 50%; background-size: cover; background-position: center; background-image: url('<?php echo esc_url($author_avatar); ?>');"></div>
-                      <span class="author-name" style="font-size: 0.75rem; font-weight: 500;"><?php echo esc_html($author_name); ?></span>
+                    <a href="<?php echo esc_url($post_data['author_url']); ?>" class="author-link" style="display: flex; align-items: center; gap: 0.5rem; color: white; text-decoration: none;">
+                      <div class="author-avatar" style="width: 24px; height: 24px; border-radius: 50%; background-size: cover; background-position: center; background-image: url('<?php echo esc_url($post_data['author_avatar']); ?>');"></div>
+                      <span class="author-name" style="font-size: 0.75rem; font-weight: 500;"><?php echo esc_html($post_data['author_name']); ?></span>
                     </a>
                   </footer>
-                  <a href="<?php echo esc_url(get_the_permalink()); ?>" class="card-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3;"></a>
+                  <a href="<?php echo esc_url($post_data['permalink']); ?>" class="card-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3;"></a>
                 </div>
               </article>
             </div>
           <?php
-            endwhile;
-            wp_reset_postdata();
+              endforeach;
+            endfor;
           endif;
           ?>
         </div>
@@ -293,7 +306,13 @@
         items = carousel.querySelectorAll('.carousel-item');
         totalItems = items.length;
 
-        console.log('Carousel initialized with', totalItems, 'items');
+        // Calculate original posts count (totalItems / 3 since we display 3 times)
+        const originalCount = Math.floor(totalItems / 3);
+
+        // Start at the middle set of posts to allow seamless backward/forward
+        currentSlide = originalCount;
+
+        console.log('Carousel initialized with', totalItems, 'items (', originalCount, 'originals x 3)');
         updateLayout();
       }
 
@@ -329,9 +348,16 @@
 
         currentSlide += direction;
 
-        // Create infinite loop - when reaching end, go to beginning
-        if (currentSlide < 0) currentSlide = totalItems - 1;
-        if (currentSlide >= totalItems) currentSlide = 0;
+        const originalCount = Math.floor(totalItems / 3);
+
+        // Handle seamless looping with tripled posts
+        if (currentSlide < 0) {
+          // Jump to the end of the middle set
+          currentSlide = originalCount * 2 - 1;
+        } else if (currentSlide >= originalCount * 2) {
+          // Jump to the beginning of the middle set
+          currentSlide = originalCount;
+        }
 
         // Calculate movement based on fixed item width (280px + 16px padding = 296px)
         const itemTotalWidth = 296;
@@ -345,7 +371,7 @@
         if (prevBtn) prevBtn.style.opacity = '1';
         if (nextBtn) nextBtn.style.opacity = '1';
 
-        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Translate:', translateX + 'px', 'Total items:', totalItems);
+        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Translate:', translateX + 'px', 'Original count:', originalCount);
       }
 
       // Initialize when DOM is ready
