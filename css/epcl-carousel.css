@@ -1,13 +1,20 @@
 /* EPCL Carousel Styles - Original Template Structure */
 
-/* EPCL Carousel Base Styles */
+/* EPCL Carousel Base Styles - FULL WIDTH */
 .epcl-carousel {
-  margin: 0;
-  padding: 0;
+  margin: 40px 0 !important;
+  padding: 0 100px !important;
+  width: 100vw !important;
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  background: #f8f9fa !important;
 }
 
 .epcl-carousel .item {
-  padding: 0 10px;
+  padding: 0 15px;
   box-sizing: border-box;
 }
 
@@ -15,10 +22,10 @@
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 100%; /* Creates square aspect ratio */
-  border-radius: 15px;
+  padding-bottom: 120%; /* Bigger cards - taller rectangles like original */
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
   background: #fff;
 }
@@ -124,14 +131,15 @@
   clear: both;
 }
 
-/* SLICK ARROWS - WORKING VERSION */
-.epcl-carousel .slick-arrow {
+/* NAVIGATION ARROWS - FORCED VISIBILITY */
+.epcl-carousel .slick-prev,
+.epcl-carousel .slick-next {
   position: absolute !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  z-index: 100 !important;
-  width: 50px !important;
-  height: 50px !important;
+  z-index: 999 !important;
+  width: 60px !important;
+  height: 60px !important;
   border-radius: 50% !important;
   background: #FF3152 !important;
   border: none !important;
@@ -139,108 +147,91 @@
   font-size: 0 !important;
   line-height: 0 !important;
   padding: 0 !important;
-  display: block !important;
-  text-align: center !important;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 6px 20px rgba(255, 49, 82, 0.3) !important;
   transition: all 0.3s ease !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.epcl-carousel .slick-arrow:hover {
+.epcl-carousel .slick-prev:hover,
+.epcl-carousel .slick-next:hover {
   background: #e02946 !important;
   transform: translateY(-50%) scale(1.1) !important;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+  box-shadow: 0 8px 25px rgba(255, 49, 82, 0.4) !important;
 }
 
 .epcl-carousel .slick-prev {
-  left: -70px !important;
+  left: 20px !important;
 }
 
 .epcl-carousel .slick-next {
-  right: -70px !important;
-}
-
-.epcl-carousel .slick-arrow::before {
-  content: '' !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 0 !important;
-  height: 0 !important;
-  border-style: solid !important;
+  right: 20px !important;
 }
 
 .epcl-carousel .slick-prev::before {
-  border-width: 8px 12px 8px 0 !important;
-  border-color: transparent white transparent transparent !important;
-  margin-left: -3px !important;
+  content: "‹" !important;
+  color: white !important;
+  font-size: 30px !important;
+  font-weight: bold !important;
+  line-height: 1 !important;
 }
 
 .epcl-carousel .slick-next::before {
-  border-width: 8px 0 8px 12px !important;
-  border-color: transparent transparent transparent white !important;
-  margin-left: 3px !important;
-}
-
-/* Container spacing for arrows */
-.epcl-carousel {
-  margin: 0 80px !important;
-  position: relative !important;
+  content: "›" !important;
+  color: white !important;
+  font-size: 30px !important;
+  font-weight: bold !important;
+  line-height: 1 !important;
 }
 
 /* Responsive Design */
 @media (max-width: 1200px) {
+  .epcl-carousel {
+    padding: 0 80px !important;
+  }
   .epcl-carousel .info .title.white {
     font-size: 15px;
-  }
-  .epcl-carousel {
-    margin: 0 60px !important;
-  }
-  .epcl-carousel .slick-prev {
-    left: -55px !important;
-  }
-  .epcl-carousel .slick-next {
-    right: -55px !important;
   }
 }
 
 @media (max-width: 768px) {
+  .epcl-carousel {
+    padding: 0 60px !important;
+  }
   .epcl-carousel .info .title.white {
     font-size: 14px;
   }
-  .epcl-carousel {
-    margin: 0 50px !important;
-  }
-  .epcl-carousel .slick-arrow {
-    width: 45px !important;
-    height: 45px !important;
-  }
-  .epcl-carousel .slick-prev {
-    left: -45px !important;
-  }
+  .epcl-carousel .slick-prev,
   .epcl-carousel .slick-next {
-    right: -45px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .epcl-carousel .slick-prev::before,
+  .epcl-carousel .slick-next::before {
+    font-size: 25px !important;
   }
 }
 
 @media (max-width: 480px) {
+  .epcl-carousel {
+    padding: 0 40px !important;
+  }
   .epcl-carousel .info .title.white {
     font-size: 13px;
   }
   .epcl-carousel .info {
-    padding: 15px;
+    padding: 12px;
   }
-  .epcl-carousel {
-    margin: 0 35px !important;
-  }
-  .epcl-carousel .slick-arrow {
-    width: 40px !important;
-    height: 40px !important;
-  }
-  .epcl-carousel .slick-prev {
-    left: -35px !important;
-  }
+  .epcl-carousel .slick-prev,
   .epcl-carousel .slick-next {
-    right: -35px !important;
+    width: 45px !important;
+    height: 45px !important;
+  }
+  .epcl-carousel .slick-prev::before,
+  .epcl-carousel .slick-next::before {
+    font-size: 22px !important;
   }
 }
