@@ -1,6 +1,7 @@
 /* EPCL Carousel Styles - Original Template Structure */
 
 /* Slick Slider Base Styles */
+.slick-slider,
 .slick-slider .slick-list,
 .slick-slider .slick-track {
   background: #F7F3ED !important;
@@ -8,6 +9,13 @@
 
 .slick-slider .slick-list {
   padding: 6px !important;
+}
+
+/* Fix all carousel container backgrounds */
+.epcl-carousel *,
+.epcl-carousel .slick-slide,
+.epcl-carousel .slick-slide > div {
+  background: #F7F3ED !important;
 }
 
 /* EPCL Carousel Base Styles - FULL WIDTH */
