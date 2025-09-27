@@ -14,7 +14,7 @@
 }
 
 .epcl-carousel .item {
-  padding: 0 15px;
+  padding: 0 12px;
   box-sizing: border-box;
 }
 
@@ -163,20 +163,24 @@
   background: #FF3152 url('../images/left-arrow.svg') no-repeat center center !important;
   background-size: 15px !important;
   margin-left: -25px !important;
-  left: 50px !important;
+  left: 20px !important;
+  transition: all 0.3s ease !important;
 }
 
 .epcl-carousel.outer-arrows .slick-next {
   background: #FF3152 url('../images/right-arrow.svg') no-repeat center center !important;
   background-size: 15px !important;
   margin-right: -25px !important;
-  right: 50px !important;
+  right: 20px !important;
+  transition: all 0.3s ease !important;
 }
 
 .epcl-carousel.outer-arrows .slick-prev:hover,
 .epcl-carousel.outer-arrows .slick-next:hover {
   background-color: #FF3152 !important;
   width: 70px !important;
+  transform: translate(0, -50%) scale(1.05) !important;
+  box-shadow: 0 4px 15px rgba(255, 49, 82, 0.4) !important;
 }
 
 .epcl-carousel .slick-prev::before,
@@ -190,11 +194,11 @@
   .epcl-carousel {
     padding: 0 100px !important;
   }
-  .epcl-carousel .slick-prev {
-    left: 40px !important;
+  .epcl-carousel.outer-arrows .slick-prev {
+    left: 15px !important;
   }
-  .epcl-carousel .slick-next {
-    right: 40px !important;
+  .epcl-carousel.outer-arrows .slick-next {
+    right: 15px !important;
   }
   .epcl-carousel .info .title.white {
     font-size: 15px;
@@ -205,11 +209,11 @@
   .epcl-carousel {
     padding: 0 80px !important;
   }
-  .epcl-carousel .slick-prev {
-    left: 30px !important;
+  .epcl-carousel.outer-arrows .slick-prev {
+    left: 10px !important;
   }
-  .epcl-carousel .slick-next {
-    right: 30px !important;
+  .epcl-carousel.outer-arrows .slick-next {
+    right: 10px !important;
   }
   .epcl-carousel .info .title.white {
     font-size: 14px;
@@ -231,11 +235,11 @@
   .epcl-carousel {
     padding: 0 60px !important;
   }
-  .epcl-carousel .slick-prev {
-    left: 20px !important;
+  .epcl-carousel.outer-arrows .slick-prev {
+    left: 5px !important;
   }
-  .epcl-carousel .slick-next {
-    right: 20px !important;
+  .epcl-carousel.outer-arrows .slick-next {
+    right: 5px !important;
   }
   .epcl-carousel .info .title.white {
     font-size: 13px;
