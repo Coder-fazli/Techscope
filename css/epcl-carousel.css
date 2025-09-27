@@ -26,6 +26,7 @@
 .epcl-carousel .item {
   padding: 0 8px;
   box-sizing: border-box;
+  background: #F7F3ED !important;
 }
 
 .epcl-carousel .item article {
