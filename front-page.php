@@ -238,11 +238,14 @@
                   <h2 class="title white"><?php the_title(); ?></h2>
                 </div>
                 <div class="clear"></div>
-                <footer class="author-meta">
-                  <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>" title="<?php the_author(); ?>">
-                    <span class="author-image cover" style="background-image: url('<?php echo get_avatar_url(get_the_author_meta('ID')); ?>');"></span>
-                    <span class="author-name"><?php the_author(); ?></span>
-                  </a>
+                <footer class="views-meta">
+                  <div class="views-count">
+                    <?php
+                    $views = get_post_meta(get_the_ID(), 'post_views_count', true);
+                    if (!$views) $views = '0';
+                    echo number_format($views) . ' views';
+                    ?>
+                  </div>
                   <div class="clear"></div>
                 </footer>
                 <a href="<?php the_permalink(); ?>" class="full-link" aria-label="<?php echo esc_attr(get_the_title()); ?>">
