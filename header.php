@@ -94,6 +94,189 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
+
+    /* ===== EPCL CAROUSEL STYLES - EXACT TEMPLATE COPY ===== */
+    .epcl-carousel {
+      position: relative;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      gap: 1rem;
+      padding: 1rem 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .epcl-carousel .item {
+      flex: 0 0 300px;
+      scroll-snap-align: start;
+      position: relative;
+    }
+
+    .epcl-carousel article {
+      position: relative;
+      height: 400px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .epcl-carousel article:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .epcl-carousel .img.cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      z-index: 1;
+    }
+
+    .epcl-carousel .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+      z-index: 2;
+    }
+
+    .epcl-carousel .info {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      text-align: center;
+      z-index: 3;
+      padding: 1.5rem;
+    }
+
+    .epcl-carousel .info time {
+      display: block;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.75rem;
+    }
+
+    .epcl-carousel .title.white {
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .epcl-carousel .author-meta {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      z-index: 3;
+    }
+
+    .epcl-carousel .author-meta a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #ffffff;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .epcl-carousel .author-meta a:hover {
+      opacity: 0.8;
+    }
+
+    .epcl-carousel .author-image.cover {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+    }
+
+    .epcl-carousel .author-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .epcl-carousel .full-link {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 4;
+      text-decoration: none;
+    }
+
+    .epcl-carousel .clear {
+      clear: both;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .epcl-carousel {
+        padding: 0.5rem 0;
+        gap: 0.75rem;
+      }
+
+      .epcl-carousel .item {
+        flex: 0 0 250px;
+      }
+
+      .epcl-carousel article {
+        height: 320px;
+      }
+
+      .epcl-carousel .title.white {
+        font-size: 1.1rem;
+      }
+
+      .epcl-carousel .info {
+        padding: 1rem;
+      }
+
+      .epcl-carousel .author-meta {
+        bottom: 0.75rem;
+        left: 0.75rem;
+        right: 0.75rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .epcl-carousel .item {
+        flex: 0 0 350px;
+      }
+
+      .epcl-carousel article {
+        height: 450px;
+      }
+
+      .epcl-carousel .title.white {
+        font-size: 1.5rem;
+      }
+    }
+    /* ===== END EPCL CAROUSEL STYLES ===== */
   </style>
 </head>
 <body <?php body_class('bg-gray-100 font-inter'); ?>>

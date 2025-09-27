@@ -221,424 +221,49 @@
       </div>
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
-      <!-- ========== TEMPLATE EXACT CAROUSEL - EDIT HERE ========== -->
-      <section class="template-carousel-wrapper">
-        <div class="carousel-container">
-          <div class="carousel-track-wrapper">
-            <div class="carousel-slides-track">
-              <?php
-              $trending_posts = techscope_get_featured_posts();
-              if ($trending_posts->have_posts()) :
-                $posts_array = [];
-                while ($trending_posts->have_posts()) : $trending_posts->the_post();
-                  $posts_array[] = [
-                    'id' => get_the_ID(),
-                    'title' => get_the_title(),
-                    'permalink' => get_the_permalink(),
-                    'author' => get_the_author(),
-                    'date' => get_the_date('M j, Y'),
-                    'image' => techscope_get_responsive_image(get_the_ID(), 'featured-card'),
-                    'excerpt' => get_the_excerpt(),
-                    'category' => get_the_category_list(', ')
-                  ];
-                endwhile;
-                wp_reset_postdata();
-
-                // Group posts for each slide (1 large + 3 small per slide)
-                $slide_chunks = array_chunk($posts_array, 4);
-                foreach ($slide_chunks as $slide_index => $slide_posts) :
-                  $featured_post = $slide_posts[0];
-                  $side_posts = array_slice($slide_posts, 1, 3);
-              ?>
-                <!-- ========== CAROUSEL SLIDE ========== -->
-                <div class="carousel-slide" data-slide="<?php echo $slide_index; ?>">
-                  <div class="slide-layout">
-                    <!-- Large Featured Post -->
-                    <div class="featured-post-card">
-                      <div class="post-image-wrapper">
-                        <img src="<?php echo $featured_post['image']; ?>"
-                             alt="<?php echo esc_attr($featured_post['title']); ?>"
-                             class="post-image">
-                      </div>
-                      <div class="post-content">
-                        <div class="post-meta">
-                          <span class="post-date"><?php echo $featured_post['date']; ?></span>
-                        </div>
-                        <h2 class="post-title">
-                          <a href="<?php echo $featured_post['permalink']; ?>">
-                            <?php echo $featured_post['title']; ?>
-                          </a>
-                        </h2>
-                        <div class="post-excerpt">
-                          <?php echo techscope_truncate_text($featured_post['excerpt'], 120); ?>
-                        </div>
-                        <div class="post-author">
-                          <span class="author-name"><?php echo $featured_post['author']; ?></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Small Side Posts -->
-                    <div class="side-posts-grid">
-                      <?php foreach ($side_posts as $side_post) : ?>
-                        <div class="side-post-card">
-                          <div class="side-post-image">
-                            <img src="<?php echo $side_post['image']; ?>"
-                                 alt="<?php echo esc_attr($side_post['title']); ?>">
-                          </div>
-                          <div class="side-post-content">
-                            <div class="side-post-meta">
-                              <span class="side-post-date"><?php echo $side_post['date']; ?></span>
-                            </div>
-                            <h3 class="side-post-title">
-                              <a href="<?php echo $side_post['permalink']; ?>">
-                                <?php echo techscope_truncate_text($side_post['title'], 50); ?>
-                              </a>
-                            </h3>
-                            <div class="side-post-author">
-                              <?php echo $side_post['author']; ?>
-                            </div>
-                          </div>
-                        </div>
-                      <?php endforeach; ?>
-                    </div>
-                  </div>
-                </div>
-              <?php endforeach; endif; ?>
-            </div>
+      <!-- ========== EPCL CAROUSEL - EXACT TEMPLATE COPY ========== -->
+      <section class="epcl-carousel slick-slider section outer-arrows slides-5" data-show="5" data-rtl="" data-aos="fade">
+        <?php
+        $trending_posts = techscope_get_featured_posts();
+        if ($trending_posts->have_posts()) :
+          while ($trending_posts->have_posts()) : $trending_posts->the_post();
+            $post_image = techscope_get_responsive_image(get_the_ID(), 'featured-card');
+            $post_date = get_the_date('F j, Y');
+            $post_datetime = get_the_date('Y-m-d');
+            $author_name = get_the_author();
+            $author_url = get_author_posts_url(get_the_author_meta('ID'));
+            $author_avatar = get_avatar_url(get_the_author_meta('ID'));
+        ?>
+          <div class="item">
+            <article>
+              <div class="img cover" role="img" alt="<?php echo esc_attr(get_the_title()); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>" style="background: url(<?php echo esc_url($post_image); ?>);"></div>
+              <div class="info border-effect">
+                <time datetime="<?php echo esc_attr($post_datetime); ?>">
+                  <?php echo esc_html($post_date); ?>
+                </time>
+                <h2 class="title white"><?php echo esc_html(get_the_title()); ?></h2>
+              </div>
+              <div class="clear"></div>
+              <footer class="author-meta">
+                <a href="<?php echo esc_url($author_url); ?>" title="<?php echo esc_attr($author_name); ?>">
+                  <span class="author-image cover" style="background-image: url('<?php echo esc_url($author_avatar); ?>');"></span>
+                  <span class="author-name"><?php echo esc_html($author_name); ?></span>
+                </a>
+                <div class="clear"></div>
+              </footer>
+              <a href="<?php echo esc_url(get_the_permalink()); ?>" class="full-link" aria-label="<?php echo esc_attr(get_the_title()); ?>">
+                <span style="display:none;"><?php echo esc_html(get_the_title()); ?></span>
+              </a>
+              <div class="overlay"></div>
+            </article>
           </div>
-
-          <!-- Navigation Dots -->
-          <div class="carousel-pagination">
-            <?php for ($i = 0; $i < count($slide_chunks); $i++) : ?>
-              <button class="carousel-dot-btn <?php echo $i === 0 ? 'active' : ''; ?>"
-                      data-slide="<?php echo $i; ?>"></button>
-            <?php endfor; ?>
-          </div>
-        </div>
+        <?php
+          endwhile;
+          wp_reset_postdata();
+        endif;
+        ?>
       </section>
-      <!-- ========== END TEMPLATE CAROUSEL ========== -->
-
-        <!-- ========== TEMPLATE CAROUSEL JAVASCRIPT ========== -->
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const track = document.querySelector('.carousel-slides-track');
-          const dots = document.querySelectorAll('.carousel-dot-btn');
-          const slides = document.querySelectorAll('.carousel-slide');
-          let currentSlide = 0;
-          let isAnimating = false;
-
-          if (track && slides.length > 0) {
-            function updateCarousel() {
-              if (isAnimating) return;
-              isAnimating = true;
-
-              // Hide all slides
-              slides.forEach((slide, index) => {
-                slide.style.opacity = index === currentSlide ? '1' : '0';
-                slide.style.display = index === currentSlide ? 'block' : 'none';
-              });
-
-              // Update dots
-              dots.forEach((dot, index) => {
-                if (index === currentSlide) {
-                  dot.classList.add('active');
-                } else {
-                  dot.classList.remove('active');
-                }
-              });
-
-              setTimeout(() => {
-                isAnimating = false;
-              }, 300);
-            }
-
-            // Dot navigation
-            dots.forEach((dot, index) => {
-              dot.addEventListener('click', () => {
-                if (!isAnimating && index !== currentSlide) {
-                  currentSlide = index;
-                  updateCarousel();
-                }
-              });
-            });
-
-            // Auto-play carousel
-            setInterval(() => {
-              if (!isAnimating) {
-                currentSlide = (currentSlide + 1) % slides.length;
-                updateCarousel();
-              }
-            }, 6000);
-
-            // Initialize
-            updateCarousel();
-          }
-        });
-        </script>
-
-        <!-- ========== TEMPLATE CAROUSEL STYLES ========== -->
-        <style>
-        .template-carousel-wrapper {
-          margin: 2rem 0;
-          padding: 0;
-        }
-
-        .carousel-container {
-          position: relative;
-          background: #ffffff;
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .carousel-track-wrapper {
-          position: relative;
-          overflow: hidden;
-        }
-
-        .carousel-slides-track {
-          position: relative;
-        }
-
-        .carousel-slide {
-          display: none;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .carousel-slide:first-child {
-          display: block;
-          opacity: 1;
-        }
-
-        .slide-layout {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          gap: 0;
-          min-height: 400px;
-        }
-
-        /* Featured Post (Large) */
-        .featured-post-card {
-          position: relative;
-          background: #ffffff;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .post-image-wrapper {
-          height: 250px;
-          overflow: hidden;
-        }
-
-        .post-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.3s ease;
-        }
-
-        .featured-post-card:hover .post-image {
-          transform: scale(1.05);
-        }
-
-        .post-content {
-          padding: 24px;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .post-meta {
-          margin-bottom: 12px;
-        }
-
-        .post-date {
-          color: #6b7280;
-          font-size: 13px;
-          text-transform: uppercase;
-          font-weight: 500;
-          letter-spacing: 0.5px;
-        }
-
-        .post-title {
-          font-size: 24px;
-          font-weight: 700;
-          line-height: 1.3;
-          margin: 0 0 16px 0;
-          color: #1f2937;
-        }
-
-        .post-title a {
-          color: inherit;
-          text-decoration: none;
-          transition: color 0.3s ease;
-        }
-
-        .post-title a:hover {
-          color: #3b82f6;
-        }
-
-        .post-excerpt {
-          color: #6b7280;
-          font-size: 15px;
-          line-height: 1.6;
-          margin-bottom: 20px;
-          flex: 1;
-        }
-
-        .post-author {
-          margin-top: auto;
-        }
-
-        .author-name {
-          color: #374151;
-          font-size: 14px;
-          font-weight: 600;
-        }
-
-        /* Side Posts (Small) */
-        .side-posts-grid {
-          background: #f9fafb;
-          display: flex;
-          flex-direction: column;
-          border-left: 1px solid #e5e7eb;
-        }
-
-        .side-post-card {
-          display: flex;
-          padding: 20px;
-          border-bottom: 1px solid #e5e7eb;
-          transition: background-color 0.3s ease;
-          flex: 1;
-        }
-
-        .side-post-card:hover {
-          background: #ffffff;
-        }
-
-        .side-post-card:last-child {
-          border-bottom: none;
-        }
-
-        .side-post-image {
-          width: 80px;
-          height: 60px;
-          margin-right: 16px;
-          border-radius: 8px;
-          overflow: hidden;
-          flex-shrink: 0;
-        }
-
-        .side-post-image img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.3s ease;
-        }
-
-        .side-post-card:hover .side-post-image img {
-          transform: scale(1.1);
-        }
-
-        .side-post-content {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .side-post-meta {
-          margin-bottom: 8px;
-        }
-
-        .side-post-date {
-          color: #9ca3af;
-          font-size: 11px;
-          text-transform: uppercase;
-          font-weight: 500;
-          letter-spacing: 0.5px;
-        }
-
-        .side-post-title {
-          font-size: 14px;
-          font-weight: 600;
-          line-height: 1.4;
-          margin: 0 0 8px 0;
-          color: #1f2937;
-        }
-
-        .side-post-title a {
-          color: inherit;
-          text-decoration: none;
-          transition: color 0.3s ease;
-        }
-
-        .side-post-title a:hover {
-          color: #3b82f6;
-        }
-
-        .side-post-author {
-          color: #6b7280;
-          font-size: 12px;
-          margin-top: auto;
-        }
-
-        /* Pagination */
-        .carousel-pagination {
-          display: flex;
-          justify-content: center;
-          padding: 20px;
-          gap: 8px;
-          background: #ffffff;
-        }
-
-        .carousel-dot-btn {
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          border: none;
-          background: #d1d5db;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        .carousel-dot-btn:hover {
-          background: #9ca3af;
-          transform: scale(1.2);
-        }
-
-        .carousel-dot-btn.active {
-          background: #3b82f6;
-          transform: scale(1.3);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-          .slide-layout {
-            grid-template-columns: 1fr;
-            gap: 0;
-          }
-
-          .side-posts-grid {
-            border-left: none;
-            border-top: 1px solid #e5e7eb;
-          }
-
-          .post-content {
-            padding: 20px;
-          }
-
-          .post-title {
-            font-size: 20px;
-          }
-
-          .side-post-card {
-            padding: 16px;
-          }
-        }
-        </style>
-      </section>
+      <!-- ========== END EPCL CAROUSEL ========== -->
 
     </div>
 
