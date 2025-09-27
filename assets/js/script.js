@@ -84,25 +84,48 @@ document.addEventListener('DOMContentLoaded', () => {
     .querySelectorAll('.section-animate')
     .forEach((section) => section.classList.add('visible'));
 
-  // --- Simulated loading: swap skeleton -> main content ---
-  setTimeout(() => {
+  // --- Fast loading: swap skeleton -> main content ---
+  function showMainContent() {
     const loading = document.getElementById('loading-content');
     const main = document.getElementById('main-content');
-    if (!loading || !main) return;
 
-    // Smooth transition without affecting scroll
+    if (!loading || !main) {
+      console.warn('Loading elements not found');
+      return;
+    }
+
+    // Quick transition to show content immediately
     loading.style.opacity = '0';
-    loading.style.transition = 'opacity 0.3s ease';
+    loading.style.transition = 'opacity 0.2s ease';
 
     setTimeout(() => {
       loading.style.display = 'none';
       main.classList.remove('hidden');
-      main.classList.add('fade-in');
+      main.style.opacity = '0';
+      main.style.transition = 'opacity 0.3s ease';
+
+      // Force reflow
+      main.offsetHeight;
+
+      // Show main content
+      main.style.opacity = '1';
 
       // Reset body height calculation
       document.body.style.minHeight = 'auto';
-    }, 300);
 
-    // All sections already made visible above - no need for complex checks
-  }, 800);
+      console.log('Main content loaded successfully');
+    }, 200);
+  }
+
+  // Show content faster - reduced from 800ms to 300ms
+  setTimeout(showMainContent, 300);
+
+  // Fallback: if content still hidden after 1 second, force show it
+  setTimeout(() => {
+    const main = document.getElementById('main-content');
+    if (main && main.classList.contains('hidden')) {
+      console.warn('Fallback: Force showing main content');
+      showMainContent();
+    }
+  }, 1000);
 });
