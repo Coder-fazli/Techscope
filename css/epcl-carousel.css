@@ -14,7 +14,7 @@
 }
 
 .epcl-carousel .item {
-  padding: 0 12px;
+  padding: 0 8px;
   box-sizing: border-box;
 }
 
@@ -163,7 +163,7 @@
   background: #FF3152 url('../images/left-arrow.svg') no-repeat center center !important;
   background-size: 15px !important;
   margin-left: -25px !important;
-  left: 20px !important;
+  left: 103px !important;
   transition: all 0.3s ease !important;
 }
 
@@ -171,7 +171,7 @@
   background: #FF3152 url('../images/right-arrow.svg') no-repeat center center !important;
   background-size: 15px !important;
   margin-right: -25px !important;
-  right: 20px !important;
+  right: 103px !important;
   transition: all 0.3s ease !important;
 }
 
