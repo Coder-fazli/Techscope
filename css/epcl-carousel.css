@@ -219,23 +219,23 @@
   }
   .epcl-carousel.outer-arrows .slick-prev {
     left: 36px !important;
-    width: 35px !important;
-    height: 38px !important;
-    line-height: 35px !important;
-    border-radius: 17px !important;
-  }
-  .epcl-carousel.outer-arrows .slick-next {
-    right: 36px !important;
-    width: 35px !important;
-    height: 38px !important;
-    line-height: 35px !important;
-    border-radius: 17px !important;
-  }
-  .epcl-carousel.outer-arrows .slick-prev:hover,
-  .epcl-carousel.outer-arrows .slick-next:hover {
     width: 40px !important;
     height: 43px !important;
     line-height: 40px !important;
+    border-radius: 20px !important;
+  }
+  .epcl-carousel.outer-arrows .slick-next {
+    right: 36px !important;
+    width: 40px !important;
+    height: 43px !important;
+    line-height: 40px !important;
+    border-radius: 20px !important;
+  }
+  .epcl-carousel.outer-arrows .slick-prev:hover,
+  .epcl-carousel.outer-arrows .slick-next:hover {
+    width: 45px !important;
+    height: 48px !important;
+    line-height: 45px !important;
     transform: translate(0, -50%) scale(1) !important;
   }
   .epcl-carousel .info .title.white {
@@ -244,6 +244,11 @@
   }
   .epcl-carousel .item article {
     border-radius: 30px !important;
+  }
+  .epcl-carousel .img.cover {
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
   }
   .epcl-carousel .item {
     margin: 3px;
@@ -258,23 +263,23 @@
   }
   .epcl-carousel.outer-arrows .slick-prev {
     left: 36px !important;
-    width: 32px !important;
-    height: 35px !important;
-    line-height: 32px !important;
-    border-radius: 16px !important;
-  }
-  .epcl-carousel.outer-arrows .slick-next {
-    right: 36px !important;
-    width: 32px !important;
-    height: 35px !important;
-    line-height: 32px !important;
-    border-radius: 16px !important;
-  }
-  .epcl-carousel.outer-arrows .slick-prev:hover,
-  .epcl-carousel.outer-arrows .slick-next:hover {
     width: 37px !important;
     height: 40px !important;
     line-height: 37px !important;
+    border-radius: 18px !important;
+  }
+  .epcl-carousel.outer-arrows .slick-next {
+    right: 36px !important;
+    width: 37px !important;
+    height: 40px !important;
+    line-height: 37px !important;
+    border-radius: 18px !important;
+  }
+  .epcl-carousel.outer-arrows .slick-prev:hover,
+  .epcl-carousel.outer-arrows .slick-next:hover {
+    width: 42px !important;
+    height: 45px !important;
+    line-height: 42px !important;
     transform: translate(0, -50%) scale(1) !important;
   }
   .epcl-carousel .info .title.white {
@@ -286,6 +291,11 @@
   }
   .epcl-carousel .item article {
     border-radius: 35px !important;
+  }
+  .epcl-carousel .img.cover {
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
   }
   .epcl-carousel .item {
     margin: 3px;
