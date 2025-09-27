@@ -146,9 +146,9 @@
               $category_name = !empty($categories) ? esc_html($categories[0]->name) : 'TRENDING';
           ?>
             <!-- Clean Sidebar Post Card -->
-            <div class="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1" style="border-radius: 20px !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18), 0 8px 24px rgba(0, 0, 0, 0.12), 0 16px 48px rgba(0, 0, 0, 0.08) !important;">
+            <div class="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1">
               <div class="w-full h-[140px] relative overflow-hidden tech-img"
-                   style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center; border-radius: 20px 20px 0 0 !important;">
+                   style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-3">
                   <h4 class="font-bold text-sm mb-2 leading-tight text-white">
