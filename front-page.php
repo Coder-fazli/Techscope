@@ -114,7 +114,7 @@
     <?php if (get_option('techscope_show_trending', 1)) : ?>
     <div class="lg:col-span-1 section-animate stagger-2">
       <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-4 border border-pink-100 h-full">
-        <div class="space-y-4">
+        <div class="space-y-2">
           <?php
           // Get admin settings with proper defaults
           $hero_trending_count = intval(get_option('techscope_hero_trending_count', 4));
@@ -145,35 +145,23 @@
               $categories = get_the_category();
               $category_name = !empty($categories) ? esc_html($categories[0]->name) : 'TRENDING';
           ?>
-            <!-- Featured Trending Post Design for All Posts -->
-            <div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white card-hover h-[140px]">
-              <div class="absolute inset-0 opacity-70">
-                <img src="<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>"
-                     alt="<?php the_title_attribute(); ?>"
-                     class="w-full h-full object-contain">
-              </div>
-              <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
-              <div class="absolute bottom-0 left-0 right-0 p-3">
-                <div class="flex items-center gap-2 mb-1">
-                </div>
-                <h4 class="font-bold text-sm mb-1 leading-tight">
-                  <a href="<?php the_permalink(); ?>" class="text-white hover:text-pink-200 transition-colors duration-200">
-                    <?php echo techscope_truncate_text(get_the_title(), 50); ?>
-                  </a>
-                </h4>
-
-                <!-- Short Description -->
-                <p class="text-gray-200 text-xs mb-2 line-clamp-1 leading-relaxed">
-                  <?php echo techscope_truncate_text(get_the_excerpt() ?: wp_trim_words(get_the_content(), 10), 60); ?>
-                </p>
-
-                <div class="flex items-center justify-between text-xs">
-                  <div class="flex items-center gap-2 text-gray-300">
-                    <span class="font-medium"><?php echo get_the_date('M j, Y'); ?></span>
-                  </div>
-                  <div class="flex items-center gap-1 text-pink-300">
-                    <span class="material-icons text-xs">visibility</span>
-                    <span class="font-bold"><?php echo $view_count; ?></span>
+            <!-- Clean Sidebar Post Card -->
+            <div class="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1">
+              <div class="w-full h-[120px] relative overflow-hidden tech-img"
+                   style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-3">
+                  <h4 class="font-bold text-sm mb-2 leading-tight text-white">
+                    <a href="<?php the_permalink(); ?>" class="text-white hover:text-gray-200 transition-colors">
+                      <?php echo techscope_truncate_text(get_the_title(), 45); ?>
+                    </a>
+                  </h4>
+                  <div class="flex items-center justify-between text-xs text-gray-300">
+                    <span><?php echo get_the_date('M j'); ?></span>
+                    <div class="flex items-center gap-1">
+                      <span class="material-icons text-xs">visibility</span>
+                      <span><?php echo $view_count; ?></span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -239,7 +227,7 @@
         </div>
 
         <div class="trending-slider-container overflow-hidden px-2">
-          <div class="trending-slider flex gap-8 transition-transform duration-300 ease-in-out py-4">
+          <div class="trending-slider flex gap-8 transition-transform duration-300 ease-in-out py-2">
             <?php
             $trending_posts = techscope_get_featured_posts();
             if ($trending_posts->have_posts()) :
@@ -267,25 +255,20 @@
                 <div class="grid grid-cols-4 gap-6">
                   <?php foreach ($chunk as $post_data) : ?>
                     <div class="trending-card bg-white rounded-xl overflow-hidden transition-all duration-300 card-hover">
-                      <div class="trending-card-image w-full h-48 relative overflow-hidden">
-                        <img src="<?php echo $post_data['image']; ?>"
-                             alt="<?php echo esc_attr($post_data['title']); ?>"
-                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                      <div class="trending-card-image w-full h-48 relative overflow-hidden tech-img" style="background-image: url('<?php echo $post_data['image']; ?>')">
                       </div>
-                      <div class="p-6">
+                      <div class="p-4">
                         <h4 class="font-bold text-lg mb-3 leading-tight">
                           <a href="<?php echo $post_data['permalink']; ?>" class="text-gray-900 hover:text-blue-600 transition-colors">
                             <?php echo techscope_truncate_text($post_data['title'], 60); ?>
                           </a>
                         </h4>
                         <div class="flex items-center justify-between text-sm">
-                          <div class="flex items-center gap-3 text-gray-500">
-                            <span class="flex items-center gap-1">
-                              <span class="material-icons text-sm text-orange-500">visibility</span>
-                              <?php echo $post_data['view_count']; ?>
-                            </span>
-                            <span><?php echo $post_data['date']; ?></span>
-                          </div>
+                          <span class="text-gray-500"><?php echo $post_data['date']; ?></span>
+                          <span class="flex items-center gap-1 text-gray-500">
+                            <span class="material-icons text-sm text-orange-500">visibility</span>
+                            <?php echo $post_data['view_count']; ?>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -711,7 +694,7 @@
 
       <!-- HOT STORIES -->
       <section class="section-animate stagger-3">
-        <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider mb-2 md:mb-3 text-red-800">
+        <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider mb-1 text-red-800">
           🔥 <?php echo techscope_get_section_title('hot'); ?>
         </h3>
         <?php
@@ -748,10 +731,8 @@
                   </a>
                 </h4>
                 <div class="flex items-center justify-between text-xs">
+                  <span class="text-gray-500"><?php echo get_the_date('M j'); ?></span>
                   <span class="text-orange-500">🔥 <?php echo $view_count; ?></span>
-                  <?php if ($rating > 0) : ?>
-                    <span class="text-yellow-500">⭐ <?php echo number_format($rating, 1); ?></span>
-                  <?php endif; ?>
                 </div>
               </div>
             </div>
@@ -765,7 +746,7 @@
 
       <!-- MOBILE TECH -->
       <section class="section-animate stagger-4">
-        <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider mb-2 md:mb-3 text-blue-800">
+        <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider mb-1 text-blue-800">
           📱 <?php echo techscope_get_section_title('mobile'); ?>
         </h3>
         <?php
@@ -799,10 +780,8 @@
                   </a>
                 </h4>
                 <div class="flex items-center justify-between text-xs">
+                  <span class="text-gray-500"><?php echo get_the_date('M j'); ?></span>
                   <span class="text-orange-500">🔥 <?php echo $view_count; ?></span>
-                  <?php if ($rating > 0) : ?>
-                    <span class="text-yellow-500">⭐ <?php echo number_format($rating, 1); ?></span>
-                  <?php endif; ?>
                 </div>
               </div>
             </div>
@@ -816,7 +795,7 @@
 
       <!-- AI & GAMING -->
       <section class="section-animate stagger-5">
-        <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider mb-2 md:mb-3 text-green-800">
+        <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider mb-1 text-green-800">
           🤖 <?php echo techscope_get_section_title('ai'); ?>
         </h3>
         <?php
@@ -851,12 +830,7 @@
                 </h4>
                 <div class="flex items-center justify-between text-sm">
                   <span class="text-gray-500"><?php echo get_the_date('M j, Y'); ?></span>
-                  <div class="flex items-center gap-2">
-                    <span class="text-orange-500">🔥 <?php echo $view_count; ?></span>
-                    <?php if ($rating > 0) : ?>
-                      <span class="text-yellow-500">⭐ <?php echo number_format($rating, 1); ?></span>
-                    <?php endif; ?>
-                  </div>
+                  <span class="text-orange-500">🔥 <?php echo $view_count; ?></span>
                 </div>
               </div>
             </div>
