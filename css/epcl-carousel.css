@@ -225,19 +225,29 @@
 
 @media (max-width: 768px) {
   .epcl-carousel {
-    padding: 20px 60px !important;
+    padding: 20px 80px !important;
+    overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
     left: 26px !important;
-    width: 40px !important;
-    height: 40px !important;
-    line-height: 40px !important;
+    width: 32px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+    border-radius: 16px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
     right: 26px !important;
-    width: 40px !important;
-    height: 40px !important;
-    line-height: 40px !important;
+    width: 32px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+    border-radius: 16px !important;
+  }
+  .epcl-carousel.outer-arrows .slick-prev:hover,
+  .epcl-carousel.outer-arrows .slick-next:hover {
+    width: 36px !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    transform: translate(0, -50%) scale(1) !important;
   }
   .epcl-carousel .info .title.white {
     font-size: 18px;
@@ -254,19 +264,29 @@
 
 @media (max-width: 480px) {
   .epcl-carousel {
-    padding: 15px 50px !important;
+    padding: 15px 70px !important;
+    overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
     left: 26px !important;
-    width: 35px !important;
-    height: 35px !important;
-    line-height: 35px !important;
+    width: 28px !important;
+    height: 28px !important;
+    line-height: 28px !important;
+    border-radius: 14px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
     right: 26px !important;
-    width: 35px !important;
-    height: 35px !important;
-    line-height: 35px !important;
+    width: 28px !important;
+    height: 28px !important;
+    line-height: 28px !important;
+    border-radius: 14px !important;
+  }
+  .epcl-carousel.outer-arrows .slick-prev:hover,
+  .epcl-carousel.outer-arrows .slick-next:hover {
+    width: 32px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+    transform: translate(0, -50%) scale(1) !important;
   }
   .epcl-carousel .info .title.white {
     font-size: 16px;
