@@ -522,3 +522,28 @@ div.lg\:col-span-1 div.w-full.h-\[140px\].relative.overflow-hidden.tech-img.side
     0 4px 16px 0px hsl(0 0% 0% / 0.04),
     0 8px 32px 0px hsl(0 0% 0% / 0.02) !important;
 }
+
+/* ========================================= */
+/* SIMPLE DIRECT TARGETING - LOAD LAST */
+/* ========================================= */
+
+.sidebar-card {
+  background-color: #FFFFFF !important;
+  border-radius: 20px !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important, 0 8px 24px rgba(0, 0, 0, 0.12) !important, 0 16px 48px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.4s ease !important;
+}
+
+.sidebar-card:hover {
+  transform: translateY(-8px) scale(1.03) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important, 0 16px 48px rgba(0, 0, 0, 0.18) !important, 0 32px 96px rgba(0, 0, 0, 0.12) !important;
+}
+
+.sidebar-image {
+  border-radius: 20px 20px 0 0 !important;
+  margin: 0 !important;
+  background-size: cover !important;
+  background-position: center !important;
+  overflow: hidden !important;
+}
