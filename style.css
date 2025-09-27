@@ -466,25 +466,36 @@ div[class*="col-span-2"] .card-hover {
   border-radius: 12px;
 }
 
-/* SIDEBAR SPECIFIC STYLING - Clean and Modern */
+/* SIDEBAR SPECIFIC STYLING - Modern and Clean */
 .lg\:col-span-1 .bg-white {
-  /* Sidebar cards - completely clean style */
+  /* Modern sidebar cards with soft corners and subtle depth */
   background: #FFFFFF !important;
-  box-shadow: none !important;
-  border: 1px solid rgba(0, 0, 0, 0.06) !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
+  border: none !important;
+
+  /* Gentle 3D shadow for visual lift */
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 2px 6px rgba(0, 0, 0, 0.03),
+    0 4px 12px rgba(0, 0, 0, 0.02) !important;
+
+  transition: all 0.3s ease !important;
 }
 
 .lg\:col-span-1 .bg-white:hover {
-  /* Minimal hover effect for sidebar */
-  transform: translateY(-2px) !important;
-  box-shadow: none !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  /* Enhanced hover with subtle lift */
+  transform: translateY(-3px) !important;
+
+  /* Slightly deeper shadow on hover */
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.06),
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    0 8px 20px rgba(0, 0, 0, 0.03) !important;
 }
 
-/* Sidebar image containers - edge to edge */
+/* Sidebar image containers - edge to edge with soft top corners */
 .lg\:col-span-1 .tech-img {
-  border-radius: 12px 12px 0 0 !important;
+  border-radius: 14px 14px 0 0 !important;
   margin: 0 !important;
   background-size: cover !important;
   background-position: center !important;
@@ -493,4 +504,16 @@ div[class*="col-span-2"] .card-hover {
 /* Sidebar container tighter spacing */
 .lg\:col-span-1 .space-y-2 > * + * {
   margin-top: 0.5rem !important;
+}
+
+/* Sidebar main container styling */
+.lg\:col-span-1 .bg-gradient-to-br {
+  /* Slightly softer corners for main container */
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 192, 203, 0.2) !important;
+
+  /* Very subtle shadow for the main container */
+  box-shadow:
+    0 2px 8px rgba(255, 192, 203, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.02) !important;
 }

@@ -113,8 +113,8 @@
     <!-- TRENDING WIDGET - Right side of hero -->
     <?php if (get_option('techscope_show_trending', 1)) : ?>
     <div class="lg:col-span-1 section-animate stagger-2">
-      <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-4 border border-pink-100 h-full">
-        <div class="space-y-2">
+      <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-4 border border-pink-100 h-full flex flex-col">
+        <div class="space-y-2 flex-grow">
           <?php
           // Get admin settings with proper defaults
           $hero_trending_count = intval(get_option('techscope_hero_trending_count', 4));
@@ -147,7 +147,7 @@
           ?>
             <!-- Clean Sidebar Post Card -->
             <div class="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1">
-              <div class="w-full h-[120px] relative overflow-hidden tech-img"
+              <div class="w-full h-[140px] relative overflow-hidden tech-img"
                    style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-3">
@@ -179,30 +179,31 @@
             </div>
           <?php endif; ?>
 
-          <!-- See More Button -->
-          <?php if ($hero_trending_posts->have_posts()) :
-            // Determine the link URL based on selected categories
-            $see_more_url = get_permalink(get_option('page_for_posts')); // Default to blog page
-            $see_more_text = 'See More Trending';
-
-            if (!empty($hero_trending_categories) && count($hero_trending_categories) == 1) {
-              // If only one category is selected, link to that category
-              $category = get_category($hero_trending_categories[0]);
-              if ($category) {
-                $see_more_url = get_category_link($category->term_id);
-                $see_more_text = 'See More ' . $category->name;
-              }
-            }
-          ?>
-            <div class="text-center mt-4">
-              <a href="<?php echo esc_url($see_more_url); ?>"
-                 class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-6 py-3 rounded-full font-bold text-sm hover:from-pink-600 hover:to-rose-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                <span><?php echo esc_html($see_more_text); ?></span>
-                <span class="material-icons text-sm">arrow_forward</span>
-              </a>
-            </div>
-          <?php endif; ?>
         </div>
+
+        <!-- See More Button - Anchored to Bottom -->
+        <?php if ($hero_trending_posts->have_posts()) :
+          // Determine the link URL based on selected categories
+          $see_more_url = get_permalink(get_option('page_for_posts')); // Default to blog page
+          $see_more_text = 'See More Trending';
+
+          if (!empty($hero_trending_categories) && count($hero_trending_categories) == 1) {
+            // If only one category is selected, link to that category
+            $category = get_category($hero_trending_categories[0]);
+            if ($category) {
+              $see_more_url = get_category_link($category->term_id);
+              $see_more_text = 'See More ' . $category->name;
+            }
+          }
+        ?>
+          <div class="text-center mt-3 pt-3 border-t border-pink-100">
+            <a href="<?php echo esc_url($see_more_url); ?>"
+               class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:from-pink-600 hover:to-rose-600 transition-all duration-300 shadow-sm hover:shadow-md">
+              <span><?php echo esc_html($see_more_text); ?></span>
+              <span class="material-icons text-sm">arrow_forward</span>
+            </a>
+          </div>
+        <?php endif; ?>
       </div>
     </div>
     <?php endif; ?>
