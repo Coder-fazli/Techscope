@@ -222,8 +222,8 @@
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
       <!-- ========== WORKING EPCL CAROUSEL ========== -->
-      <div class="epcl-carousel-wrapper" style="position: relative; margin: 2rem 0; width: 100%;">
-        <div class="epcl-carousel" id="epcl-carousel" style="display: flex; transition: transform 0.3s ease; width: 100%;">
+      <div class="epcl-carousel-wrapper" style="position: relative; margin: 2rem 0; width: 100%; overflow: hidden;">
+        <div class="epcl-carousel" id="epcl-carousel" style="display: flex; transition: transform 0.3s ease; width: fit-content;">
           <?php
           $trending_posts = techscope_get_featured_posts();
           if ($trending_posts->have_posts()) :
@@ -235,8 +235,8 @@
               $author_url = get_author_posts_url(get_the_author_meta('ID'));
               $author_avatar = get_avatar_url(get_the_author_meta('ID'));
           ?>
-            <div class="carousel-item" style="flex: 0 0 22%; padding: 0 4px;">
-              <article class="carousel-card" style="width: 100%; height: 280px; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
+            <div class="carousel-item" style="flex: 0 0 280px; padding: 0 8px;">
+              <article class="carousel-card" style="width: 280px; height: 280px; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
                 <div class="card-image" style="background-image: url('<?php echo esc_url($post_image); ?>'); width: 100%; height: 100%; background-size: cover; background-position: center; position: relative;">
                   <div class="card-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1;"></div>
                   <div class="card-content" style="position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); text-align: center; z-index: 2; padding: 1rem;">
@@ -286,11 +286,10 @@
       let maxSlides = Math.max(0, totalItems - itemsPerView);
 
       function getItemsPerView() {
-        // Responsive calculation
-        if (window.innerWidth >= 1200) return Math.floor(100 / 22); // 4 items on desktop
-        if (window.innerWidth >= 768) return Math.floor(100 / 28); // 3 items on tablet
-        if (window.innerWidth >= 480) return Math.floor(100 / 45); // 2 items on mobile
-        return 1; // 1 item on small mobile
+        // Calculate based on container width and item width (280px + 16px padding)
+        const containerWidth = carousel.parentElement.offsetWidth;
+        const itemTotalWidth = 296; // 280px + 16px padding
+        return Math.floor(containerWidth / itemTotalWidth);
       }
 
       function updateLayout() {
@@ -299,27 +298,10 @@
         // Allow infinite sliding - no max slides limit
         maxSlides = totalItems; // Can slide through all items infinitely
 
-        // Don't reset slide position
-
-        // Update item widths responsively
-        let itemWidth, padding;
-        if (window.innerWidth >= 1200) {
-          itemWidth = '22%';
-          padding = '0 4px';
-        } else if (window.innerWidth >= 768) {
-          itemWidth = '28%';
-          padding = '0 6px';
-        } else if (window.innerWidth >= 480) {
-          itemWidth = '45%';
-          padding = '0 8px';
-        } else {
-          itemWidth = '90%';
-          padding = '0 10px';
-        }
-
+        // Set all items to fixed width
         items.forEach(item => {
-          item.style.flex = `0 0 ${itemWidth}`;
-          item.style.padding = padding;
+          item.style.flex = `0 0 280px`;
+          item.style.padding = '0 8px';
         });
 
         moveCarousel(0); // Refresh position
@@ -332,20 +314,10 @@
         if (currentSlide < 0) currentSlide = totalItems - 1;
         if (currentSlide >= totalItems) currentSlide = 0;
 
-        // Calculate movement based on responsive item width
-        let itemWidthPercent;
-        if (window.innerWidth >= 1200) {
-          itemWidthPercent = 22;
-        } else if (window.innerWidth >= 768) {
-          itemWidthPercent = 28;
-        } else if (window.innerWidth >= 480) {
-          itemWidthPercent = 45;
-        } else {
-          itemWidthPercent = 90;
-        }
-
-        const translateX = -(currentSlide * itemWidthPercent);
-        carousel.style.transform = `translateX(${translateX}%)`;
+        // Calculate movement based on fixed item width (280px + 16px padding = 296px)
+        const itemTotalWidth = 296;
+        const translateX = -(currentSlide * itemTotalWidth);
+        carousel.style.transform = `translateX(${translateX}px)`;
 
         // Buttons always active for infinite loop
         const prevBtn = document.querySelector('.carousel-prev');
@@ -354,7 +326,7 @@
         if (prevBtn) prevBtn.style.opacity = '1';
         if (nextBtn) nextBtn.style.opacity = '1';
 
-        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Max slides:', maxSlides, 'Total items:', totalItems, 'Items per view:', itemsPerView);
+        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Translate:', translateX + 'px');
       }
 
       // Initialize carousel
