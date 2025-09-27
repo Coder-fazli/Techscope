@@ -218,24 +218,24 @@
     overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
-    left: 10px !important;
-    width: 32px !important;
-    height: 32px !important;
-    line-height: 32px !important;
-    border-radius: 16px !important;
+    left: 36px !important;
+    width: 35px !important;
+    height: 38px !important;
+    line-height: 35px !important;
+    border-radius: 17px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
-    right: 10px !important;
-    width: 32px !important;
-    height: 32px !important;
-    line-height: 32px !important;
-    border-radius: 16px !important;
+    right: 36px !important;
+    width: 35px !important;
+    height: 38px !important;
+    line-height: 35px !important;
+    border-radius: 17px !important;
   }
   .epcl-carousel.outer-arrows .slick-prev:hover,
   .epcl-carousel.outer-arrows .slick-next:hover {
-    width: 36px !important;
-    height: 36px !important;
-    line-height: 36px !important;
+    width: 40px !important;
+    height: 43px !important;
+    line-height: 40px !important;
     transform: translate(0, -50%) scale(1) !important;
   }
   .epcl-carousel .info .title.white {
@@ -257,24 +257,24 @@
     overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
-    left: 8px !important;
-    width: 28px !important;
-    height: 28px !important;
-    line-height: 28px !important;
-    border-radius: 14px !important;
+    left: 36px !important;
+    width: 32px !important;
+    height: 35px !important;
+    line-height: 32px !important;
+    border-radius: 16px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
-    right: 8px !important;
-    width: 28px !important;
-    height: 28px !important;
-    line-height: 28px !important;
-    border-radius: 14px !important;
+    right: 36px !important;
+    width: 32px !important;
+    height: 35px !important;
+    line-height: 32px !important;
+    border-radius: 16px !important;
   }
   .epcl-carousel.outer-arrows .slick-prev:hover,
   .epcl-carousel.outer-arrows .slick-next:hover {
-    width: 32px !important;
-    height: 32px !important;
-    line-height: 32px !important;
+    width: 37px !important;
+    height: 40px !important;
+    line-height: 37px !important;
     transform: translate(0, -50%) scale(1) !important;
   }
   .epcl-carousel .info .title.white {
