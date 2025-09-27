@@ -37,8 +37,8 @@
   </div>
 </div>
 
-<!-- MAIN LAYOUT (Initially hidden) -->
-<div id="main-content" class="hidden max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
+<!-- MAIN LAYOUT (Show immediately while keeping skeleton for smooth transition) -->
+<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6" style="opacity: 0; transition: opacity 0.3s ease;">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- HERO SLIDER -->
@@ -563,5 +563,53 @@
     </div>
   </div>
 </div>
+
+<!-- IMMEDIATE PAGE LOADING FIX -->
+<script>
+(function() {
+  console.log('Starting immediate page loading fix...');
+
+  function showContent() {
+    const loading = document.getElementById('loading-content');
+    const main = document.getElementById('main-content');
+
+    if (loading) {
+      loading.style.opacity = '0';
+      setTimeout(() => {
+        loading.style.display = 'none';
+      }, 300);
+      console.log('Skeleton hidden');
+    }
+
+    if (main) {
+      main.style.opacity = '1';
+      main.style.visibility = 'visible';
+      console.log('Main content shown');
+    }
+  }
+
+  // Try immediately
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showContent);
+  } else {
+    showContent();
+  }
+
+  // Force show after very short delay regardless
+  setTimeout(showContent, 200);
+
+  // Emergency fallback - show content no matter what after 500ms
+  setTimeout(() => {
+    const main = document.getElementById('main-content');
+    if (main) {
+      main.style.opacity = '1';
+      main.style.visibility = 'visible';
+      console.log('Emergency fallback: Content forced visible');
+    }
+  }, 500);
+
+  console.log('Page loading fix script loaded');
+})();
+</script>
 
 <?php get_footer(); ?>
