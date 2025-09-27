@@ -52,13 +52,13 @@
       background-color: #FFFFFF !important;
       border-radius: 20px !important;
       border: none !important;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important, 0 8px 24px rgba(0, 0, 0, 0.12) !important, 0 16px 48px rgba(0, 0, 0, 0.08) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important, 0 8px 24px rgba(0, 0, 0, 0.25) !important, 0 16px 48px rgba(0, 0, 0, 0.15) !important;
       transition: all 0.4s ease !important;
     }
 
     .lg\:col-span-1 .sidebar-card:hover {
       transform: translateY(-8px) scale(1.03) !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important, 0 16px 48px rgba(0, 0, 0, 0.18) !important, 0 32px 96px rgba(0, 0, 0, 0.12) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important, 0 16px 48px rgba(0, 0, 0, 0.35) !important, 0 32px 96px rgba(0, 0, 0, 0.25) !important;
     }
 
     .lg\:col-span-1 .sidebar-image {
