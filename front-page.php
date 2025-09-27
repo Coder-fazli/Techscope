@@ -222,8 +222,8 @@
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
       <!-- ========== WORKING EPCL CAROUSEL ========== -->
-      <div class="epcl-carousel-wrapper" style="position: relative; margin: 2rem 0;">
-        <div class="epcl-carousel" id="epcl-carousel">
+      <div class="epcl-carousel-wrapper" style="position: relative; margin: 2rem 0; overflow: hidden; padding: 0 50px;">
+        <div class="epcl-carousel" id="epcl-carousel" style="display: flex; transition: transform 0.3s ease;">
           <?php
           $trending_posts = techscope_get_featured_posts();
           if ($trending_posts->have_posts()) :
@@ -263,13 +263,13 @@
         </div>
 
         <!-- Navigation Buttons -->
-        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
+        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
           </svg>
         </button>
 
-        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
+        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
           </svg>
@@ -286,22 +286,46 @@
       let maxSlides = Math.max(0, totalItems - itemsPerView);
 
       function getItemsPerView() {
-        // Calculate how many 22% width items fit in 100% container
-        return Math.floor(100 / 22); // = 4 items visible at once
+        // Responsive calculation
+        if (window.innerWidth >= 1200) return Math.floor(100 / 22); // 4 items on desktop
+        if (window.innerWidth >= 768) return Math.floor(100 / 28); // 3 items on tablet
+        if (window.innerWidth >= 480) return Math.floor(100 / 45); // 2 items on mobile
+        return 1; // 1 item on small mobile
       }
 
       function updateLayout() {
         itemsPerView = getItemsPerView();
-        // Max slides should be total items minus visible items
+
+        // Calculate max slides - stop when all remaining items are visible
         maxSlides = Math.max(0, totalItems - itemsPerView);
+
+        // If we have 5 or fewer items and can show 4+, don't allow sliding
+        if (totalItems <= itemsPerView) {
+          maxSlides = 0;
+        }
 
         // Reset slide if needed
         if (currentSlide > maxSlides) currentSlide = maxSlides;
 
-        // Update item widths to match the 22% from inline styles
+        // Update item widths responsively
+        let itemWidth, padding;
+        if (window.innerWidth >= 1200) {
+          itemWidth = '22%';
+          padding = '0 6px';
+        } else if (window.innerWidth >= 768) {
+          itemWidth = '28%';
+          padding = '0 8px';
+        } else if (window.innerWidth >= 480) {
+          itemWidth = '45%';
+          padding = '0 10px';
+        } else {
+          itemWidth = '90%';
+          padding = '0 15px';
+        }
+
         items.forEach(item => {
-          item.style.flex = `0 0 22%`;
-          item.style.padding = '0 6px';
+          item.style.flex = `0 0 ${itemWidth}`;
+          item.style.padding = padding;
         });
 
         moveCarousel(0); // Refresh position
@@ -313,17 +337,32 @@
         if (currentSlide < 0) currentSlide = 0;
         if (currentSlide > maxSlides) currentSlide = maxSlides;
 
-        // Calculate movement based on item width (22%)
-        const itemWidthPercent = 22;
+        // Calculate movement based on responsive item width
+        let itemWidthPercent;
+        if (window.innerWidth >= 1200) {
+          itemWidthPercent = 22;
+        } else if (window.innerWidth >= 768) {
+          itemWidthPercent = 28;
+        } else if (window.innerWidth >= 480) {
+          itemWidthPercent = 45;
+        } else {
+          itemWidthPercent = 90;
+        }
+
         const translateX = -(currentSlide * itemWidthPercent);
         carousel.style.transform = `translateX(${translateX}%)`;
 
-        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Max slides:', maxSlides, 'Total items:', totalItems);
+        // Update button states
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+
+        if (prevBtn) prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
+        if (nextBtn) nextBtn.style.opacity = currentSlide >= maxSlides ? '0.5' : '1';
+
+        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Max slides:', maxSlides, 'Total items:', totalItems, 'Items per view:', itemsPerView);
       }
 
       // Initialize carousel
-      carousel.style.display = 'flex';
-      carousel.style.transition = 'transform 0.3s ease';
       updateLayout();
 
       // Handle window resize
