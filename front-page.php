@@ -235,23 +235,23 @@
               $author_url = get_author_posts_url(get_the_author_meta('ID'));
               $author_avatar = get_avatar_url(get_the_author_meta('ID'));
           ?>
-            <div class="carousel-item">
-              <article class="carousel-card">
-                <div class="card-image" style="background-image: url('<?php echo esc_url($post_image); ?>');">
-                  <div class="card-overlay"></div>
-                  <div class="card-content">
-                    <time class="card-date" datetime="<?php echo esc_attr($post_datetime); ?>">
+            <div class="carousel-item" style="flex: 0 0 20%; padding: 0 10px;">
+              <article class="carousel-card" style="width: 100%; height: 250px; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <div class="card-image" style="background-image: url('<?php echo esc_url($post_image); ?>'); width: 100%; height: 100%; background-size: cover; background-position: center; position: relative;">
+                  <div class="card-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1;"></div>
+                  <div class="card-content" style="position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); text-align: center; z-index: 2; padding: 1rem;">
+                    <time class="card-date" datetime="<?php echo esc_attr($post_datetime); ?>" style="display: block; color: rgba(255,255,255,0.9); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 0.5rem;">
                       <?php echo esc_html($post_date); ?>
                     </time>
-                    <h2 class="card-title"><?php echo esc_html(get_the_title()); ?></h2>
+                    <h2 class="card-title" style="color: white; font-size: 1rem; font-weight: 700; line-height: 1.3; margin: 0;"><?php echo esc_html(get_the_title()); ?></h2>
                   </div>
-                  <footer class="card-author">
-                    <a href="<?php echo esc_url($author_url); ?>" class="author-link">
-                      <div class="author-avatar" style="background-image: url('<?php echo esc_url($author_avatar); ?>');"></div>
-                      <span class="author-name"><?php echo esc_html($author_name); ?></span>
+                  <footer class="card-author" style="position: absolute; bottom: 1rem; left: 1rem; right: 1rem; z-index: 2;">
+                    <a href="<?php echo esc_url($author_url); ?>" class="author-link" style="display: flex; align-items: center; gap: 0.5rem; color: white; text-decoration: none;">
+                      <div class="author-avatar" style="width: 24px; height: 24px; border-radius: 50%; background-size: cover; background-position: center; background-image: url('<?php echo esc_url($author_avatar); ?>');"></div>
+                      <span class="author-name" style="font-size: 0.75rem; font-weight: 500;"><?php echo esc_html($author_name); ?></span>
                     </a>
                   </footer>
-                  <a href="<?php echo esc_url(get_the_permalink()); ?>" class="card-link"></a>
+                  <a href="<?php echo esc_url(get_the_permalink()); ?>" class="card-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3;"></a>
                 </div>
               </article>
             </div>
@@ -329,8 +329,8 @@
       window.addEventListener('resize', updateLayout);
       </script>
 
-      <!-- Carousel Styles -->
-      <style>
+      <!-- Carousel Styles - Force Refresh -->
+      <style id="carousel-styles-v2">
       .epcl-carousel {
         display: flex;
         width: 100%;
@@ -343,11 +343,12 @@
       }
 
       .carousel-card {
-        width: 100%;
-        height: 280px;
+        width: 100% !important;
+        height: 250px !important;
         border-radius: 8px;
         overflow: hidden;
         position: relative;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       }
 
       .card-image {
@@ -439,18 +440,18 @@
       }
 
       @media (max-width: 1200px) {
-        .carousel-item { flex: 0 0 25%; }
-        .carousel-card { height: 260px; }
+        .carousel-item { flex: 0 0 25% !important; }
+        .carousel-card { height: 230px !important; }
       }
 
       @media (max-width: 768px) {
-        .carousel-item { flex: 0 0 50%; }
-        .carousel-card { height: 240px; }
+        .carousel-item { flex: 0 0 50% !important; }
+        .carousel-card { height: 210px !important; }
       }
 
       @media (max-width: 480px) {
-        .carousel-item { flex: 0 0 100%; }
-        .carousel-card { height: 200px; }
+        .carousel-item { flex: 0 0 100% !important; }
+        .carousel-card { height: 180px !important; }
       }
       </style>
       <!-- ========== END WORKING CAROUSEL ========== -->
