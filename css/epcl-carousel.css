@@ -1,5 +1,15 @@
 /* EPCL Carousel Styles - Original Template Structure */
 
+/* Slick Slider Base Styles */
+.slick-slider .slick-list,
+.slick-slider .slick-track {
+  background: #F7F3ED !important;
+}
+
+.slick-slider .slick-list {
+  padding: 6px !important;
+}
+
 /* EPCL Carousel Base Styles - FULL WIDTH */
 .epcl-carousel {
   margin: 40px 0 !important;
