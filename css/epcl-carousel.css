@@ -225,16 +225,16 @@
 
 @media (max-width: 768px) {
   .epcl-carousel {
-    padding: 20px 50px !important;
+    padding: 20px 60px !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
-    left: -5px !important;
+    left: 26px !important;
     width: 40px !important;
     height: 40px !important;
     line-height: 40px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
-    right: -5px !important;
+    right: 26px !important;
     width: 40px !important;
     height: 40px !important;
     line-height: 40px !important;
@@ -244,7 +244,7 @@
     font-weight: 600;
   }
   .epcl-carousel .item article {
-    padding-bottom: 75% !important;
+    padding-bottom: 80% !important;
     border-radius: 30px !important;
   }
   .epcl-carousel .item {
@@ -254,16 +254,16 @@
 
 @media (max-width: 480px) {
   .epcl-carousel {
-    padding: 15px 40px !important;
+    padding: 15px 50px !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
-    left: -8px !important;
+    left: 26px !important;
     width: 35px !important;
     height: 35px !important;
     line-height: 35px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
-    right: -8px !important;
+    right: 26px !important;
     width: 35px !important;
     height: 35px !important;
     line-height: 35px !important;
@@ -276,7 +276,7 @@
     padding: 15px;
   }
   .epcl-carousel .item article {
-    padding-bottom: 70% !important;
+    padding-bottom: 75% !important;
     border-radius: 35px !important;
   }
   .epcl-carousel .item {
