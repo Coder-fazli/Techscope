@@ -246,7 +246,8 @@
     border-radius: 30px !important;
   }
   .epcl-carousel .item {
-    padding: 16px 5px;
+    margin: 3px;
+    flex: 0 0 calc(100% - 0.5rem);
   }
 }
 
@@ -287,6 +288,7 @@
     border-radius: 35px !important;
   }
   .epcl-carousel .item {
-    padding: 16px 3px;
+    margin: 3px;
+    flex: 0 0 calc(100% - 0.5rem);
   }
 }
