@@ -214,7 +214,7 @@
 
 @media (max-width: 768px) {
   .epcl-carousel {
-    padding: 20px 15px !important;
+    padding: 20px 5px !important;
     overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
@@ -243,18 +243,18 @@
     font-weight: 600;
   }
   .epcl-carousel .item article {
-    padding-bottom: 160% !important;
+    padding-bottom: 85% !important;
     border-radius: 30px !important;
   }
   .epcl-carousel .item {
-    padding: 16px 3px;
-    margin: 0 120px;
+    padding: 16px 1px;
+    margin: 0 80px;
   }
 }
 
 @media (max-width: 480px) {
   .epcl-carousel {
-    padding: 15px 10px !important;
+    padding: 15px 5px !important;
     overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
@@ -286,11 +286,11 @@
     padding: 15px;
   }
   .epcl-carousel .item article {
-    padding-bottom: 150% !important;
+    padding-bottom: 80% !important;
     border-radius: 35px !important;
   }
   .epcl-carousel .item {
-    padding: 16px 3px;
-    margin: 0 100px;
+    padding: 16px 1px;
+    margin: 0 70px;
   }
 }
