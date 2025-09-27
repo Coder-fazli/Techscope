@@ -58,8 +58,8 @@
     }
 
     .lg\:col-span-1 .sidebar-card:hover {
-      transform: translateY(-8px) scale(1.03) !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important, 0 16px 48px rgba(0, 0, 0, 0.35) !important, 0 32px 96px rgba(0, 0, 0, 0.25) !important;
+      transform: translateY(-3px) scale(1.01) !important;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.40) !important, 0 12px 36px rgba(0, 0, 0, 0.30) !important, 0 24px 72px rgba(0, 0, 0, 0.20) !important;
     }
 
     /* Image containers */
