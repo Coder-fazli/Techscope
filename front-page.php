@@ -221,26 +221,19 @@
       </div>
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
-      <!-- TRENDING TECH SLIDER -->
-      <section class="section-animate stagger-1">
-        <div class="flex items-center justify-end mb-3">
-          <div class="flex items-center gap-2">
-            <button class="trending-slider-prev w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
-              <span class="material-icons text-sm">chevron_left</span>
-            </button>
-            <button class="trending-slider-next w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
-              <span class="material-icons text-sm">chevron_right</span>
-            </button>
-          </div>
+      <!-- ========== MODERN GLASSMORPHISM CAROUSEL - EDIT HERE ========== -->
+      <section class="modern-hero-carousel relative">
+        <!-- Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 rounded-2xl overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20"></div>
         </div>
 
-
-        <div class="trending-slider-container overflow-hidden px-2">
-          <div class="trending-slider flex gap-8 transition-transform duration-300 ease-in-out py-2">
+        <!-- Carousel Container -->
+        <div class="relative h-96 md:h-[500px] overflow-hidden rounded-2xl">
+          <div class="carousel-track flex transition-transform duration-700 ease-out h-full">
             <?php
             $trending_posts = techscope_get_featured_posts();
             if ($trending_posts->have_posts()) :
-              // Group posts into chunks of 4
               $posts_array = [];
               while ($trending_posts->have_posts()) : $trending_posts->the_post();
                 $posts_array[] = [
@@ -248,343 +241,249 @@
                   'title' => get_the_title(),
                   'permalink' => get_the_permalink(),
                   'author' => get_the_author(),
-                  'date' => get_the_date('M j'),
+                  'date' => get_the_date('M j, Y'),
                   'image' => techscope_get_responsive_image(get_the_ID(), 'featured-card'),
-                  'view_count' => techscope_format_view_count(techscope_get_post_views(get_the_ID()))
+                  'excerpt' => get_the_excerpt(),
+                  'avatar' => get_avatar_url(get_the_author_meta('ID'), ['size' => 40])
                 ];
               endwhile;
               wp_reset_postdata();
 
-              // Create slides with 4 posts each
-              $post_chunks = array_chunk($posts_array, 4);
-              foreach ($post_chunks as $chunk) :
+              // Take first 5 posts for hero carousel
+              $hero_posts = array_slice($posts_array, 0, 5);
+              foreach ($hero_posts as $index => $post_data) :
             ?>
-              <!-- SLIDE with 4 posts -->
-              <div class="trending-slide flex-shrink-0 w-full">
-                <div class="grid grid-cols-4 gap-6">
-                  <?php foreach ($chunk as $post_data) : ?>
-                    <!-- ========== CLEAN SLIDER CARD - EDIT STYLE HERE ========== -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                      <!-- Full-width image -->
-                      <div class="w-full h-48 overflow-hidden">
-                        <img src="<?php echo $post_data['image']; ?>"
-                             alt="<?php echo esc_attr($post_data['title']); ?>"
-                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
-                      </div>
+              <!-- ========== GLASSMORPHISM SLIDE ========== -->
+              <div class="carousel-slide flex-shrink-0 w-full h-full relative">
+                <!-- Background Image -->
+                <div class="absolute inset-0">
+                  <img src="<?php echo $post_data['image']; ?>"
+                       alt="<?php echo esc_attr($post_data['title']); ?>"
+                       class="w-full h-full object-cover">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                </div>
 
-                      <!-- Clean content area -->
-                      <div class="p-5">
-                        <!-- Title -->
-                        <h4 class="font-semibold text-gray-900 text-base leading-tight mb-3 line-clamp-2">
-                          <a href="<?php echo $post_data['permalink']; ?>" class="hover:text-blue-600 transition-colors">
-                            <?php echo techscope_truncate_text($post_data['title'], 60); ?>
-                          </a>
-                        </h4>
+                <!-- Glass Card Content -->
+                <div class="absolute inset-0 flex items-end p-8 md:p-12">
+                  <div class="glass-card backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 md:p-8 max-w-2xl">
+                    <!-- Date Badge -->
+                    <div class="inline-block mb-4">
+                      <span class="bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full border border-white/30">
+                        <?php echo $post_data['date']; ?>
+                      </span>
+                    </div>
 
-                        <!-- Meta info with clean spacing -->
-                        <div class="flex items-center justify-between text-sm">
-                          <span class="text-gray-500 text-xs uppercase tracking-wide"><?php echo $post_data['date']; ?></span>
-                          <span class="flex items-center gap-1 text-gray-400">
-                            <span class="material-icons text-sm">visibility</span>
-                            <?php echo $post_data['view_count']; ?>
-                          </span>
-                        </div>
+                    <!-- Title -->
+                    <h2 class="text-white text-2xl md:text-4xl font-bold leading-tight mb-4">
+                      <a href="<?php echo $post_data['permalink']; ?>" class="hover:text-blue-200 transition-colors">
+                        <?php echo techscope_truncate_text($post_data['title'], 80); ?>
+                      </a>
+                    </h2>
+
+                    <!-- Excerpt -->
+                    <p class="text-white/90 text-sm md:text-base leading-relaxed mb-6 line-clamp-3">
+                      <?php echo techscope_truncate_text($post_data['excerpt'], 150); ?>
+                    </p>
+
+                    <!-- Author Info -->
+                    <div class="flex items-center gap-3">
+                      <img src="<?php echo $post_data['avatar']; ?>"
+                           alt="<?php echo esc_attr($post_data['author']); ?>"
+                           class="w-10 h-10 rounded-full border-2 border-white/30">
+                      <div>
+                        <p class="text-white font-medium text-sm"><?php echo $post_data['author']; ?></p>
+                        <p class="text-white/70 text-xs">Author</p>
                       </div>
                     </div>
-                    <!-- ========== END CLEAN SLIDER CARD ========== -->
-                  <?php endforeach; ?>
+                  </div>
                 </div>
               </div>
-            <?php
-              endforeach;
-            endif;
-            ?>
+            <?php endforeach; endif; ?>
+          </div>
+
+          <!-- Navigation Arrows -->
+          <button class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300">
+            <span class="material-icons">chevron_left</span>
+          </button>
+          <button class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300">
+            <span class="material-icons">chevron_right</span>
+          </button>
+
+          <!-- Pagination Dots -->
+          <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+            <?php for ($i = 0; $i < count($hero_posts); $i++) : ?>
+              <button class="carousel-dot w-3 h-3 rounded-full bg-white/30 border border-white/50 transition-all duration-300 <?php echo $i === 0 ? 'bg-white scale-125' : 'hover:bg-white/50'; ?>"
+                      data-slide="<?php echo $i; ?>"></button>
+            <?php endfor; ?>
           </div>
         </div>
+      </section>
+      <!-- ========== END GLASSMORPHISM CAROUSEL ========== -->
 
-        <!-- Modern Slider JavaScript with Superdesign Aesthetics -->
+        <!-- ========== GLASSMORPHISM CAROUSEL JAVASCRIPT ========== -->
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-          const slider = document.querySelector('.trending-slider');
-          const prevBtn = document.querySelector('.trending-slider-prev');
-          const nextBtn = document.querySelector('.trending-slider-next');
-          const container = document.querySelector('.trending-slider-container');
+          const track = document.querySelector('.carousel-track');
+          const prevBtn = document.querySelector('.carousel-prev');
+          const nextBtn = document.querySelector('.carousel-next');
+          const dots = document.querySelectorAll('.carousel-dot');
+          const slides = document.querySelectorAll('.carousel-slide');
           let currentSlide = 0;
           let isAnimating = false;
 
-          if (slider && prevBtn && nextBtn && container) {
-            setTimeout(() => {
-              const slides = slider.querySelectorAll('.trending-slide');
-              const totalSlides = slides.length;
+          if (track && prevBtn && nextBtn && slides.length > 0) {
+            function updateCarousel() {
+              if (isAnimating) return;
+              isAnimating = true;
 
-              function updateSliderPosition(smooth = true) {
-                if (isAnimating) return;
-                isAnimating = true;
+              // Smooth transition
+              track.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-                const slideWidth = container.offsetWidth;
-                const gapSize = 32; // 8 * 4px = 32px gap between slides
-                const translateX = -currentSlide * (slideWidth + gapSize);
-
-                // Modern superdesign animation
-                slider.style.transition = smooth ?
-                  'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
-                slider.style.transform = `translateX(${translateX}px) translateZ(0)`;
-
-                // Smooth button state transitions
-                updateButtonStates();
-
-                // Add subtle card animations during slide
-                if (smooth) {
-                  animateCards();
-                }
-
-                setTimeout(() => {
-                  isAnimating = false;
-                }, smooth ? 800 : 0);
-              }
-
-              function updateButtonStates() {
-                // Smooth button transitions with superdesign style
-                prevBtn.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                nextBtn.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-
-                if (currentSlide === 0) {
-                  prevBtn.style.opacity = '0.3';
-                  prevBtn.style.transform = 'scale(0.9)';
-                  prevBtn.style.pointerEvents = 'none';
+              // Update dots
+              dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                  dot.classList.add('bg-white', 'scale-125');
+                  dot.classList.remove('bg-white/30');
                 } else {
-                  prevBtn.style.opacity = '1';
-                  prevBtn.style.transform = 'scale(1)';
-                  prevBtn.style.pointerEvents = 'auto';
-                }
-
-                if (currentSlide === totalSlides - 1) {
-                  nextBtn.style.opacity = '0.3';
-                  nextBtn.style.transform = 'scale(0.9)';
-                  nextBtn.style.pointerEvents = 'none';
-                } else {
-                  nextBtn.style.opacity = '1';
-                  nextBtn.style.transform = 'scale(1)';
-                  nextBtn.style.pointerEvents = 'auto';
-                }
-              }
-
-              function animateCards() {
-                // Subtle card animations during transition
-                const currentSlideElement = slides[currentSlide];
-                if (currentSlideElement) {
-                  const cards = currentSlideElement.querySelectorAll('.trending-card');
-                  cards.forEach((card, index) => {
-                    card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.opacity = '0.7';
-
-                    setTimeout(() => {
-                      card.style.transform = 'translateY(0)';
-                      card.style.opacity = '1';
-                    }, 200 + (index * 100));
-                  });
-                }
-              }
-
-              // Set initial slide widths with proper flexbox
-              slides.forEach((slide, index) => {
-                slide.style.width = container.offsetWidth + 'px';
-                slide.style.flexShrink = '0';
-                slide.style.willChange = 'transform';
-              });
-
-              // Modern button interactions
-              nextBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!isAnimating && currentSlide < totalSlides - 1) {
-                  // Add button press animation
-                  nextBtn.style.transform = 'scale(0.95)';
-                  setTimeout(() => {
-                    nextBtn.style.transform = currentSlide === totalSlides - 2 ? 'scale(0.9)' : 'scale(1)';
-                  }, 100);
-
-                  currentSlide++;
-                  updateSliderPosition();
+                  dot.classList.remove('bg-white', 'scale-125');
+                  dot.classList.add('bg-white/30');
                 }
               });
 
-              prevBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!isAnimating && currentSlide > 0) {
-                  // Add button press animation
-                  prevBtn.style.transform = 'scale(0.95)';
-                  setTimeout(() => {
-                    prevBtn.style.transform = currentSlide === 1 ? 'scale(0.9)' : 'scale(1)';
-                  }, 100);
+              // Update button states
+              prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
+              nextBtn.style.opacity = currentSlide === slides.length - 1 ? '0.5' : '1';
 
-                  currentSlide--;
-                  updateSliderPosition();
-                }
-              });
-
-              // Add touch/swipe support for modern feel
-              let startX = 0;
-              let currentX = 0;
-              let isDragging = false;
-
-              slider.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].clientX;
-                isDragging = true;
-                slider.style.transition = 'none';
-              });
-
-              slider.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                currentX = e.touches[0].clientX;
-                const diffX = currentX - startX;
-                const slideWidth = container.offsetWidth;
-                const gapSize = 32;
-                const currentTranslateX = -currentSlide * (slideWidth + gapSize);
-                slider.style.transform = `translateX(${currentTranslateX + diffX}px) translateZ(0)`;
-              });
-
-              slider.addEventListener('touchend', (e) => {
-                if (!isDragging) return;
-                isDragging = false;
-                const diffX = currentX - startX;
-                const threshold = container.offsetWidth * 0.2;
-
-                if (Math.abs(diffX) > threshold) {
-                  if (diffX > 0 && currentSlide > 0) {
-                    currentSlide--;
-                  } else if (diffX < 0 && currentSlide < totalSlides - 1) {
-                    currentSlide++;
-                  }
-                }
-                updateSliderPosition();
-              });
-
-              // Initialize with smooth entrance
-              updateSliderPosition(false);
               setTimeout(() => {
-                animateCards();
-              }, 100);
+                isAnimating = false;
+              }, 700);
+            }
 
-              // Responsive resize with debouncing
-              let resizeTimeout;
-              window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                  slides.forEach(slide => {
-                    slide.style.width = container.offsetWidth + 'px';
-                  });
-                  updateSliderPosition(false);
-                }, 150);
+            // Navigation buttons
+            nextBtn.addEventListener('click', () => {
+              if (!isAnimating && currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateCarousel();
+              }
+            });
+
+            prevBtn.addEventListener('click', () => {
+              if (!isAnimating && currentSlide > 0) {
+                currentSlide--;
+                updateCarousel();
+              }
+            });
+
+            // Dot navigation
+            dots.forEach((dot, index) => {
+              dot.addEventListener('click', () => {
+                if (!isAnimating && index !== currentSlide) {
+                  currentSlide = index;
+                  updateCarousel();
+                }
               });
+            });
 
-            }, 100);
+            // Auto-play carousel
+            setInterval(() => {
+              if (!isAnimating) {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateCarousel();
+              }
+            }, 5000);
+
+            // Initialize
+            updateCarousel();
           }
         });
         </script>
 
+        <!-- ========== GLASSMORPHISM CAROUSEL STYLES ========== -->
         <style>
-        .trending-card-image {
-          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        .modern-hero-carousel {
+          margin: 2rem 0;
         }
 
-        /* Modern Superdesign Slider Styles */
-        .trending-slider-container {
-          position: relative;
-          width: 100%;
-          overflow: hidden;
-          border-radius: 12px;
-          background: linear-gradient(135deg, #FFEFF3 0%, #f8fafc 100%);
-          padding: 8px;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .trending-slider {
-          display: flex;
-          width: 100%;
+        .carousel-track {
           will-change: transform;
-          backface-visibility: hidden;
-          perspective: 1000px;
         }
 
-        .trending-slide {
-          min-width: 100%;
-          width: 100%;
-          flex-shrink: 0;
-          box-sizing: border-box;
-          transform: translateZ(0);
-          margin-right: 2rem; /* Add spacing between slides */
+        .carousel-slide {
+          background-attachment: fixed;
         }
 
-        .trending-slide:last-child {
-          margin-right: 0; /* Remove margin from last slide */
-        }
-
-        /* Enhanced Card Hover Effects with Superdesign */
-        .trending-card {
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          will-change: transform, box-shadow;
-          backface-visibility: hidden;
-        }
-
-        .trending-card:hover {
-          transform: translateY(-8px) scale(1.02);
+        .glass-card {
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           box-shadow:
-            0 20px 25px -5px rgba(255, 77, 120, 0.15),
-            0 10px 10px -5px rgba(0, 0, 0, 0.04),
-            0 4px 12px rgba(255, 77, 120, 0.1);
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+          transition: all 0.3s ease;
         }
 
-        .trending-card:hover .trending-card-image img {
-          transform: scale(1.05);
-        }
-
-        /* Modern Button Styles with Superdesign Aesthetic */
-        .trending-slider-prev,
-        .trending-slider-next {
-          background: linear-gradient(135deg, #FF80A5 0%, #FF3366 100%);
-          border: none;
+        .glass-card:hover {
+          transform: translateY(-2px);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
           box-shadow:
-            0 4px 6px -1px rgba(255, 77, 120, 0.25),
-            0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            0 12px 40px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-prev,
+        .carousel-next {
           backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
         }
 
-        .trending-slider-prev:hover,
-        .trending-slider-next:hover {
-          background: linear-gradient(135deg, #FF3366 0%, #FF1744 100%);
+        .carousel-prev:hover,
+        .carousel-next:hover {
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           transform: scale(1.1);
-          box-shadow:
-            0 8px 12px -2px rgba(255, 77, 120, 0.35),
-            0 4px 8px -2px rgba(0, 0, 0, 0.1);
         }
 
-        .trending-slider-prev .material-icons,
-        .trending-slider-next .material-icons {
-          color: white;
-          font-weight: bold;
+        .carousel-dot {
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          cursor: pointer;
         }
 
-        /* Responsive grid adjustments */
-        @media (max-width: 1024px) {
-          .trending-slide .grid {
-            grid-template-columns: repeat(3, 1fr); /* 3 cards on tablet */
-            gap: 1rem;
-          }
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-          .trending-slide .grid {
-            grid-template-columns: repeat(2, 1fr); /* 2 cards on small tablet */
-            gap: 1rem;
+          .modern-hero-carousel .relative {
+            height: 20rem; /* Smaller height on mobile */
+          }
+
+          .glass-card {
+            padding: 1.5rem !important;
+            max-width: 100% !important;
+          }
+
+          .glass-card h2 {
+            font-size: 1.5rem !important;
+            line-height: 1.3 !important;
+          }
+
+          .carousel-prev,
+          .carousel-next {
+            width: 2.5rem;
+            height: 2.5rem;
           }
         }
 
         @media (max-width: 640px) {
-          .trending-slide .grid {
-            grid-template-columns: 1fr; /* 1 card on mobile */
-            gap: 1rem;
+          .modern-hero-carousel .relative {
+            height: 18rem;
+          }
+
+          .carousel-prev {
+            left: 0.75rem;
+          }
+
+          .carousel-next {
+            right: 0.75rem;
           }
         }
         </style>

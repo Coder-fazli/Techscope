@@ -1,0 +1,31 @@
+/* BACKUP OF ORIGINAL SLIDER SECTION - CREATED BEFORE GLASSMORPHISM REDESIGN */
+
+<!-- TRENDING TECH SLIDER - ORIGINAL BACKUP -->
+<section class="section-animate stagger-1">
+  <div class="flex items-center justify-end mb-3">
+    <div class="flex items-center gap-2">
+      <button class="trending-slider-prev w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+        <span class="material-icons text-sm">chevron_left</span>
+      </button>
+      <button class="trending-slider-next w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+        <span class="material-icons text-sm">chevron_right</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="trending-slider-container overflow-hidden px-2">
+    <div class="trending-slider flex gap-8 transition-transform duration-300 ease-in-out py-2">
+      <!-- SLIDE with 4 posts -->
+      <div class="trending-slide flex-shrink-0 w-full">
+        <div class="grid grid-cols-4 gap-6">
+          <!-- CLEAN SLIDER CARD - EDIT STYLE HERE -->
+          <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+            <!-- Content structure was here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+/* Note: This backup contains the original clean card design before the glassmorphism carousel redesign */
