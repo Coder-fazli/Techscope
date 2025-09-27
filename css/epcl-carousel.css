@@ -225,55 +225,59 @@
 
 @media (max-width: 768px) {
   .epcl-carousel {
-    padding: 0 80px !important;
+    padding: 15px 70px !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
     left: 10px !important;
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
     right: 10px !important;
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
   }
   .epcl-carousel .info .title.white {
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 600;
   }
-  .epcl-carousel .slick-prev,
-  .epcl-carousel .slick-next {
-    width: 45px !important;
-    height: 45px !important;
+  .epcl-carousel .item article {
+    padding-bottom: 65% !important; /* Wide cards on mobile */
   }
-  .epcl-carousel .slick-prev::before {
-    border-width: 7px 10px 7px 0 !important;
-  }
-  .epcl-carousel .slick-next::before {
-    border-width: 7px 0 7px 10px !important;
+  .epcl-carousel .item {
+    padding: 0 5px;
   }
 }
 
 @media (max-width: 480px) {
   .epcl-carousel {
-    padding: 0 60px !important;
+    padding: 10px 50px !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
     left: 5px !important;
+    width: 35px !important;
+    height: 35px !important;
+    line-height: 35px !important;
   }
   .epcl-carousel.outer-arrows .slick-next {
     right: 5px !important;
+    width: 35px !important;
+    height: 35px !important;
+    line-height: 35px !important;
   }
   .epcl-carousel .info .title.white {
-    font-size: 13px;
+    font-size: 16px;
+    font-weight: 600;
   }
   .epcl-carousel .info {
-    padding: 12px;
+    padding: 15px;
   }
-  .epcl-carousel .slick-prev,
-  .epcl-carousel .slick-next {
-    width: 40px !important;
-    height: 40px !important;
+  .epcl-carousel .item article {
+    padding-bottom: 60% !important; /* Even wider cards on small mobile */
   }
-  .epcl-carousel .slick-prev::before {
-    border-width: 6px 8px 6px 0 !important;
-  }
-  .epcl-carousel .slick-next::before {
-    border-width: 6px 0 6px 8px !important;
+  .epcl-carousel .item {
+    padding: 0 3px;
   }
 }
