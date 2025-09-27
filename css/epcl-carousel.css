@@ -11,8 +11,7 @@
   padding: 6px !important;
 }
 
-/* Fix all carousel container backgrounds */
-.epcl-carousel *,
+/* Fix carousel container backgrounds only */
 .epcl-carousel .slick-slide,
 .epcl-carousel .slick-slide > div {
   background: #F7F3ED !important;
@@ -46,7 +45,7 @@
   overflow: hidden;
   box-shadow: 0 8px 30px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
-  background: #fff;
+  background: #fff !important;
 }
 
 .epcl-carousel .item article:hover {
