@@ -225,7 +225,7 @@
 
 @media (max-width: 768px) {
   .epcl-carousel {
-    padding: 20px 80px !important;
+    padding: 20px 15px !important;
     overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
@@ -258,13 +258,13 @@
     border-radius: 30px !important;
   }
   .epcl-carousel .item {
-    padding: 0 1px;
+    padding: 0 50px;
   }
 }
 
 @media (max-width: 480px) {
   .epcl-carousel {
-    padding: 15px 70px !important;
+    padding: 15px 10px !important;
     overflow: hidden !important;
   }
   .epcl-carousel.outer-arrows .slick-prev {
@@ -300,6 +300,6 @@
     border-radius: 35px !important;
   }
   .epcl-carousel .item {
-    padding: 0 1px;
+    padding: 0 40px;
   }
 }
