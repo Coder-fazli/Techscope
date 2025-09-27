@@ -1,0 +1,243 @@
+/* EPCL Carousel Styles - Original Template Structure */
+
+/* EPCL Carousel Base Styles */
+.epcl-carousel {
+  margin: 0;
+  padding: 0;
+}
+
+.epcl-carousel .item {
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.epcl-carousel .item article {
+  position: relative;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.epcl-carousel .item article:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.epcl-carousel .img.cover {
+  width: 100%;
+  height: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  position: relative;
+}
+
+.epcl-carousel .info {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  text-align: center;
+  z-index: 2;
+  padding: 20px;
+}
+
+.epcl-carousel .info time {
+  display: block;
+  color: rgba(255,255,255,0.9);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.epcl-carousel .info .title.white {
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.epcl-carousel .author-meta {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  z-index: 2;
+}
+
+.epcl-carousel .author-meta a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  text-decoration: none;
+}
+
+.epcl-carousel .author-image.cover {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.epcl-carousel .author-name {
+  font-size: 13px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.epcl-carousel .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+  z-index: 1;
+}
+
+.epcl-carousel .full-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  text-decoration: none;
+}
+
+.epcl-carousel .clear {
+  clear: both;
+}
+
+/* ORIGINAL TEMPLATE SLICK ARROWS - EXACT COPY */
+.epcl-carousel.outer-arrows .slick-next,
+.epcl-carousel.outer-arrows .slick-prev {
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  text-align: center;
+  line-height: 60px;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  outline: none;
+  background: #FF3152;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  z-index: 10;
+}
+
+.epcl-carousel.outer-arrows .slick-next:hover,
+.epcl-carousel.outer-arrows .slick-prev:hover {
+  background-color: #FF3152;
+  width: 70px;
+}
+
+.epcl-carousel.outer-arrows .slick-prev {
+  margin-left: -25px;
+  left: 10px;
+}
+
+.epcl-carousel.outer-arrows .slick-next {
+  margin-right: -25px;
+  right: 10px;
+}
+
+.epcl-carousel .slick-next:before,
+.epcl-carousel .slick-prev:before {
+  font-family: 'FontAwesome';
+  -webkit-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  transition: all 300ms ease;
+  color: white;
+  font-size: 18px;
+}
+
+.epcl-carousel .slick-prev:before {
+  content: '\f104';
+  margin-left: -2px;
+}
+
+.epcl-carousel .slick-next:before {
+  content: '\f105';
+  margin-right: -2px;
+}
+
+.epcl-carousel .slick-next:hover:before,
+.epcl-carousel .slick-prev:hover:before {
+  opacity: 1;
+}
+
+.epcl-carousel .slick-next:hover,
+.epcl-carousel .slick-prev:hover {
+  width: 70px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .epcl-carousel .item article {
+    height: 280px;
+  }
+  .epcl-carousel .info .title.white {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .epcl-carousel .item article {
+    height: 250px;
+  }
+  .epcl-carousel .info .title.white {
+    font-size: 14px;
+  }
+  .epcl-carousel.outer-arrows .slick-next,
+  .epcl-carousel.outer-arrows .slick-prev {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+  .epcl-carousel.outer-arrows .slick-next:hover,
+  .epcl-carousel.outer-arrows .slick-prev:hover {
+    width: 55px;
+  }
+}
+
+@media (max-width: 480px) {
+  .epcl-carousel .item article {
+    height: 220px;
+  }
+  .epcl-carousel .info .title.white {
+    font-size: 13px;
+  }
+  .epcl-carousel .info {
+    padding: 15px;
+  }
+  .epcl-carousel.outer-arrows .slick-next,
+  .epcl-carousel.outer-arrows .slick-prev {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+  .epcl-carousel.outer-arrows .slick-next:hover,
+  .epcl-carousel.outer-arrows .slick-prev:hover {
+    width: 45px;
+  }
+}

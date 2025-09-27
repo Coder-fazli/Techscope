@@ -48,6 +48,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
 
+  <!-- FontAwesome for arrows -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- EPCL Carousel Styles -->
+  <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/epcl-carousel.css?v=<?php echo time(); ?>">
+
   <?php wp_head(); ?>
 
   <!-- SIDEBAR STYLING - TARGET PARENT CONTAINERS FOR SHADOWS -->
