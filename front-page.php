@@ -263,13 +263,13 @@
         </div>
 
         <!-- Navigation Buttons -->
-        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.3);">
+        <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.5);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
           </svg>
         </button>
 
-        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.3);">
+        <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF3152; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 49, 82, 0.5);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
           </svg>
@@ -279,11 +279,23 @@
       <!-- Simple Working JavaScript -->
       <script>
       let currentSlide = 0;
-      let itemsPerView = getItemsPerView();
-      const carousel = document.getElementById('epcl-carousel');
-      const items = carousel.querySelectorAll('.carousel-item');
-      const totalItems = items.length;
-      let maxSlides = Math.max(0, totalItems - itemsPerView);
+      let itemsPerView = 4;
+      let carousel, items, totalItems, maxSlides;
+
+      function initCarousel() {
+        carousel = document.getElementById('epcl-carousel');
+        if (!carousel) {
+          console.log('Carousel not found, retrying...');
+          setTimeout(initCarousel, 100);
+          return;
+        }
+
+        items = carousel.querySelectorAll('.carousel-item');
+        totalItems = items.length;
+
+        console.log('Carousel initialized with', totalItems, 'items');
+        updateLayout();
+      }
 
       function getItemsPerView() {
         // Calculate based on container width and item width (280px + 16px padding)
@@ -293,6 +305,8 @@
       }
 
       function updateLayout() {
+        if (!carousel || !items) return;
+
         itemsPerView = getItemsPerView();
 
         // Allow infinite sliding - no max slides limit
@@ -308,6 +322,11 @@
       }
 
       function moveCarousel(direction) {
+        if (!carousel || !items || totalItems === 0) {
+          console.log('Carousel not ready');
+          return;
+        }
+
         currentSlide += direction;
 
         // Create infinite loop - when reaching end, go to beginning
@@ -326,14 +345,16 @@
         if (prevBtn) prevBtn.style.opacity = '1';
         if (nextBtn) nextBtn.style.opacity = '1';
 
-        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Translate:', translateX + 'px');
+        console.log('Moving carousel:', direction, 'Current slide:', currentSlide, 'Translate:', translateX + 'px', 'Total items:', totalItems);
       }
 
-      // Initialize carousel
-      updateLayout();
+      // Initialize when DOM is ready
+      document.addEventListener('DOMContentLoaded', initCarousel);
 
       // Handle window resize
-      window.addEventListener('resize', updateLayout);
+      window.addEventListener('resize', function() {
+        if (carousel) updateLayout();
+      });
       </script>
 
       <!-- Carousel Styles - Force Refresh -->
