@@ -223,45 +223,117 @@
 
       <!-- ========== EPCL CAROUSEL - EXACT TEMPLATE COPY ========== -->
       <section class="epcl-carousel slick-slider section outer-arrows slides-5" data-show="5" data-rtl="" data-aos="fade">
-        <?php
-        $trending_posts = techscope_get_featured_posts();
-        if ($trending_posts->have_posts()) :
-          while ($trending_posts->have_posts()) : $trending_posts->the_post();
-            $post_image = techscope_get_responsive_image(get_the_ID(), 'featured-card');
-            $post_date = get_the_date('F j, Y');
-            $post_datetime = get_the_date('Y-m-d');
-            $author_name = get_the_author();
-            $author_url = get_author_posts_url(get_the_author_meta('ID'));
-            $author_avatar = get_avatar_url(get_the_author_meta('ID'));
-        ?>
-          <div class="item">
-            <article>
-              <div class="img cover" role="img" alt="<?php echo esc_attr(get_the_title()); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>" style="background: url(<?php echo esc_url($post_image); ?>);"></div>
-              <div class="info border-effect">
-                <time datetime="<?php echo esc_attr($post_datetime); ?>">
-                  <?php echo esc_html($post_date); ?>
-                </time>
-                <h2 class="title white"><?php echo esc_html(get_the_title()); ?></h2>
+        <div class="epcl-carousel-container">
+          <div class="epcl-carousel-track" id="carousel-track">
+            <?php
+            $trending_posts = techscope_get_featured_posts();
+            if ($trending_posts->have_posts()) :
+              while ($trending_posts->have_posts()) : $trending_posts->the_post();
+                $post_image = techscope_get_responsive_image(get_the_ID(), 'featured-card');
+                $post_date = get_the_date('F j, Y');
+                $post_datetime = get_the_date('Y-m-d');
+                $author_name = get_the_author();
+                $author_url = get_author_posts_url(get_the_author_meta('ID'));
+                $author_avatar = get_avatar_url(get_the_author_meta('ID'));
+            ?>
+              <div class="item">
+                <article>
+                  <div class="img cover" role="img" alt="<?php echo esc_attr(get_the_title()); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>" style="background: url(<?php echo esc_url($post_image); ?>);"></div>
+                  <div class="info border-effect">
+                    <time datetime="<?php echo esc_attr($post_datetime); ?>">
+                      <?php echo esc_html($post_date); ?>
+                    </time>
+                    <h2 class="title white"><?php echo esc_html(get_the_title()); ?></h2>
+                  </div>
+                  <div class="clear"></div>
+                  <footer class="author-meta">
+                    <a href="<?php echo esc_url($author_url); ?>" title="<?php echo esc_attr($author_name); ?>">
+                      <span class="author-image cover" style="background-image: url('<?php echo esc_url($author_avatar); ?>');"></span>
+                      <span class="author-name"><?php echo esc_html($author_name); ?></span>
+                    </a>
+                    <div class="clear"></div>
+                  </footer>
+                  <a href="<?php echo esc_url(get_the_permalink()); ?>" class="full-link" aria-label="<?php echo esc_attr(get_the_title()); ?>">
+                    <span style="display:none;"><?php echo esc_html(get_the_title()); ?></span>
+                  </a>
+                  <div class="overlay"></div>
+                </article>
               </div>
-              <div class="clear"></div>
-              <footer class="author-meta">
-                <a href="<?php echo esc_url($author_url); ?>" title="<?php echo esc_attr($author_name); ?>">
-                  <span class="author-image cover" style="background-image: url('<?php echo esc_url($author_avatar); ?>');"></span>
-                  <span class="author-name"><?php echo esc_html($author_name); ?></span>
-                </a>
-                <div class="clear"></div>
-              </footer>
-              <a href="<?php echo esc_url(get_the_permalink()); ?>" class="full-link" aria-label="<?php echo esc_attr(get_the_title()); ?>">
-                <span style="display:none;"><?php echo esc_html(get_the_title()); ?></span>
-              </a>
-              <div class="overlay"></div>
-            </article>
+            <?php
+              endwhile;
+              wp_reset_postdata();
+            endif;
+            ?>
           </div>
-        <?php
-          endwhile;
-          wp_reset_postdata();
-        endif;
-        ?>
+
+          <!-- Red Navigation Arrows -->
+          <button class="epcl-carousel-nav prev" id="carousel-prev" type="button">
+            <svg viewBox="0 0 24 24">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+          </button>
+          <button class="epcl-carousel-nav next" id="carousel-next" type="button">
+            <svg viewBox="0 0 24 24">
+              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Carousel JavaScript -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const track = document.getElementById('carousel-track');
+          const prevBtn = document.getElementById('carousel-prev');
+          const nextBtn = document.getElementById('carousel-next');
+          const items = track.querySelectorAll('.item');
+
+          let currentIndex = 0;
+          const itemsToShow = window.innerWidth >= 1200 ? 5 : (window.innerWidth >= 768 ? 4 : 2);
+          const maxIndex = Math.max(0, items.length - itemsToShow);
+
+          function updateCarousel() {
+            const itemWidth = items[0].offsetWidth;
+            const gap = 24; // 1.5rem gap
+            const translateX = currentIndex * (itemWidth + gap);
+            track.style.transform = `translateX(-${translateX}px)`;
+
+            // Update button states
+            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+            prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+            nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
+          }
+
+          prevBtn.addEventListener('click', function() {
+            if (currentIndex > 0) {
+              currentIndex--;
+              updateCarousel();
+            }
+          });
+
+          nextBtn.addEventListener('click', function() {
+            if (currentIndex < maxIndex) {
+              currentIndex++;
+              updateCarousel();
+            }
+          });
+
+          // Handle window resize
+          window.addEventListener('resize', function() {
+            const newItemsToShow = window.innerWidth >= 1200 ? 5 : (window.innerWidth >= 768 ? 4 : 2);
+            const newMaxIndex = Math.max(0, items.length - newItemsToShow);
+
+            if (currentIndex > newMaxIndex) {
+              currentIndex = newMaxIndex;
+            }
+
+            updateCarousel();
+          });
+
+          // Initialize
+          updateCarousel();
+        });
+        </script>
       </section>
       <!-- ========== END EPCL CAROUSEL ========== -->
 
