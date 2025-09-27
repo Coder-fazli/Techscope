@@ -243,12 +243,12 @@
     font-weight: 600;
   }
   .epcl-carousel .item article {
-    padding-bottom: 80% !important;
+    padding-bottom: 160% !important;
     border-radius: 30px !important;
   }
   .epcl-carousel .item {
     padding: 16px 3px;
-    margin: 0 60px;
+    margin: 0 120px;
   }
 }
 
@@ -286,11 +286,11 @@
     padding: 15px;
   }
   .epcl-carousel .item article {
-    padding-bottom: 75% !important;
+    padding-bottom: 150% !important;
     border-radius: 35px !important;
   }
   .epcl-carousel .item {
     padding: 16px 3px;
-    margin: 0 50px;
+    margin: 0 100px;
   }
 }
