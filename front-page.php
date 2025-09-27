@@ -213,11 +213,7 @@
 
       <!-- TRENDING TECH SLIDER -->
       <section class="section-animate stagger-1">
-        <div class="text-center mb-6">
-          <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider text-purple-800 inline-block">
-            <?php echo techscope_get_section_title('trending'); ?>
-          </h3>
-        </div>
+        <!-- ALL DIVIDERS REMOVED -->
         <div class="flex items-center justify-end mb-3">
           <div class="flex items-center gap-2">
             <button class="trending-slider-prev w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
@@ -228,6 +224,16 @@
             </button>
           </div>
         </div>
+
+        <!-- ========== TRENDING SLIDER DIVIDER - EDIT HERE ========== -->
+        <div class="flex items-center justify-center mb-6 mt-6">
+          <div class="flex-1 h-2 REMOVED-DIVIDER"></div>
+          <div class="px-6">
+            <h4 class="text-lg font-bold uppercase tracking-wider text-purple-800 text-center">📱 FEATURED TECH</h4>
+          </div>
+          <div class="flex-1 h-2 REMOVED-DIVIDER"></div>
+        </div>
+        <!-- ========== END TRENDING SLIDER DIVIDER ========== -->
 
         <div class="trending-slider-container overflow-hidden px-2">
           <div class="trending-slider flex gap-8 transition-transform duration-300 ease-in-out py-2">
@@ -578,16 +584,17 @@
     <!-- EDITOR'S CHOICE - FULL WIDTH SECTION -->
     <div class="lg:col-span-3 section-animate stagger-2">
       <!-- Section Title - Outside Container -->
-      <!-- Elegant Section Divider -->
+      <!-- ========== EDITOR'S CHOICE SECTION DIVIDER - EDIT HERE ========== -->
       <div class="flex items-center justify-center mb-8 mt-12">
-        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent"></div>
+        <div class="flex-1 h-1 bg-gradient-to-r from-transparent via-purple-600 to-transparent"></div>
         <div class="px-6">
           <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider text-purple-800 text-center">
             ⭐ <?php echo techscope_get_section_title('editor'); ?>
           </h3>
         </div>
-        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent"></div>
+        <div class="flex-1 h-1 bg-gradient-to-r from-transparent via-purple-600 to-transparent"></div>
       </div>
+      <!-- ========== END EDITOR'S CHOICE DIVIDER ========== -->
 
       <!-- Content Container - Clean Grid Only -->
       <section class="bg-gray-50 rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-3">
@@ -704,16 +711,17 @@
 
       <!-- HOT STORIES -->
       <section class="section-animate stagger-3">
-        <!-- Elegant Section Divider -->
+        <!-- ========== HOT STORIES SECTION DIVIDER - EDIT HERE ========== -->
         <div class="flex items-center justify-center mb-6 mt-8">
-          <div class="flex-1 h-px bg-gradient-to-r from-transparent via-red-200 to-transparent"></div>
+          <div class="flex-1 h-2 REMOVED-DIVIDER"></div>
           <div class="px-6">
             <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider text-red-800 text-center">
               🔥 <?php echo techscope_get_section_title('hot'); ?>
             </h3>
           </div>
-          <div class="flex-1 h-px bg-gradient-to-r from-transparent via-red-200 to-transparent"></div>
+          <div class="flex-1 h-2 REMOVED-DIVIDER"></div>
         </div>
+        <!-- ========== END HOT STORIES DIVIDER ========== -->
         <?php
         $hot_posts = techscope_get_hot_stories_posts();
         $hot_count = get_option('techscope_hot_count', 4);
@@ -763,16 +771,17 @@
 
       <!-- MOBILE TECH -->
       <section class="section-animate stagger-4">
-        <!-- Elegant Section Divider -->
+        <!-- ========== MOBILE TECH SECTION DIVIDER - EDIT HERE ========== -->
         <div class="flex items-center justify-center mb-6 mt-8">
-          <div class="flex-1 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
+          <div class="flex-1 h-2 REMOVED-DIVIDER"></div>
           <div class="px-6">
             <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider text-blue-800 text-center">
               📱 <?php echo techscope_get_section_title('mobile'); ?>
             </h3>
           </div>
-          <div class="flex-1 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
+          <div class="flex-1 h-2 REMOVED-DIVIDER"></div>
         </div>
+        <!-- ========== END MOBILE TECH DIVIDER ========== -->
         <?php
         $mobile_posts = techscope_get_mobile_posts();
         $mobile_count = get_option('techscope_mobile_count', 3);
@@ -819,16 +828,17 @@
 
       <!-- AI & GAMING -->
       <section class="section-animate stagger-5">
-        <!-- Elegant Section Divider -->
+        <!-- ========== AI & GAMING SECTION DIVIDER - EDIT HERE ========== -->
         <div class="flex items-center justify-center mb-6 mt-8">
-          <div class="flex-1 h-px bg-gradient-to-r from-transparent via-green-200 to-transparent"></div>
+          <div class="flex-1 h-2 REMOVED-DIVIDER"></div>
           <div class="px-6">
             <h3 class="text-lg md:text-xl font-extrabold uppercase tracking-wider text-green-800 text-center">
               🤖 <?php echo techscope_get_section_title('ai'); ?>
             </h3>
           </div>
-          <div class="flex-1 h-px bg-gradient-to-r from-transparent via-green-200 to-transparent"></div>
+          <div class="flex-1 h-2 REMOVED-DIVIDER"></div>
         </div>
+        <!-- ========== END AI & GAMING DIVIDER ========== -->
         <?php
         $ai_gaming_posts = techscope_get_ai_gaming_posts();
         $ai_count = get_option('techscope_ai_count', 3);

@@ -83,35 +83,7 @@
       border-radius: 20px !important;
     }
 
-    /* ELEGANT SECTION DIVIDERS - SuperDesign Style */
-    .section-divider {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .section-divider::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
-      transform: translateY(-50%);
-    }
-
-    .section-divider::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 6px;
-      height: 6px;
-      background: linear-gradient(45deg, #8b5cf6, #ec4899);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8);
-    }
+    /* ALL DIVIDER CSS REMOVED */
 
     /* Section title styling */
     .section-title-enhanced {
