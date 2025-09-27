@@ -82,6 +82,46 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20) !important;
       border-radius: 20px !important;
     }
+
+    /* ELEGANT SECTION DIVIDERS - SuperDesign Style */
+    .section-divider {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+      transform: translateY(-50%);
+    }
+
+    .section-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 6px;
+      height: 6px;
+      background: linear-gradient(45deg, #8b5cf6, #ec4899);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Section title styling */
+    .section-title-enhanced {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+      padding: 8px 24px;
+      border-radius: 50px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
   </style>
 </head>
 <body <?php body_class('bg-gray-100 font-inter'); ?>>
