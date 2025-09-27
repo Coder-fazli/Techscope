@@ -122,7 +122,7 @@
 
     .epcl-carousel article {
       position: relative;
-      height: 300px;
+      height: 350px;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -250,18 +250,25 @@
       border: none;
       border-radius: 50%;
       cursor: pointer;
-      z-index: 10;
+      z-index: 100;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
       box-shadow: 0 2px 10px rgba(255, 49, 82, 0.3);
+      outline: none;
     }
 
-    .epcl-carousel-nav:hover {
+    .epcl-carousel-nav:hover:not(:disabled) {
       background: #e02946;
       transform: translateY(-50%) scale(1.1);
       box-shadow: 0 4px 15px rgba(255, 49, 82, 0.4);
+    }
+
+    .epcl-carousel-nav:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #cccccc;
     }
 
     .epcl-carousel-nav.prev {
@@ -276,6 +283,7 @@
       width: 16px;
       height: 16px;
       fill: #ffffff;
+      pointer-events: none;
     }
 
     /* Responsive adjustments */

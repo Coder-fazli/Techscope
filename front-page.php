@@ -285,53 +285,86 @@
           const track = document.getElementById('carousel-track');
           const prevBtn = document.getElementById('carousel-prev');
           const nextBtn = document.getElementById('carousel-next');
-          const items = track.querySelectorAll('.item');
+          const items = track ? track.querySelectorAll('.item') : [];
+
+          if (!track || !prevBtn || !nextBtn || items.length === 0) {
+            console.log('Carousel elements not found');
+            return;
+          }
 
           let currentIndex = 0;
-          const itemsToShow = window.innerWidth >= 1200 ? 5 : (window.innerWidth >= 768 ? 4 : 2);
-          const maxIndex = Math.max(0, items.length - itemsToShow);
+          let itemsToShow = getItemsToShow();
+          let maxIndex = Math.max(0, items.length - itemsToShow);
+
+          function getItemsToShow() {
+            if (window.innerWidth >= 1200) return 5;
+            if (window.innerWidth >= 768) return 4;
+            if (window.innerWidth >= 480) return 2;
+            return 1;
+          }
 
           function updateCarousel() {
-            const itemWidth = items[0].offsetWidth;
+            if (items.length === 0) return;
+
+            const containerWidth = track.parentElement.offsetWidth;
+            const itemWidth = containerWidth / itemsToShow;
             const gap = 24; // 1.5rem gap
-            const translateX = currentIndex * (itemWidth + gap);
+            const translateX = currentIndex * itemWidth;
+
             track.style.transform = `translateX(-${translateX}px)`;
 
             // Update button states
             prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
             nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
-            prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
-            nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex >= maxIndex;
           }
 
-          prevBtn.addEventListener('click', function() {
+          function goToPrev() {
             if (currentIndex > 0) {
               currentIndex--;
               updateCarousel();
             }
-          });
+          }
 
-          nextBtn.addEventListener('click', function() {
+          function goToNext() {
             if (currentIndex < maxIndex) {
               currentIndex++;
               updateCarousel();
             }
+          }
+
+          // Event listeners
+          prevBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            goToPrev();
+          });
+
+          nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            goToNext();
           });
 
           // Handle window resize
+          let resizeTimeout;
           window.addEventListener('resize', function() {
-            const newItemsToShow = window.innerWidth >= 1200 ? 5 : (window.innerWidth >= 768 ? 4 : 2);
-            const newMaxIndex = Math.max(0, items.length - newItemsToShow);
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+              itemsToShow = getItemsToShow();
+              maxIndex = Math.max(0, items.length - itemsToShow);
 
-            if (currentIndex > newMaxIndex) {
-              currentIndex = newMaxIndex;
-            }
+              if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+              }
 
-            updateCarousel();
+              updateCarousel();
+            }, 100);
           });
 
-          // Initialize
-          updateCarousel();
+          // Initialize after a short delay to ensure proper layout
+          setTimeout(function() {
+            updateCarousel();
+          }, 100);
         });
         </script>
       </section>
