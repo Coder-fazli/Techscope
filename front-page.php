@@ -263,24 +263,35 @@
               <div class="trending-slide flex-shrink-0 w-full">
                 <div class="grid grid-cols-4 gap-6">
                   <?php foreach ($chunk as $post_data) : ?>
-                    <div class="trending-card bg-white rounded-xl overflow-hidden transition-all duration-300 card-hover">
-                      <div class="trending-card-image w-full h-48 relative overflow-hidden tech-img" style="background-image: url('<?php echo $post_data['image']; ?>')">
+                    <!-- ========== CLEAN SLIDER CARD - EDIT STYLE HERE ========== -->
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                      <!-- Full-width image -->
+                      <div class="w-full h-48 overflow-hidden">
+                        <img src="<?php echo $post_data['image']; ?>"
+                             alt="<?php echo esc_attr($post_data['title']); ?>"
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
                       </div>
-                      <div class="p-4">
-                        <h4 class="font-bold text-lg mb-3 leading-tight">
-                          <a href="<?php echo $post_data['permalink']; ?>" class="text-gray-900 hover:text-blue-600 transition-colors">
+
+                      <!-- Clean content area -->
+                      <div class="p-5">
+                        <!-- Title -->
+                        <h4 class="font-semibold text-gray-900 text-base leading-tight mb-3 line-clamp-2">
+                          <a href="<?php echo $post_data['permalink']; ?>" class="hover:text-blue-600 transition-colors">
                             <?php echo techscope_truncate_text($post_data['title'], 60); ?>
                           </a>
                         </h4>
+
+                        <!-- Meta info with clean spacing -->
                         <div class="flex items-center justify-between text-sm">
-                          <span class="text-gray-500"><?php echo $post_data['date']; ?></span>
-                          <span class="flex items-center gap-1 text-gray-500">
-                            <span class="material-icons text-sm text-orange-500">visibility</span>
+                          <span class="text-gray-500 text-xs uppercase tracking-wide"><?php echo $post_data['date']; ?></span>
+                          <span class="flex items-center gap-1 text-gray-400">
+                            <span class="material-icons text-sm">visibility</span>
                             <?php echo $post_data['view_count']; ?>
                           </span>
                         </div>
                       </div>
                     </div>
+                    <!-- ========== END CLEAN SLIDER CARD ========== -->
                   <?php endforeach; ?>
                 </div>
               </div>
