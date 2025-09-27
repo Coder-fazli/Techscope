@@ -46,8 +46,9 @@
 
   <?php wp_head(); ?>
 
-  <!-- SIDEBAR CARD STYLING - DIRECT HEAD CSS FOR MAXIMUM PRIORITY -->
+  <!-- SIDEBAR STYLING - TARGET PARENT CONTAINERS FOR SHADOWS -->
   <style>
+    /* Individual post cards - rounded corners and hover effects */
     .lg\:col-span-1 .sidebar-card {
       background-color: #FFFFFF !important;
       border-radius: 20px !important;
@@ -61,12 +62,25 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important, 0 16px 48px rgba(0, 0, 0, 0.35) !important, 0 32px 96px rgba(0, 0, 0, 0.25) !important;
     }
 
+    /* Image containers */
     .lg\:col-span-1 .sidebar-image {
       border-radius: 20px 20px 0 0 !important;
       margin: 0 !important;
       background-size: cover !important;
       background-position: center !important;
       overflow: hidden !important;
+    }
+
+    /* Parent container that holds all post cards */
+    .lg\:col-span-1 .bg-gradient-to-br.from-pink-50.to-rose-50.rounded-xl {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important, 0 16px 48px rgba(0, 0, 0, 0.10) !important;
+      border-radius: 20px !important;
+    }
+
+    /* Cards container */
+    .lg\:col-span-1 .space-y-2.flex-grow > * {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20) !important;
+      border-radius: 20px !important;
     }
   </style>
 </head>
