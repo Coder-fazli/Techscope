@@ -259,51 +259,6 @@
         ?>
       </section>
 
-      <!-- Slick Slider CSS and JS -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-
-      <!-- Initialize Exact EPCL Carousel -->
-      <script>
-      jQuery(document).ready(function($) {
-        $('.epcl-carousel').slick({
-          infinite: true,
-          slidesToShow: 5,
-          slidesToScroll: 1,
-          autoplay: true,
-          autoplaySpeed: 3000,
-          arrows: true,
-          dots: false,
-          centerMode: false,
-          variableWidth: false,
-          responsive: [
-            {
-              breakpoint: 1200,
-              settings: {
-                slidesToShow: 4,
-                slidesToScroll: 1
-              }
-            },
-            {
-              breakpoint: 768,
-              settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1
-              }
-            },
-            {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
-              }
-            }
-          ]
-        });
-      });
-      </script>
 
       <!-- EPCL Carousel Styles - Original Template Structure -->
       <style>
@@ -426,57 +381,103 @@
         clear: both;
       }
 
-      /* Slick Navigation Arrows */
-      .epcl-carousel.slick-slider .slick-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 10;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.9);
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
+      /* Slick Navigation Arrows - Fixed Visibility */
+      .epcl-carousel .slick-arrow {
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        z-index: 100 !important;
+        width: 45px !important;
+        height: 45px !important;
+        border-radius: 50% !important;
+        background: rgba(255,255,255,0.95) !important;
+        border: 2px solid rgba(0,0,0,0.1) !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+        transition: all 0.3s ease !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
       }
 
-      .epcl-carousel.slick-slider .slick-arrow:hover {
-        background: white;
-        transform: translateY(-50%) scale(1.1);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      .epcl-carousel .slick-arrow:hover {
+        background: white !important;
+        transform: translateY(-50%) scale(1.1) !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;
       }
 
-      .epcl-carousel.slick-slider .slick-prev {
-        left: -50px;
+      .epcl-carousel .slick-prev {
+        left: -60px !important;
       }
 
-      .epcl-carousel.slick-slider .slick-next {
-        right: -50px;
+      .epcl-carousel .slick-next {
+        right: -60px !important;
       }
 
-      .epcl-carousel.slick-slider .slick-arrow:before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 0;
-        height: 0;
-        border-style: solid;
+      .epcl-carousel .slick-arrow:before {
+        content: '' !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-style: solid !important;
+        opacity: 1 !important;
       }
 
-      .epcl-carousel.slick-slider .slick-prev:before {
-        border-width: 6px 8px 6px 0;
-        border-color: transparent #333 transparent transparent;
-        margin-left: -2px;
+      .epcl-carousel .slick-prev:before {
+        border-width: 8px 10px 8px 0 !important;
+        border-color: transparent #333 transparent transparent !important;
+        margin-left: -3px !important;
       }
 
-      .epcl-carousel.slick-slider .slick-next:before {
-        border-width: 6px 0 6px 8px;
-        border-color: transparent transparent transparent #333;
-        margin-left: 2px;
+      .epcl-carousel .slick-next:before {
+        border-width: 8px 0 8px 10px !important;
+        border-color: transparent transparent transparent #333 !important;
+        margin-left: 3px !important;
+      }
+
+      /* Container padding to show arrows */
+      .epcl-carousel {
+        margin: 0 70px !important;
+        position: relative !important;
+      }
+
+      /* Responsive arrow positioning */
+      @media (max-width: 768px) {
+        .epcl-carousel {
+          margin: 0 50px !important;
+        }
+        .epcl-carousel .slick-prev {
+          left: -45px !important;
+        }
+        .epcl-carousel .slick-next {
+          right: -45px !important;
+        }
+        .epcl-carousel .slick-arrow {
+          width: 40px !important;
+          height: 40px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .epcl-carousel {
+          margin: 0 35px !important;
+        }
+        .epcl-carousel .slick-prev {
+          left: -35px !important;
+        }
+        .epcl-carousel .slick-next {
+          right: -35px !important;
+        }
+        .epcl-carousel .slick-arrow {
+          width: 35px !important;
+          height: 35px !important;
+        }
       }
 
       /* Responsive Design */

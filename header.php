@@ -44,6 +44,10 @@
   <meta name="google-site-verification" content="EVv8JI1rI99r26zArKjlnhP4Bh0y4Jy9JBpxNncgoyw" />
   <meta name="yandex-verification" content="003691d1a0a98324" />
 
+  <!-- Slick Slider Assets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+
   <?php wp_head(); ?>
 
   <!-- SIDEBAR STYLING - TARGET PARENT CONTAINERS FOR SHADOWS -->

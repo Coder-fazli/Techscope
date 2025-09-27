@@ -143,6 +143,52 @@
 
 <?php wp_footer(); ?>
 
+<!-- Slick Slider JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<!-- Initialize EPCL Carousel -->
+<script>
+jQuery(document).ready(function($) {
+  if ($('.epcl-carousel').length) {
+    $('.epcl-carousel').slick({
+      infinite: true,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      arrows: true,
+      dots: false,
+      centerMode: false,
+      variableWidth: false,
+      responsive: [
+        {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+  }
+});
+</script>
+
 </body>
 </html>
 
