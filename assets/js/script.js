@@ -32,49 +32,129 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Hero slider ---
+  // --- Hero slider with minimalistic navigation ---
   let currentSlide = 0;
   const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.hero-dot');
+  const prevBtn = document.querySelector('.hero-prev');
+  const nextBtn = document.querySelector('.hero-next');
   const totalSlides = slides.length;
+  let isTransitioning = false;
+  let slideInterval;
+
+  console.log('🎬 Hero Slider Init:', totalSlides, 'slides found');
+  console.log('🎯 Navigation buttons:', prevBtn ? 'prev ✓' : 'prev ✗', nextBtn ? 'next ✓' : 'next ✗');
 
   function showSlide(index) {
-    if (!totalSlides) return;
-    const i = ((index % totalSlides) + totalSlides) % totalSlides; // safe mod
+    if (!totalSlides || isTransitioning) return;
+
+    isTransitioning = true;
+    const i = ((index % totalSlides) + totalSlides) % totalSlides;
     slides.forEach((s) => s.classList.remove('active'));
-    dots.forEach((d) => d.classList.remove('active'));
     slides[i].classList.add('active');
-    if (dots[i]) dots[i].classList.add('active');
+    currentSlide = i;
+
+    // Reset transition lock
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 1000);
+
+    console.log('📍 Showing slide:', i);
   }
 
   function nextSlide() {
-    currentSlide = (currentSlide + 1) % (totalSlides || 1);
-    showSlide(currentSlide);
+    const next = (currentSlide + 1) % totalSlides;
+    showSlide(next);
   }
 
-  if (totalSlides) {
-    showSlide(0);
-    // Auto-slide every 5s
-    const intervalMs = 5000;
-    let interval = setInterval(nextSlide, intervalMs);
+  function prevSlide() {
+    const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide(prev);
+  }
 
-    // Optional: pause on hover over slider area
-    const slider = document.querySelector('.hero-slider');
-    if (slider) {
-      slider.addEventListener('mouseenter', () => clearInterval(interval));
-      slider.addEventListener('mouseleave', () => {
-        clearInterval(interval);
-        interval = setInterval(nextSlide, intervalMs);
+  function startSlider() {
+    if (totalSlides > 1) {
+      slideInterval = setInterval(nextSlide, 5000);
+    }
+  }
+
+  function stopSlider() {
+    clearInterval(slideInterval);
+  }
+
+  if (totalSlides > 0) {
+    // Hide navigation if only one slide
+    if (totalSlides <= 1) {
+      const nav = document.querySelector('.hero-nav');
+      if (nav) nav.style.display = 'none';
+    }
+
+    showSlide(0);
+    startSlider();
+
+    // Navigation button events
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('▶️ Next button clicked');
+        nextSlide();
+        stopSlider();
+        setTimeout(startSlider, 1000);
       });
     }
 
-    // Dot navigation
-    dots.forEach((dot, index) =>
-      dot.addEventListener('click', () => {
-        currentSlide = index;
-        showSlide(currentSlide);
-      })
-    );
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('⏮️ Prev button clicked');
+        prevSlide();
+        stopSlider();
+        setTimeout(startSlider, 1000);
+      });
+    }
+
+    // Pause on hover
+    const slider = document.querySelector('.hero-slider');
+    if (slider) {
+      slider.addEventListener('mouseenter', stopSlider);
+      slider.addEventListener('mouseleave', startSlider);
+    }
+
+    // Touch/swipe support
+    let startX = 0;
+    let isDragging = false;
+
+    if (slider) {
+      slider.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        stopSlider();
+      });
+
+      slider.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+      });
+
+      slider.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const endX = e.changedTouches[0].clientX;
+        const deltaX = startX - endX;
+
+        if (Math.abs(deltaX) > 50) {
+          if (deltaX > 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }
+
+        setTimeout(startSlider, 1000);
+      });
+    }
+
+    console.log('✅ Hero slider initialized with navigation');
   }
 
   // --- Section reveal animations (REMOVED - CAUSED SCROLL ISSUES) ---
