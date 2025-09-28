@@ -37,8 +37,8 @@
   </div>
 </div>
 
-<!-- MAIN LAYOUT (Show immediately while keeping skeleton for smooth transition) -->
-<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2" style="opacity: 0; transition: opacity 0.3s ease;">
+<!-- MAIN LAYOUT (Hidden initially, skeleton shows first) -->
+<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2" style="opacity: 0; visibility: hidden; transition: opacity 0.3s ease;">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- HERO SLIDER -->
