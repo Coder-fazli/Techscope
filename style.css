@@ -77,41 +77,68 @@ Text Domain: techscope
   opacity: 0.8;
 }
 
-/* ========== KATEN STYLE SECTION BORDERS ========== */
-/* Add visible section-level borders like in Katen theme */
+/* ========== KATEN STYLE SECTION BORDERS - EXACT MATCH ========== */
+/* Replicate exact Katen theme approach: thin borders with padding-30 */
+.katen-section-container {
+  /* Exact Katen theme styling */
+  padding: 30px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: #ffffff;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.katen-section-container:hover {
+  border-color: #d4d4d4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Legacy class for backward compatibility */
 .section-border-katen {
-  border: 2px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  padding: 24px;
-  background: rgba(248, 250, 252, 0.5);
-  margin-bottom: 32px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: #ffffff;
+  margin-bottom: 30px;
 }
 
-/* Section dividers - enhance existing dividers with visible borders */
-.section-divider-katen {
-  border-bottom: 3px solid rgba(0, 0, 0, 0.1);
-  padding-bottom: 16px;
+/* Section dividers - simplified Katen theme style */
+.katen-section-header {
   margin-bottom: 24px;
-  position: relative;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.section-divider-katen::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-  border-radius: 2px;
+.katen-section-header h3 {
+  font-weight: 700;
+  color: #2c2c2c;
+  font-size: 1.375rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Legacy support */
+.section-divider-katen {
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .section-divider-katen h3 {
-  margin-bottom: 16px;
   font-weight: 700;
-  color: #1f2937;
-  font-size: 1.5rem;
+  color: #2c2c2c;
+  font-size: 1.375rem;
+  margin: 0 0 12px 0;
+}
+
+/* Ensure grid layouts work well within Katen containers */
+.katen-section-container .grid {
+  gap: 1rem;
+}
+
+.katen-section-container .grid > * {
+  min-width: 0;
 }
 
 /* Override existing section background styles for clean Katen look */
@@ -119,6 +146,18 @@ Text Domain: techscope
   background: rgba(248, 250, 252, 0.8) !important;
   border: 2px solid rgba(0, 0, 0, 0.08) !important;
   border-radius: 12px !important;
+}
+
+/* Responsive adjustments for Katen containers */
+@media (max-width: 768px) {
+  .katen-section-container {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .katen-section-header h3 {
+    font-size: 1.25rem;
+  }
 }
 
 /* ========== RESPONSIVE REFINEMENTS FOR KATEN STYLE ========== */

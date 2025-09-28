@@ -266,20 +266,18 @@
     </div>
 
     <?php if (get_option('techscope_show_editor', 1)) : ?>
-    <!-- ========== EDITOR'S CHOICE SECTION - KATEN STYLE DIVIDER ========== -->
-    <div class="mb-8 mt-12 section-divider-katen">
-      <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-        <span class="text-amber-500">⭐</span>
-        <?php echo techscope_get_section_title('editor'); ?>
-      </h3>
-    </div>
-    <!-- ========== END EDITOR'S CHOICE DIVIDER ========== -->
+    <!-- ========== EDITOR'S CHOICE SECTION - KATEN STYLE CONTAINER ========== -->
+    <div class="lg:col-span-3 katen-section-container">
+      <!-- Section Header -->
+      <div class="katen-section-header">
+        <h3 class="flex items-center gap-2">
+          <span class="text-amber-500">⭐</span>
+          <?php echo techscope_get_section_title('editor'); ?>
+        </h3>
+      </div>
 
-    <!-- EDITOR'S CHOICE - FULL WIDTH SECTION -->
-    <div class="lg:col-span-3 section-animate stagger-2">
-
-      <!-- Content Container - Katen Style: Clean grid with subtle border -->
-      <section class="section-border-katen rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-3">
+      <!-- EDITOR'S CHOICE Content -->
+      <section class="section-animate stagger-2">
         <?php
         $editor_posts = techscope_get_editor_posts();
         $editor_secondary_count = get_option('techscope_editor_secondary_count', 4); // Increased default to 4
@@ -395,17 +393,18 @@
     <div class="lg:col-span-2 space-y-6 lg:space-y-8">
 
       <?php if (get_option('techscope_show_hot', 1)) : ?>
-      <!-- ========== HOT STORIES SECTION - KATEN STYLE DIVIDER ========== -->
-      <div class="mb-8 mt-12 section-divider-katen">
-        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-          <span class="text-red-500">🔥</span>
-          <?php echo techscope_get_section_title('hot'); ?>
-        </h3>
-      </div>
-      <!-- ========== END HOT STORIES DIVIDER ========== -->
+      <!-- ========== HOT STORIES SECTION - KATEN STYLE CONTAINER ========== -->
+      <div class="katen-section-container">
+        <!-- Section Header -->
+        <div class="katen-section-header">
+          <h3 class="flex items-center gap-2">
+            <span class="text-red-500">🔥</span>
+            <?php echo techscope_get_section_title('hot'); ?>
+          </h3>
+        </div>
 
-      <!-- HOT STORIES - Katen Style: Add section border -->
-      <section class="section-animate stagger-3 section-border-katen">
+        <!-- HOT STORIES Content -->
+        <section class="section-animate stagger-3">
         <?php
         $hot_posts = techscope_get_hot_stories_posts();
         $hot_count = get_option('techscope_hot_count', 4);
@@ -452,21 +451,23 @@
           endif;
           ?>
         </div>
-      </section>
+        </section>
+      </div>
       <?php endif; ?>
 
       <?php if (get_option('techscope_show_mobile', 1)) : ?>
-      <!-- ========== MOBILE TECH SECTION - KATEN STYLE DIVIDER ========== -->
-      <div class="mb-8 mt-12 section-divider-katen">
-        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-          <span class="text-blue-500">📱</span>
-          <?php echo techscope_get_section_title('mobile'); ?>
-        </h3>
-      </div>
-      <!-- ========== END MOBILE TECH DIVIDER ========== -->
+      <!-- ========== MOBILE TECH SECTION - KATEN STYLE CONTAINER ========== -->
+      <div class="katen-section-container">
+        <!-- Section Header -->
+        <div class="katen-section-header">
+          <h3 class="flex items-center gap-2">
+            <span class="text-blue-500">📱</span>
+            <?php echo techscope_get_section_title('mobile'); ?>
+          </h3>
+        </div>
 
-      <!-- MOBILE TECH - Katen Style: Add section border -->
-      <section class="section-animate stagger-4 section-border-katen">
+        <!-- MOBILE TECH Content -->
+        <section class="section-animate stagger-4">
         <?php
         $mobile_posts = techscope_get_mobile_posts();
         $mobile_count = get_option('techscope_mobile_count', 3);
@@ -510,21 +511,23 @@
           endif;
           ?>
         </div>
-      </section>
+        </section>
+      </div>
       <?php endif; ?>
 
       <?php if (get_option('techscope_show_gaming', 1)) : ?>
-      <!-- ========== AI & GAMING SECTION - KATEN STYLE DIVIDER ========== -->
-      <div class="mb-8 mt-12 section-divider-katen">
-        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-          <span class="text-green-500">🤖</span>
-          <?php echo techscope_get_section_title('ai'); ?>
-        </h3>
-      </div>
-      <!-- ========== END AI & GAMING DIVIDER ========== -->
+      <!-- ========== AI & GAMING SECTION - KATEN STYLE CONTAINER ========== -->
+      <div class="katen-section-container">
+        <!-- Section Header -->
+        <div class="katen-section-header">
+          <h3 class="flex items-center gap-2">
+            <span class="text-green-500">🤖</span>
+            <?php echo techscope_get_section_title('ai'); ?>
+          </h3>
+        </div>
 
-      <!-- AI & GAMING - Katen Style: Add section border -->
-      <section class="section-animate stagger-5 section-border-katen">
+        <!-- AI & GAMING Content -->
+        <section class="section-animate stagger-5">
         <?php
         $ai_gaming_posts = techscope_get_ai_gaming_posts();
         $ai_count = get_option('techscope_ai_count', 3);
@@ -568,7 +571,8 @@
           endif;
           ?>
         </div>
-      </section>
+        </section>
+      </div>
       <?php endif; ?>
 
     </div>
