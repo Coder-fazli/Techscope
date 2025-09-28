@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
-<!-- LOADING SKELETONS (Hidden, keep skeleton structure if needed) -->
-<div id="loading-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-6" style="display: none;">
+<!-- LOADING SKELETONS (Visible, no animations) -->
+<div id="loading-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-6">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Main Content Skeleton -->
     <div class="lg:col-span-2 space-y-8">
@@ -37,8 +37,8 @@
   </div>
 </div>
 
-<!-- MAIN LAYOUT (Visible, main content displayed) -->
-<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2">
+<!-- MAIN LAYOUT (Hidden, skeleton shows instead) -->
+<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2" style="display: none;">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- HERO SLIDER -->
@@ -629,15 +629,5 @@
   </div>
 </div>
 
-<!-- LOADING ANIMATIONS DISABLED TO PREVENT RELOAD ISSUES -->
-<script>
-// (function() {
-//   console.log('Loading animations disabled to prevent double reload...');
-//
-//   // All loading transition JavaScript disabled
-//   // Page will show content immediately without skeleton transitions
-//
-// })();
-</script>
 
 <?php get_footer(); ?>
