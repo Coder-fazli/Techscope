@@ -293,64 +293,43 @@ function techscope_format_view_count($count) {
     return $count;
 }
 
-// Enhanced responsive image function with local fallback for missing images
+// Enhanced responsive image function - now uses Smart Image Fallback plugin
 function techscope_get_responsive_image($post_id, $size = 'medium', $fallback_url = '') {
-    // First check if post has thumbnail
+    // Check if Smart Image Fallback plugin is active
+    if (function_exists('sif_get_responsive_image')) {
+        return sif_get_responsive_image($post_id, $size, $fallback_url);
+    }
+
+    // Fallback to original functionality if plugin not active
     if (has_post_thumbnail($post_id)) {
         $thumbnail_url = get_the_post_thumbnail_url($post_id, $size);
-
-        // Return the image URL - let WordPress handle it normally
-        // Only fall back if WordPress itself can't get the URL
         if (!empty($thumbnail_url)) {
             return $thumbnail_url;
         }
     }
 
-    // Use custom fallback if provided
     if (!empty($fallback_url)) {
         return $fallback_url;
     }
 
-    // Use local fallback image (27002.jpg) only when no featured image exists
+    // Use theme fallback image as last resort
     return get_template_directory_uri() . '/27002.jpg';
 }
 
-// Helper function to check if image exists and is accessible
-function techscope_image_exists($url) {
-    // Skip check for external URLs to avoid performance issues
-    if (strpos($url, 'http') === 0 && strpos($url, home_url()) === false) {
-        return true; // Assume external images are OK
+// Enhanced image function - now uses Smart Image Fallback plugin
+function techscope_ensure_image($post_id, $size = 'medium') {
+    // Check if Smart Image Fallback plugin is active
+    if (function_exists('sif_ensure_image')) {
+        return sif_ensure_image($post_id, $size);
     }
 
-    // For local images, check if file exists
-    if (strpos($url, home_url()) !== false) {
-        $file_path = str_replace(home_url(), ABSPATH, $url);
-        return file_exists($file_path);
-    }
-
-    return true; // Default to true if we can't determine
+    // Fallback to original functionality if plugin not active
+    return techscope_get_responsive_image($post_id, $size);
 }
 
-// Get fallback image URL - always returns a working image
+// Legacy function - kept for backward compatibility
 function techscope_get_fallback_image() {
     return get_template_directory_uri() . '/27002.jpg';
-}
-
-// Enhanced image function that ensures we always have an image
-function techscope_ensure_image($post_id, $size = 'medium') {
-    // Check if post has featured image first
-    if (has_post_thumbnail($post_id)) {
-        $thumbnail_url = get_the_post_thumbnail_url($post_id, $size);
-
-        // If WordPress can get the thumbnail URL, return it
-        // Let the browser/JavaScript handle 404 errors
-        if (!empty($thumbnail_url)) {
-            return $thumbnail_url;
-        }
-    }
-
-    // Only use fallback when no featured image is set at all
-    return techscope_get_fallback_image();
 }
 
 // Truncate text
