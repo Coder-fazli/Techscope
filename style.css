@@ -22,10 +22,13 @@ Text Domain: techscope
   background: transparent !important;
   border-radius: 12px;
   overflow: hidden;
+  /* Add subtle shadow for definition */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-hover-katen:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Sidebar cards Katen style */
@@ -34,43 +37,88 @@ Text Domain: techscope
   background: transparent !important;
   border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-card-katen:hover {
   transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Ensure text content has proper background for readability */
 .card-hover-katen .bg-white {
+  background: #ffffff !important;
   border-radius: 0 0 12px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: none;
+}
+
+/* Force white background for text content in Katen cards */
+.card-hover-katen > div:last-child,
+.card-hover-katen .p-3,
+.card-hover-katen .p-4,
+.card-hover-katen div[class*="p-3"],
+.card-hover-katen div[class*="p-4"] {
+  background: #ffffff !important;
+  border-radius: 0 0 12px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: none;
+}
+
+/* Ensure consistent spacing and typography in Katen cards */
+.card-hover-katen h4 {
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.card-hover-katen .text-xs {
+  font-size: 0.75rem;
+  opacity: 0.8;
 }
 
 /* ========== KATEN STYLE SECTION BORDERS ========== */
-/* Add subtle section-level borders like in Katen theme */
+/* Add visible section-level borders like in Katen theme */
 .section-border-katen {
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  padding: 20px;
-  background: transparent;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  background: rgba(248, 250, 252, 0.5);
+  margin-bottom: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Section dividers - enhance existing dividers */
+/* Section dividers - enhance existing dividers with visible borders */
 .section-divider-katen {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 16px;
   margin-bottom: 24px;
+  position: relative;
+}
+
+.section-divider-katen::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 2px;
 }
 
 .section-divider-katen h3 {
   margin-bottom: 16px;
   font-weight: 700;
   color: #1f2937;
+  font-size: 1.5rem;
 }
 
 /* Override existing section background styles for clean Katen look */
 .bg-gray-50 {
-  background: transparent !important;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(248, 250, 252, 0.8) !important;
+  border: 2px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 12px !important;
 }
 
 /* ========== RESPONSIVE REFINEMENTS FOR KATEN STYLE ========== */
@@ -92,17 +140,7 @@ Text Domain: techscope
   }
 }
 
-/* Ensure cards don't have shadow conflicts */
-.card-hover-katen,
-.sidebar-card-katen {
-  box-shadow: none !important;
-}
-
-/* Add subtle shadow only on hover for Katen style */
-.card-hover-katen:hover,
-.sidebar-card-katen:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-}
+/* Remove shadow conflicts - handled in main Katen card styles */
 /* ========== END RESPONSIVE REFINEMENTS ========== */
 
 /* ========== END KATEN STYLE SECTION BORDERS ========== */
@@ -418,12 +456,19 @@ nav, header, footer, main, section, div { max-width: 100vw; }
 /* UNIFIED POST CARD STYLING - Inspired by Superdesign Principles */
 
 /* ========== KATEN STYLE OVERRIDES ========== */
-/* Override base card styles for Katen design */
+/* Override base card styles for Katen design - Remove white backgrounds from card containers */
 .card-hover-katen,
 .sidebar-card-katen {
   background: transparent !important;
   border: none !important;
-  box-shadow: none !important;
+}
+
+/* Prevent other CSS from overriding Katen card styles */
+.card-hover-katen.bg-white,
+.sidebar-card-katen.bg-white,
+.card-hover-katen[class*="bg-white"],
+.sidebar-card-katen[class*="bg-white"] {
+  background: transparent !important;
 }
 
 /* Base card styles - applies to all post cards (EXCEPT Katen style) */

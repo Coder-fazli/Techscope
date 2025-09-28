@@ -550,8 +550,8 @@
               <div class="w-full h-48 tech-img"
                    style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
               </div>
-              <div class="p-4 bg-white">
-                <h4 class="font-bold text-base mb-2">
+              <div class="p-3 md:p-4 bg-white">
+                <h4 class="font-bold text-sm md:text-base mb-2">
                   <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors">
                     <?php echo techscope_truncate_text(get_the_title(), 60); ?>
                   </a>
