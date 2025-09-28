@@ -629,9 +629,12 @@
   console.log('Page loading fix script loaded');
 })();
 
-// Fallback image system - handle broken background images
+// Smart fallback image system - only replaces actually broken images
 (function() {
-  console.log('Setting up fallback image system...');
+  console.log('Setting up smart fallback image system...');
+
+  // Track already processed images to avoid duplicate checks
+  const processedImages = new Set();
 
   // Function to check and fix broken background images
   function checkBackgroundImages() {
@@ -643,20 +646,37 @@
 
       if (urlMatch) {
         const imageUrl = urlMatch[1];
+
+        // Skip if already processed or if it's already our fallback image
+        if (processedImages.has(imageUrl) || imageUrl.includes('27002.jpg')) {
+          return;
+        }
+
+        processedImages.add(imageUrl);
+
         const img = new Image();
 
         img.onload = function() {
           // Image loaded successfully, remove any error class
           element.classList.remove('image-error');
+          console.log('Image loaded successfully:', imageUrl);
         };
 
         img.onerror = function() {
-          console.log('Failed to load image:', imageUrl);
-          // Replace with fallback image
+          console.log('404 Error - Failed to load image:', imageUrl);
+          // Only now replace with fallback image
           const fallbackUrl = '<?php echo get_template_directory_uri(); ?>/27002.jpg';
           element.style.backgroundImage = `url('${fallbackUrl}')`;
           element.classList.add('image-error');
         };
+
+        // Set a timeout for slow-loading images
+        setTimeout(() => {
+          if (!img.complete) {
+            console.log('Image loading timeout:', imageUrl);
+            img.onerror();
+          }
+        }, 5000);
 
         img.src = imageUrl;
       }
@@ -671,9 +691,9 @@
   }
 
   // Re-check after a short delay to catch dynamically loaded content
-  setTimeout(checkBackgroundImages, 1000);
+  setTimeout(checkBackgroundImages, 2000);
 
-  console.log('Fallback image system initialized');
+  console.log('Smart fallback image system initialized');
 })();
 </script>
 

@@ -299,8 +299,9 @@ function techscope_get_responsive_image($post_id, $size = 'medium', $fallback_ur
     if (has_post_thumbnail($post_id)) {
         $thumbnail_url = get_the_post_thumbnail_url($post_id, $size);
 
-        // Verify if the image actually exists and is accessible
-        if (techscope_image_exists($thumbnail_url)) {
+        // Return the image URL - let WordPress handle it normally
+        // Only fall back if WordPress itself can't get the URL
+        if (!empty($thumbnail_url)) {
             return $thumbnail_url;
         }
     }
@@ -310,7 +311,7 @@ function techscope_get_responsive_image($post_id, $size = 'medium', $fallback_ur
         return $fallback_url;
     }
 
-    // Use local fallback image (27002.jpg) for missing/broken images
+    // Use local fallback image (27002.jpg) only when no featured image exists
     return get_template_directory_uri() . '/27002.jpg';
 }
 
@@ -337,15 +338,19 @@ function techscope_get_fallback_image() {
 
 // Enhanced image function that ensures we always have an image
 function techscope_ensure_image($post_id, $size = 'medium') {
-    // Try to get the responsive image
-    $image_url = techscope_get_responsive_image($post_id, $size);
+    // Check if post has featured image first
+    if (has_post_thumbnail($post_id)) {
+        $thumbnail_url = get_the_post_thumbnail_url($post_id, $size);
 
-    // If it's still the old Unsplash fallback or empty, use our local fallback
-    if (empty($image_url) || strpos($image_url, 'unsplash.com') !== false) {
-        return techscope_get_fallback_image();
+        // If WordPress can get the thumbnail URL, return it
+        // Let the browser/JavaScript handle 404 errors
+        if (!empty($thumbnail_url)) {
+            return $thumbnail_url;
+        }
     }
 
-    return $image_url;
+    // Only use fallback when no featured image is set at all
+    return techscope_get_fallback_image();
 }
 
 // Truncate text

@@ -144,13 +144,11 @@
                         <h1 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight"><?php the_title(); ?></h1>
                     </div>
 
-                    <!-- Featured Image -->
-                    <?php if (has_post_thumbnail()) : ?>
+                    <!-- Featured Image - Enhanced with Fallback System -->
                     <div class="relative mb-6">
-                        <div class="w-full h-[300px] sm:h-[400px] md:h-[500px] tech-img rounded-lg lg:rounded-xl overflow-hidden" style="background-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>')">
+                        <div class="w-full h-[300px] sm:h-[400px] md:h-[500px] tech-img rounded-lg lg:rounded-xl overflow-hidden" style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'full'); ?>')">
                         </div>
                     </div>
-                    <?php endif; ?>
 
                     <!-- ARTICLE META -->
                     <div class="bg-white rounded-lg p-4 md:p-6 shadow-sm mt-4">
@@ -244,9 +242,8 @@
                         foreach ($related_posts as $post) : setup_postdata($post);
                         ?>
                         <div class="bg-white rounded-lg shadow-sm overflow-hidden card-hover">
-                            <?php if (has_post_thumbnail()) : ?>
-                            <div class="w-full h-48 tech-img" style="background-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>')"></div>
-                            <?php endif; ?>
+                            <!-- Related Article Image - Enhanced with Fallback System -->
+                            <div class="w-full h-48 tech-img" style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'medium'); ?>')"></div>
                             <div class="p-4">
                                 <h4 class="font-bold text-lg mb-2">
                                     <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors"><?php the_title(); ?></a>
@@ -304,9 +301,8 @@
                         foreach ($trending_posts as $post) : setup_postdata($post);
                         ?>
                         <div class="flex gap-3">
-                            <?php if (has_post_thumbnail()) : ?>
-                            <div class="w-16 h-16 tech-img rounded" style="background-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'thumbnail')); ?>')"></div>
-                            <?php endif; ?>
+                            <!-- Trending Sidebar Image - Enhanced with Fallback System -->
+                            <div class="w-16 h-16 tech-img rounded" style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'thumbnail'); ?>')"></div>
                             <div class="flex-1">
                                 <h4 class="font-semibold text-sm mb-1">
                                     <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors"><?php the_title(); ?></a>
@@ -389,6 +385,62 @@
                     }, index * 100);
                 });
             }, 300);
+
+            // Smart fallback image system for single page - only replaces actually broken images
+            function setupFallbackImages() {
+                console.log('Setting up smart fallback image system for single page...');
+
+                const processedImages = new Set();
+                const elements = document.querySelectorAll('.tech-img[style*="background-image"]');
+
+                elements.forEach(element => {
+                    const style = element.getAttribute('style');
+                    const urlMatch = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/);
+
+                    if (urlMatch) {
+                        const imageUrl = urlMatch[1];
+
+                        // Skip if already processed or if it's already our fallback image
+                        if (processedImages.has(imageUrl) || imageUrl.includes('27002.jpg')) {
+                            return;
+                        }
+
+                        processedImages.add(imageUrl);
+
+                        const img = new Image();
+
+                        img.onload = function() {
+                            // Image loaded successfully, remove any error class
+                            element.classList.remove('image-error');
+                            console.log('Single page image loaded successfully:', imageUrl);
+                        };
+
+                        img.onerror = function() {
+                            console.log('404 Error on single page - Failed to load image:', imageUrl);
+                            // Only now replace with fallback image
+                            const fallbackUrl = '<?php echo get_template_directory_uri(); ?>/27002.jpg';
+                            element.style.backgroundImage = `url('${fallbackUrl}')`;
+                            element.classList.add('image-error');
+                        };
+
+                        // Set a timeout for slow-loading images
+                        setTimeout(() => {
+                            if (!img.complete) {
+                                console.log('Single page image loading timeout:', imageUrl);
+                                img.onerror();
+                            }
+                        }, 5000);
+
+                        img.src = imageUrl;
+                    }
+                });
+            }
+
+            // Run fallback image setup
+            setupFallbackImages();
+
+            // Re-check after content loads
+            setTimeout(setupFallbackImages, 2000);
         });
     </script>
 

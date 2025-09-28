@@ -541,15 +541,16 @@ nav, header, footer, main, section, div { max-width: 100vw; }
 }
 
 /* ========== FALLBACK IMAGE SYSTEM ========== */
-/* CSS fallback for broken background images */
-.tech-img {
-  background-image: url('./27002.jpg') !important;
-  /* This will be overridden by inline styles when images work */
-}
-
-/* Ensure fallback image is properly styled */
+/* CSS fallback only for elements without background images */
 .tech-img:not([style*="background-image"]) {
   background-image: url('./27002.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Default styling for tech-img elements */
+.tech-img {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

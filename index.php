@@ -53,8 +53,9 @@
 
               <!-- Featured Image -->
               <?php if (has_post_thumbnail()) : ?>
+                <!-- Blog Archive Image - Enhanced with Fallback System -->
                 <div class="w-full h-48 tech-img"
-                     style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
+                     style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
                   <a href="<?php the_permalink(); ?>" class="block w-full h-full"></a>
                 </div>
               <?php endif; ?>
