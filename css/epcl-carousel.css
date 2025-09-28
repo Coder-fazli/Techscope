@@ -4,7 +4,7 @@
 .slick-slider,
 .slick-slider .slick-list,
 .slick-slider .slick-track {
-  background: #F7F3ED !important;
+  background: transparent !important;
 }
 
 .slick-slider .slick-list {
@@ -14,7 +14,7 @@
 /* Fix carousel container backgrounds only */
 .epcl-carousel .slick-slide,
 .epcl-carousel .slick-slide > div {
-  background: #F7F3ED !important;
+  background: transparent !important;
 }
 
 /* EPCL Carousel Base Styles - FULL WIDTH */
@@ -27,13 +27,13 @@
   right: 50% !important;
   margin-left: -50vw !important;
   margin-right: -50vw !important;
-  background: #F7F3ED !important;
+  background: transparent !important;
 }
 
 .epcl-carousel .item {
   padding: 0 8px;
   box-sizing: border-box;
-  background: #F7F3ED !important;
+  background: transparent !important;
 }
 
 .epcl-carousel .item article {
@@ -45,7 +45,7 @@
   overflow: hidden;
   box-shadow: 0 8px 30px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
-  background: #fff !important;
+  background: transparent !important;
 }
 
 .epcl-carousel .item article:hover {
