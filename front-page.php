@@ -640,14 +640,4 @@
 // })();
 </script>
 
-// Smart fallback image system - TEMPORARILY DISABLED TO TEST RELOAD ISSUE
-// (function() {
-//   console.log('Smart fallback image system temporarily disabled for testing...');
-//
-//   // The image fallback system might be causing reload issues
-//   // by manipulating DOM elements or triggering events
-//
-// })();
-</script>
-
 <?php get_footer(); ?>
