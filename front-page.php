@@ -42,7 +42,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- HERO SLIDER -->
-    <?php if (get_option('techscope_show_hero', 1)) : ?>
+    <?php if (techscope_should_show_section('hero')) : ?>
     <div class="lg:col-span-2 relative hero-slider section-animate">
       <!-- Hero Slider - Katen Style: Remove white background wrapper -->
       <div class="rounded-xl overflow-hidden">
@@ -133,7 +133,7 @@
     <?php endif; ?>
 
     <!-- TRENDING WIDGET - Right side of hero -->
-    <?php if (get_option('techscope_show_trending', 1)) : ?>
+    <?php if (techscope_should_show_section('trending')) : ?>
     <div class="lg:col-span-1 section-animate stagger-2">
       <!-- Trending Widget - Katen Style: Remove gradient background -->
       <div class="katen-section-container h-full flex flex-col">
@@ -234,7 +234,7 @@
     <!-- MAIN CONTENT SECTIONS -->
     <div class="lg:col-span-3 space-y-6 lg:space-y-8">
 
-      <?php if (get_option('techscope_show_trending_tech', 1)) : ?>
+      <?php if (techscope_should_show_section('trending_tech')) : ?>
       <!-- ========== TRENDING TECH SECTION - KATEN STYLE DIVIDER ========== -->
       <div class="mb-8 mt-12 section-divider-katen">
         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
@@ -290,7 +290,7 @@
 
     </div>
 
-    <?php if (get_option('techscope_show_editor', 1)) : ?>
+    <?php if (techscope_should_show_section('editor')) : ?>
     <!-- ========== EDITOR'S CHOICE SECTION - KATEN STYLE CONTAINER ========== -->
     <div class="lg:col-span-3 katen-section-container">
       <!-- Section Header -->
@@ -418,7 +418,7 @@
     <!-- CONTINUE MAIN CONTENT COLUMN -->
     <div class="lg:col-span-2 space-y-6 lg:space-y-8">
 
-      <?php if (get_option('techscope_show_hot', 1)) : ?>
+      <?php if (techscope_should_show_section('hot')) : ?>
       <!-- ========== HOT STORIES SECTION - KATEN STYLE CONTAINER ========== -->
       <div class="katen-section-container">
         <!-- Section Header -->
@@ -481,7 +481,7 @@
       </div>
       <?php endif; ?>
 
-      <?php if (get_option('techscope_show_mobile', 1)) : ?>
+      <?php if (techscope_should_show_section('mobile')) : ?>
       <!-- ========== MOBILE TECH SECTION - KATEN STYLE CONTAINER ========== -->
       <div class="katen-section-container">
         <!-- Section Header -->
@@ -541,7 +541,7 @@
       </div>
       <?php endif; ?>
 
-      <?php if (get_option('techscope_show_gaming', 1)) : ?>
+      <?php if (techscope_should_show_section('ai')) : ?>
       <!-- ========== AI & GAMING SECTION - KATEN STYLE CONTAINER ========== -->
       <div class="katen-section-container">
         <!-- Section Header -->

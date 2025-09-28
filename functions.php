@@ -420,6 +420,15 @@ function techscope_admin_menu() {
         'techscope-sections',
         'techscope_sections_page'
     );
+
+    add_submenu_page(
+        'techscope-settings',
+        __('Mobile Settings', 'techscope'),
+        __('Mobile Settings', 'techscope'),
+        'manage_options',
+        'techscope-mobile',
+        'techscope_mobile_page'
+    );
 }
 add_action('admin_menu', 'techscope_admin_menu');
 
@@ -1100,6 +1109,135 @@ function techscope_sections_page() {
         </div>
     </div>
     <?php
+}
+
+// Mobile Settings Page
+function techscope_mobile_page() {
+    // Handle form submission
+    if (isset($_POST['submit']) && wp_verify_nonce($_POST['_wpnonce'], 'techscope_mobile')) {
+        // Save mobile section visibility options
+        update_option('techscope_mobile_show_hero', isset($_POST['mobile_show_hero']) ? 1 : 0);
+        update_option('techscope_mobile_show_trending', isset($_POST['mobile_show_trending']) ? 1 : 0);
+        update_option('techscope_mobile_show_trending_tech', isset($_POST['mobile_show_trending_tech']) ? 1 : 0);
+        update_option('techscope_mobile_show_editor', isset($_POST['mobile_show_editor']) ? 1 : 0);
+        update_option('techscope_mobile_show_hot', isset($_POST['mobile_show_hot']) ? 1 : 0);
+        update_option('techscope_mobile_show_mobile', isset($_POST['mobile_show_mobile']) ? 1 : 0);
+        update_option('techscope_mobile_show_ai', isset($_POST['mobile_show_ai']) ? 1 : 0);
+
+        // Set a flag to show success message
+        $settings_saved = true;
+
+        // Display success message
+        echo '<div class="notice notice-success is-dismissible"><p>' . __('Mobile settings saved successfully!', 'techscope') . '</p></div>';
+    }
+
+    // Get current mobile settings
+    $mobile_show_hero = get_option('techscope_mobile_show_hero', 1);
+    $mobile_show_trending = get_option('techscope_mobile_show_trending', 1);
+    $mobile_show_trending_tech = get_option('techscope_mobile_show_trending_tech', 1);
+    $mobile_show_editor = get_option('techscope_mobile_show_editor', 1);
+    $mobile_show_hot = get_option('techscope_mobile_show_hot', 1);
+    $mobile_show_mobile = get_option('techscope_mobile_show_mobile', 1);
+    $mobile_show_ai = get_option('techscope_mobile_show_ai', 1);
+    ?>
+    <div class="wrap">
+        <h1><?php _e('Mobile Settings', 'techscope'); ?></h1>
+
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <h2><?php _e('Mobile Section Visibility', 'techscope'); ?></h2>
+            <p><?php _e('Control which sections appear on mobile devices (screens smaller than 768px).', 'techscope'); ?></p>
+
+            <form method="post">
+                <?php wp_nonce_field('techscope_mobile'); ?>
+
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><?php _e('Hero Slider', 'techscope'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="mobile_show_hero" value="1" <?php checked($mobile_show_hero, 1); ?> />
+                                <?php _e('Show Hero Slider on Mobile', 'techscope'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('Trending Tech', 'techscope'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="mobile_show_trending" value="1" <?php checked($mobile_show_trending, 1); ?> />
+                                <?php _e('Show Trending Tech Section on Mobile', 'techscope'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('Trending Tech Carousel', 'techscope'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="mobile_show_trending_tech" value="1" <?php checked($mobile_show_trending_tech, 1); ?> />
+                                <?php _e('Show Trending Tech Carousel on Mobile', 'techscope'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e("Editor's Choice", 'techscope'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="mobile_show_editor" value="1" <?php checked($mobile_show_editor, 1); ?> />
+                                <?php _e("Show Editor's Choice Section on Mobile", 'techscope'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('HOT STORIES', 'techscope'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="mobile_show_hot" value="1" <?php checked($mobile_show_hot, 1); ?> />
+                                <?php _e('Show HOT STORIES Section on Mobile', 'techscope'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('Mobile Tech', 'techscope'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="mobile_show_mobile" value="1" <?php checked($mobile_show_mobile, 1); ?> />
+                                <?php _e('Show Mobile Tech Section on Mobile', 'techscope'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('AI & Gaming', 'techscope'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="mobile_show_ai" value="1" <?php checked($mobile_show_ai, 1); ?> />
+                                <?php _e('Show AI & Gaming Section on Mobile', 'techscope'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+
+                <?php submit_button(__('Save Mobile Settings', 'techscope')); ?>
+            </form>
+        </div>
+    </div>
+    <?php
+}
+
+// Helper function to check if user is on mobile device
+function techscope_is_mobile() {
+    return wp_is_mobile();
+}
+
+// Helper function to check section visibility (combines desktop and mobile checks)
+function techscope_should_show_section($section_name) {
+    $desktop_show = get_option('techscope_show_' . $section_name, 1);
+
+    if (techscope_is_mobile()) {
+        $mobile_show = get_option('techscope_mobile_show_' . $section_name, 1);
+        return $desktop_show && $mobile_show;
+    }
+
+    return $desktop_show;
 }
 
 // Helper functions for admin-controlled sections
