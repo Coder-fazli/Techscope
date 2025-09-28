@@ -389,6 +389,7 @@
         <?php endif; ?>
       </section>
     </div>
+    <?php endif; ?>
 
     <!-- CONTINUE MAIN CONTENT COLUMN -->
     <div class="lg:col-span-2 space-y-6 lg:space-y-8">
