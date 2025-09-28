@@ -91,14 +91,14 @@ function techscope_enqueue_scripts() {
         wp_get_theme()->get('Version')
     );
 
-    // --- Theme JS (FIXED - REMOVED SCROLL ANIMATIONS) ---
-    wp_enqueue_script(
-        'techscope-script',
-        get_template_directory_uri() . '/assets/js/script.js',
-        array(),
-        wp_get_theme()->get('Version'),
-        true
-    );
+    // --- Theme JS (DISABLED TO PREVENT DOUBLE LOADING) ---
+    // wp_enqueue_script(
+    //     'techscope-script',
+    //     get_template_directory_uri() . '/assets/js/script.js',
+    //     array(),
+    //     wp_get_theme()->get('Version'),
+    //     true
+    // );
 
 
     // --- Admin Dashboard JS ---
