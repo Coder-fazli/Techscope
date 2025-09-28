@@ -54,7 +54,11 @@
         let currentSlide = 0;
         let slideInterval;
 
-        if ($slides.length <= 1) return;
+        console.log('Hero slider init:', $slides.length, 'slides found');
+        console.log('Navigation buttons found:', $prevBtn.length, $nextBtn.length);
+
+        // Always show navigation for testing
+        // if ($slides.length <= 1) return;
 
         function showSlide(index) {
             $slides.removeClass('active').eq(index).addClass('active');
