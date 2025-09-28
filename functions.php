@@ -50,21 +50,24 @@ add_action('after_setup_theme', 'techscope_theme_setup');
  * Enqueue Styles and Scripts
  */
 function techscope_enqueue_scripts() {
-    // --- Tailwind via CDN TEMPORARILY DISABLED TO FIX RELOAD ISSUE ---
-    // COMMENT: Tailwind CDN often causes page reloads and conflicts
+    // --- Tailwind via CDN - OPTIMIZED LOADING TO PREVENT RELOADS ---
 
-    // 1) Tiny empty handle to hold the config
-    // wp_register_script('tailwind-config', '', array(), null, false);
-    // wp_enqueue_script('tailwind-config');
+    // Load Tailwind CDN with defer to prevent blocking
+    wp_enqueue_script(
+        'tailwindcdn',
+        'https://cdn.tailwindcss.com',
+        array(),
+        null,
+        true // Load in footer
+    );
 
-    // 2) Your Tailwind config (no heredoc, no 'before' arg)
-    // wp_add_inline_script(
-    //     'tailwind-config',
-    //     'tailwind = window.tailwind || {}; tailwind.config = { theme: { extend: {} } };'
-    // );
-
-    // 3) Load the Tailwind CDN script, depends on the config so it runs after it
-    // wp_enqueue_script('tailwindcdn', 'https://cdn.tailwindcss.com', array('tailwind-config'), null, false);
+    // Add script attributes to prevent blocking
+    add_filter('script_loader_tag', function($tag, $handle) {
+        if ('tailwindcdn' === $handle) {
+            return str_replace('<script ', '<script defer ', $tag);
+        }
+        return $tag;
+    }, 10, 2);
 
     // --- Fonts & styles ---
     wp_enqueue_style(

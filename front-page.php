@@ -629,7 +629,7 @@
   </div>
 </div>
 
-<!-- SKELETON TO MAIN CONTENT TRANSITION -->
+<!-- SKELETON TO MAIN CONTENT TRANSITION - TAILWIND COMPATIBLE -->
 <script>
 (function() {
   console.log('🚀 Initializing page loading system...');
@@ -665,12 +665,22 @@
     }
   }
 
-  // Single execution - wait for DOM to be ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', showMainContent);
-  } else {
-    showMainContent();
+  // Wait for both DOM and Tailwind to be ready
+  function initializeWhenReady() {
+    // Check if Tailwind is available (if loaded)
+    const isTailwindReady = !window.tailwind || window.tailwind;
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      // Small delay to ensure Tailwind has processed classes
+      setTimeout(showMainContent, 100);
+    } else {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(showMainContent, 100);
+      });
+    }
   }
+
+  initializeWhenReady();
 
   console.log('✅ Loading system initialized');
 })();
