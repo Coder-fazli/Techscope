@@ -38,14 +38,14 @@
 </div>
 
 <!-- MAIN LAYOUT (Show immediately while keeping skeleton for smooth transition) -->
-<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6" style="opacity: 0; transition: opacity 0.3s ease;">
+<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2" style="opacity: 0; transition: opacity 0.3s ease;">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- HERO SLIDER -->
     <?php if (techscope_should_show_section('hero')) : ?>
-    <div class="lg:col-span-2 relative hero-slider section-animate">
+    <div class="lg:col-span-2 relative hero-slider section-animate mb-2">
       <!-- Hero Slider - Katen Style: Remove white background wrapper -->
-      <div class="rounded-xl overflow-hidden">
+      <div class="rounded-xl overflow-hidden mx-2 lg:mx-4">
         <div class="w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden relative">
           <?php
           $hero_posts = techscope_get_hero_posts();
@@ -62,7 +62,7 @@
             <div class="hero-slide <?php echo $active_class; ?> tech-img"
                  style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'hero-slider'); ?>')">
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-              <div class="absolute inset-x-0 bottom-0 p-4 md:p-6">
+              <div class="absolute inset-x-0 bottom-8 md:bottom-12 p-4 md:p-6">
                 <?php
                 $categories = get_the_category();
                 if (!empty($categories)) :
@@ -99,7 +99,7 @@
             <div class="hero-slide <?php echo $active_class; ?> tech-img"
                  style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')">
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-              <div class="absolute inset-x-0 bottom-0 p-4 md:p-6">
+              <div class="absolute inset-x-0 bottom-8 md:bottom-12 p-4 md:p-6">
                 <div class="mb-3">
                   <span class="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                     Technology
@@ -232,7 +232,7 @@
     <?php endif; ?>
 
     <!-- MAIN CONTENT SECTIONS -->
-    <div class="lg:col-span-3 space-y-6 lg:space-y-8">
+    <div class="lg:col-span-3 space-y-4 lg:space-y-6">
 
       <?php if (techscope_should_show_section('trending_tech')) : ?>
       <!-- ========== TRENDING TECH SECTION - KATEN STYLE DIVIDER ========== -->
