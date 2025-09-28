@@ -138,19 +138,20 @@
           <?php endfor; endif; ?>
 
         </div>
-        <!-- Minimalistic Navigation - Always visible -->
-        <div class="hero-nav" style="display: flex !important;">
-          <button class="hero-nav-btn hero-prev" aria-label="Previous slide" style="display: flex !important;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-            </svg>
-          </button>
-          <button class="hero-nav-btn hero-next" aria-label="Next slide" style="display: flex !important;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-          </button>
-        </div>
+      </div>
+
+      <!-- Minimalistic Navigation - Positioned relative to hero-slider container -->
+      <div class="hero-nav" style="display: flex !important;">
+        <button class="hero-nav-btn hero-prev" aria-label="Previous slide" style="display: flex !important;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="hero-nav-btn hero-next" aria-label="Next slide" style="display: flex !important;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
       </div>
     </div>
     <?php endif; ?>
