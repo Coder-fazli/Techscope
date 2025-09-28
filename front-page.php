@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<!-- LOADING SKELETONS (Initially visible) -->
+<!-- LOADING SKELETONS (Visible, no animations) -->
 <div id="loading-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-6">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Main Content Skeleton -->
@@ -37,8 +37,8 @@
   </div>
 </div>
 
-<!-- MAIN LAYOUT (Hidden initially, skeleton shows first) -->
-<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2" style="opacity: 0; visibility: hidden; transition: opacity 0.3s ease;">
+<!-- MAIN LAYOUT (Hidden, skeleton shows instead) -->
+<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2" style="display: none;">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- HERO SLIDER -->
@@ -629,128 +629,25 @@
   </div>
 </div>
 
-<!-- SKELETON TO MAIN CONTENT TRANSITION - TAILWIND COMPATIBLE -->
+<!-- LOADING ANIMATIONS DISABLED TO PREVENT RELOAD ISSUES -->
 <script>
-(function() {
-  console.log('🚀 Initializing page loading system...');
+// (function() {
+//   console.log('Loading animations disabled to prevent double reload...');
+//
+//   // All loading transition JavaScript disabled
+//   // Page will show content immediately without skeleton transitions
+//
+// })();
+</script>
 
-  let hasExecuted = false; // Prevent double execution
-
-  function showMainContent() {
-    if (hasExecuted) {
-      console.log('⚠️ Already executed, skipping...');
-      return;
-    }
-    hasExecuted = true;
-
-    const loading = document.getElementById('loading-content');
-    const main = document.getElementById('main-content');
-
-    console.log('📱 Loading element:', loading ? '✅' : '❌');
-    console.log('📄 Main element:', main ? '✅' : '❌');
-
-    if (loading) {
-      loading.style.transition = 'opacity 0.3s ease';
-      loading.style.opacity = '0';
-      setTimeout(() => {
-        loading.style.display = 'none';
-        console.log('💀 Skeleton hidden');
-      }, 300);
-    }
-
-    if (main) {
-      main.style.opacity = '1';
-      main.style.visibility = 'visible';
-      console.log('✨ Main content shown');
-    }
-  }
-
-  // Wait for both DOM and Tailwind to be ready
-  function initializeWhenReady() {
-    // Check if Tailwind is available (if loaded)
-    const isTailwindReady = !window.tailwind || window.tailwind;
-
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      // Small delay to ensure Tailwind has processed classes
-      setTimeout(showMainContent, 100);
-    } else {
-      document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(showMainContent, 100);
-      });
-    }
-  }
-
-  initializeWhenReady();
-
-  console.log('✅ Loading system initialized');
-})();
-
-// Smart fallback image system - only replaces actually broken images
-(function() {
-  console.log('Setting up smart fallback image system...');
-
-  // Track already processed images to avoid duplicate checks
-  const processedImages = new Set();
-
-  // Function to check and fix broken background images
-  function checkBackgroundImages() {
-    const elements = document.querySelectorAll('.tech-img[style*="background-image"]');
-
-    elements.forEach(element => {
-      const style = element.getAttribute('style');
-      const urlMatch = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/);
-
-      if (urlMatch) {
-        const imageUrl = urlMatch[1];
-
-        // Skip if already processed or if it's already our fallback image
-        if (processedImages.has(imageUrl) || imageUrl.includes('27002.jpg')) {
-          return;
-        }
-
-        processedImages.add(imageUrl);
-
-        const img = new Image();
-
-        img.onload = function() {
-          // Image loaded successfully, remove any error class
-          element.classList.remove('image-error');
-          console.log('Image loaded successfully:', imageUrl);
-        };
-
-        img.onerror = function() {
-          console.log('404 Error - Failed to load image:', imageUrl);
-          // Only now replace with fallback image
-          const fallbackUrl = '<?php echo get_template_directory_uri(); ?>/27002.jpg';
-          element.style.backgroundImage = `url('${fallbackUrl}')`;
-          element.classList.add('image-error');
-        };
-
-        // Set a timeout for slow-loading images
-        setTimeout(() => {
-          if (!img.complete) {
-            console.log('Image loading timeout:', imageUrl);
-            img.onerror();
-          }
-        }, 5000);
-
-        img.src = imageUrl;
-      }
-    });
-  }
-
-  // Run image check when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', checkBackgroundImages);
-  } else {
-    checkBackgroundImages();
-  }
-
-  // Re-check after a short delay to catch dynamically loaded content
-  setTimeout(checkBackgroundImages, 2000);
-
-  console.log('Smart fallback image system initialized');
-})();
+// Smart fallback image system - TEMPORARILY DISABLED TO TEST RELOAD ISSUE
+// (function() {
+//   console.log('Smart fallback image system temporarily disabled for testing...');
+//
+//   // The image fallback system might be causing reload issues
+//   // by manipulating DOM elements or triggering events
+//
+// })();
 </script>
 
 <?php get_footer(); ?>
