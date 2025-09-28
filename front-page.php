@@ -44,7 +44,8 @@
     <!-- HERO SLIDER -->
     <?php if (get_option('techscope_show_hero', 1)) : ?>
     <div class="lg:col-span-2 relative hero-slider section-animate">
-      <div class="bg-white rounded-xl overflow-hidden card-hover p-3">
+      <!-- Hero Slider - Katen Style: Remove white background wrapper -->
+      <div class="rounded-xl overflow-hidden">
         <div class="w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden relative">
           <?php
           $hero_posts = techscope_get_hero_posts();
@@ -59,7 +60,7 @@
           ?>
             <!-- Slide <?php echo $slide_count; ?> -->
             <div class="hero-slide <?php echo $active_class; ?> tech-img"
-                 style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'hero-slider'); ?>')">
+                 style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'hero-slider'); ?>')">
               <div class="absolute inset-x-0 bottom-0 p-3 md:p-6">
                 <div class="glass-effect-dark text-white rounded-lg p-2 md:p-4">
                   <h2 class="text-base md:text-2xl lg:text-3xl font-extrabold mb-1 md:mb-2">
@@ -113,7 +114,8 @@
     <!-- TRENDING WIDGET - Right side of hero -->
     <?php if (get_option('techscope_show_trending', 1)) : ?>
     <div class="lg:col-span-1 section-animate stagger-2">
-      <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-4 border border-pink-100 h-full flex flex-col">
+      <!-- Trending Widget - Katen Style: Remove gradient background -->
+      <div class="katen-section-container h-full flex flex-col">
         <div class="space-y-2 flex-grow">
           <?php
           // Get admin settings with proper defaults
@@ -148,7 +150,7 @@
             <!-- Clean Sidebar Post Card - Katen Style: Remove white background box -->
             <div class="overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1 sidebar-card-katen">
               <div class="w-full h-[140px] relative overflow-hidden tech-img sidebar-image"
-                   style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
+                   style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-3">
                   <h4 class="font-bold text-sm mb-2 leading-tight text-white">
@@ -229,7 +231,7 @@
         ?>
           <div class="item">
             <article>
-              <div class="img cover" role="img" alt="<?php echo esc_attr(get_the_title()); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>" style="background: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>');">
+              <div class="img cover" role="img" alt="<?php echo esc_attr(get_the_title()); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>" style="background: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>');">
                 <div class="info border-effect">
                   <time datetime="<?php echo get_the_date('Y-m-d'); ?>">
                     <?php echo get_the_date('F j, Y'); ?>
@@ -298,9 +300,10 @@
             $view_count = techscope_format_view_count(techscope_get_post_views($post->ID));
             $rating = techscope_get_post_rating($post->ID);
             ?>
-            <div class="relative overflow-hidden rounded-3xl bg-white group flex-1">
+            <!-- Editor's Choice Large Post - Katen Style: Remove white background -->
+            <div class="relative overflow-hidden rounded-3xl group flex-1">
               <div class="w-full h-full tech-img relative"
-                   style="background-image: url('<?php echo techscope_get_responsive_image($post->ID, 'hero-slider'); ?>'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+                   style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'hero-slider'); ?>'); background-size: contain; background-position: center; background-repeat: no-repeat;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6">
                   <div class="text-white">
@@ -351,7 +354,7 @@
                   <!-- Editor's Choice Small Card Content - Katen Style: Image as main element -->
                   <div class="w-full h-36 sm:h-44 overflow-hidden relative">
                     <div class="w-full h-full tech-img transform transition-transform duration-300 hover:scale-105"
-                         style="background-image: url('<?php echo techscope_get_responsive_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                         style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                       <!-- Overlay gradient -->
                       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                       <!-- Title overlay -->
@@ -428,7 +431,7 @@
             <!-- Hot Stories Card - Katen Style: Remove white background box -->
             <div class="overflow-hidden card-hover-katen">
               <div class="w-full h-32 md:h-40 tech-img relative"
-                   style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
+                   style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
                 <div class="absolute top-2 left-2">
                   <span class="hot-badge px-2 py-1 text-xs font-bold bg-red-500 text-white rounded">HOT</span>
                 </div>
@@ -491,7 +494,7 @@
             <!-- Mobile Tech Card - Katen Style: Remove white background box -->
             <div class="overflow-hidden card-hover-katen">
               <div class="w-full h-40 md:h-48 tech-img"
-                   style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
+                   style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
               </div>
               <div class="p-3 md:p-4 bg-white">
                 <h4 class="font-bold text-sm md:text-base mb-2 leading-tight">
@@ -551,7 +554,7 @@
             <!-- AI & Gaming Card - Katen Style: Remove white background box -->
             <div class="overflow-hidden card-hover-katen">
               <div class="w-full h-48 tech-img"
-                   style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
+                   style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
               </div>
               <div class="p-3 md:p-4 bg-white">
                 <h4 class="font-bold text-sm md:text-base mb-2">
@@ -624,6 +627,53 @@
   }, 500);
 
   console.log('Page loading fix script loaded');
+})();
+
+// Fallback image system - handle broken background images
+(function() {
+  console.log('Setting up fallback image system...');
+
+  // Function to check and fix broken background images
+  function checkBackgroundImages() {
+    const elements = document.querySelectorAll('.tech-img[style*="background-image"]');
+
+    elements.forEach(element => {
+      const style = element.getAttribute('style');
+      const urlMatch = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/);
+
+      if (urlMatch) {
+        const imageUrl = urlMatch[1];
+        const img = new Image();
+
+        img.onload = function() {
+          // Image loaded successfully, remove any error class
+          element.classList.remove('image-error');
+        };
+
+        img.onerror = function() {
+          console.log('Failed to load image:', imageUrl);
+          // Replace with fallback image
+          const fallbackUrl = '<?php echo get_template_directory_uri(); ?>/27002.jpg';
+          element.style.backgroundImage = `url('${fallbackUrl}')`;
+          element.classList.add('image-error');
+        };
+
+        img.src = imageUrl;
+      }
+    });
+  }
+
+  // Run image check when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkBackgroundImages);
+  } else {
+    checkBackgroundImages();
+  }
+
+  // Re-check after a short delay to catch dynamically loaded content
+  setTimeout(checkBackgroundImages, 1000);
+
+  console.log('Fallback image system initialized');
 })();
 </script>
 
