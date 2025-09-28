@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
-<!-- LOADING SKELETONS (Visible, no animations) -->
-<div id="loading-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-6">
+<!-- LOADING SKELETONS (Hidden, keep skeleton structure if needed) -->
+<div id="loading-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 py-6" style="display: none;">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Main Content Skeleton -->
     <div class="lg:col-span-2 space-y-8">
@@ -37,8 +37,8 @@
   </div>
 </div>
 
-<!-- MAIN LAYOUT (Hidden, skeleton shows instead) -->
-<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2" style="display: none;">
+<!-- MAIN LAYOUT (Visible, main content displayed) -->
+<div id="main-content" class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 pb-2">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
     <!-- HERO SLIDER -->
