@@ -293,6 +293,7 @@ function techscope_format_view_count($count) {
     return $count;
 }
 
+/* ===== THEME FALLBACK FUNCTIONS TEMPORARILY DISABLED FOR PLUGIN TESTING =====
 // Enhanced responsive image function - now uses Smart Image Fallback plugin
 function techscope_get_responsive_image($post_id, $size = 'medium', $fallback_url = '') {
     // Check if Smart Image Fallback plugin is active
@@ -328,6 +329,23 @@ function techscope_ensure_image($post_id, $size = 'medium') {
 }
 
 // Legacy function - kept for backward compatibility
+function techscope_get_fallback_image() {
+    return get_template_directory_uri() . '/27002.jpg';
+}
+===== END DISABLED THEME FUNCTIONS ===== */
+
+// TEMPORARY: Simple fallback functions for plugin testing
+function techscope_get_responsive_image($post_id, $size = 'medium', $fallback_url = '') {
+    if (has_post_thumbnail($post_id)) {
+        return get_the_post_thumbnail_url($post_id, $size);
+    }
+    return !empty($fallback_url) ? $fallback_url : get_template_directory_uri() . '/27002.jpg';
+}
+
+function techscope_ensure_image($post_id, $size = 'medium') {
+    return techscope_get_responsive_image($post_id, $size);
+}
+
 function techscope_get_fallback_image() {
     return get_template_directory_uri() . '/27002.jpg';
 }
