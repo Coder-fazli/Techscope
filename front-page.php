@@ -145,8 +145,8 @@
               $categories = get_the_category();
               $category_name = !empty($categories) ? esc_html($categories[0]->name) : 'TRENDING';
           ?>
-            <!-- Clean Sidebar Post Card -->
-            <div class="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1 sidebar-card">
+            <!-- Clean Sidebar Post Card - Katen Style: Remove white background box -->
+            <div class="overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1 sidebar-card-katen">
               <div class="w-full h-[140px] relative overflow-hidden tech-img sidebar-image"
                    style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
@@ -211,13 +211,12 @@
     <!-- MAIN CONTENT SECTIONS -->
     <div class="lg:col-span-3 space-y-6 lg:space-y-8">
 
-      <!-- ========== TRENDING TECH SECTION - EDIT DIVIDER HERE ========== -->
-      <div class="mb-8 mt-12">
+      <!-- ========== TRENDING TECH SECTION - KATEN STYLE DIVIDER ========== -->
+      <div class="mb-8 mt-12 section-divider-katen">
         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
           <span class="text-purple-500">📱</span>
           <?php echo techscope_get_section_title('trending'); ?>
         </h3>
-        <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
       </div>
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
@@ -266,21 +265,21 @@
 
     </div>
 
-    <!-- ========== EDITOR'S CHOICE SECTION - EDIT DIVIDER HERE ========== -->
-    <div class="mb-8 mt-12">
+    <?php if (get_option('techscope_show_editor', 1)) : ?>
+    <!-- ========== EDITOR'S CHOICE SECTION - KATEN STYLE DIVIDER ========== -->
+    <div class="mb-8 mt-12 section-divider-katen">
       <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
         <span class="text-amber-500">⭐</span>
         <?php echo techscope_get_section_title('editor'); ?>
       </h3>
-      <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
     </div>
     <!-- ========== END EDITOR'S CHOICE DIVIDER ========== -->
 
     <!-- EDITOR'S CHOICE - FULL WIDTH SECTION -->
     <div class="lg:col-span-3 section-animate stagger-2">
 
-      <!-- Content Container - Clean Grid Only -->
-      <section class="bg-gray-50 rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-3">
+      <!-- Content Container - Katen Style: Clean grid with subtle border -->
+      <section class="section-border-katen rounded-2xl sm:rounded-3xl overflow-hidden p-2 sm:p-3">
         <?php
         $editor_posts = techscope_get_editor_posts();
         $editor_secondary_count = get_option('techscope_editor_secondary_count', 4); // Increased default to 4
@@ -349,8 +348,10 @@
                 $view_count = techscope_format_view_count(techscope_get_post_views($post->ID));
                 $rating = techscope_get_post_rating($post->ID);
               ?>
-                <div class="bg-white rounded-2xl sm:rounded-3xl overflow-hidden card-hover border border-gray-100/50 transform transition-all duration-300 hover:-translate-y-0.5">
-                  <div class="w-full h-36 sm:h-44 overflow-hidden rounded-2xl sm:rounded-3xl relative">
+                <!-- Editor's Choice Small Card - Katen Style: Remove white background box -->
+                <div class="overflow-hidden card-hover-katen transform transition-all duration-300 hover:-translate-y-0.5">
+                  <!-- Editor's Choice Small Card Content - Katen Style: Image as main element -->
+                  <div class="w-full h-36 sm:h-44 overflow-hidden relative">
                     <div class="w-full h-full tech-img transform transition-transform duration-300 hover:scale-105"
                          style="background-image: url('<?php echo techscope_get_responsive_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                       <!-- Overlay gradient -->
@@ -392,18 +393,18 @@
     <!-- CONTINUE MAIN CONTENT COLUMN -->
     <div class="lg:col-span-2 space-y-6 lg:space-y-8">
 
-      <!-- ========== HOT STORIES SECTION - EDIT DIVIDER HERE ========== -->
-      <div class="mb-8 mt-12">
+      <?php if (get_option('techscope_show_hot', 1)) : ?>
+      <!-- ========== HOT STORIES SECTION - KATEN STYLE DIVIDER ========== -->
+      <div class="mb-8 mt-12 section-divider-katen">
         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
           <span class="text-red-500">🔥</span>
           <?php echo techscope_get_section_title('hot'); ?>
         </h3>
-        <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
       </div>
       <!-- ========== END HOT STORIES DIVIDER ========== -->
 
-      <!-- HOT STORIES -->
-      <section class="section-animate stagger-3">
+      <!-- HOT STORIES - Katen Style: Add section border -->
+      <section class="section-animate stagger-3 section-border-katen">
         <?php
         $hot_posts = techscope_get_hot_stories_posts();
         $hot_count = get_option('techscope_hot_count', 4);
@@ -424,14 +425,15 @@
               $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
               $rating = techscope_get_post_rating(get_the_ID());
           ?>
-            <div class="bg-white rounded-lg lg:rounded-xl overflow-hidden card-hover">
-              <div class="w-full h-32 md:h-40 tech-img"
+            <!-- Hot Stories Card - Katen Style: Remove white background box -->
+            <div class="overflow-hidden card-hover-katen">
+              <div class="w-full h-32 md:h-40 tech-img relative"
                    style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
                 <div class="absolute top-2 left-2">
                   <span class="hot-badge px-2 py-1 text-xs font-bold bg-red-500 text-white rounded">HOT</span>
                 </div>
               </div>
-              <div class="p-3 md:p-4">
+              <div class="p-3 md:p-4 bg-white">
                 <h4 class="font-bold text-sm md:text-base mb-2 leading-tight">
                   <a href="<?php the_permalink(); ?>" class="hover:text-red-600 transition-colors">
                     <?php echo techscope_truncate_text(get_the_title(), 50); ?>
@@ -450,19 +452,20 @@
           ?>
         </div>
       </section>
+      <?php endif; ?>
 
-      <!-- ========== MOBILE TECH SECTION - EDIT DIVIDER HERE ========== -->
-      <div class="mb-8 mt-12">
+      <?php if (get_option('techscope_show_mobile', 1)) : ?>
+      <!-- ========== MOBILE TECH SECTION - KATEN STYLE DIVIDER ========== -->
+      <div class="mb-8 mt-12 section-divider-katen">
         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
           <span class="text-blue-500">📱</span>
           <?php echo techscope_get_section_title('mobile'); ?>
         </h3>
-        <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
       </div>
       <!-- ========== END MOBILE TECH DIVIDER ========== -->
 
-      <!-- MOBILE TECH -->
-      <section class="section-animate stagger-4">
+      <!-- MOBILE TECH - Katen Style: Add section border -->
+      <section class="section-animate stagger-4 section-border-katen">
         <?php
         $mobile_posts = techscope_get_mobile_posts();
         $mobile_count = get_option('techscope_mobile_count', 3);
@@ -483,11 +486,12 @@
               $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
               $rating = techscope_get_post_rating(get_the_ID());
           ?>
-            <div class="bg-white rounded-lg lg:rounded-xl overflow-hidden card-hover">
+            <!-- Mobile Tech Card - Katen Style: Remove white background box -->
+            <div class="overflow-hidden card-hover-katen">
               <div class="w-full h-40 md:h-48 tech-img"
                    style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
               </div>
-              <div class="p-3 md:p-4">
+              <div class="p-3 md:p-4 bg-white">
                 <h4 class="font-bold text-sm md:text-base mb-2 leading-tight">
                   <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors">
                     <?php echo techscope_truncate_text(get_the_title(), 50); ?>
@@ -506,19 +510,20 @@
           ?>
         </div>
       </section>
+      <?php endif; ?>
 
-      <!-- ========== AI & GAMING SECTION - EDIT DIVIDER HERE ========== -->
-      <div class="mb-8 mt-12">
+      <?php if (get_option('techscope_show_gaming', 1)) : ?>
+      <!-- ========== AI & GAMING SECTION - KATEN STYLE DIVIDER ========== -->
+      <div class="mb-8 mt-12 section-divider-katen">
         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
           <span class="text-green-500">🤖</span>
           <?php echo techscope_get_section_title('ai'); ?>
         </h3>
-        <div class="w-full h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
       </div>
       <!-- ========== END AI & GAMING DIVIDER ========== -->
 
-      <!-- AI & GAMING -->
-      <section class="section-animate stagger-5">
+      <!-- AI & GAMING - Katen Style: Add section border -->
+      <section class="section-animate stagger-5 section-border-katen">
         <?php
         $ai_gaming_posts = techscope_get_ai_gaming_posts();
         $ai_count = get_option('techscope_ai_count', 3);
@@ -539,11 +544,12 @@
               $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
               $rating = techscope_get_post_rating(get_the_ID());
           ?>
-            <div class="bg-white rounded-xl overflow-hidden card-hover">
+            <!-- AI & Gaming Card - Katen Style: Remove white background box -->
+            <div class="overflow-hidden card-hover-katen">
               <div class="w-full h-48 tech-img"
                    style="background-image: url('<?php echo techscope_get_responsive_image(get_the_ID(), 'featured-card'); ?>')">
               </div>
-              <div class="p-4">
+              <div class="p-4 bg-white">
                 <h4 class="font-bold text-base mb-2">
                   <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors">
                     <?php echo techscope_truncate_text(get_the_title(), 60); ?>
@@ -562,6 +568,7 @@
           ?>
         </div>
       </section>
+      <?php endif; ?>
 
     </div>
   </div>
