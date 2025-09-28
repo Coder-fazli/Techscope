@@ -45,7 +45,7 @@
         });
     }
 
-    // Hero Slider Functionality
+    // Hero Slider Functionality - Superdesign Enhanced
     function initHeroSlider() {
         const $slider = $('.hero-slider');
         const $slides = $slider.find('.hero-slide');
@@ -53,16 +53,29 @@
         const $nextBtn = $('.hero-next');
         let currentSlide = 0;
         let slideInterval;
+        let isTransitioning = false;
 
-        console.log('Hero slider init:', $slides.length, 'slides found');
-        console.log('Navigation buttons found:', $prevBtn.length, $nextBtn.length);
+        console.log('🎬 Hero Slider Init:', $slides.length, 'slides found');
+        console.log('🎯 Navigation buttons:', $prevBtn.length, 'prev,', $nextBtn.length, 'next');
 
-        // Always show navigation for testing
-        // if ($slides.length <= 1) return;
+        if ($slides.length <= 1) {
+            $('.hero-nav').hide();
+            return;
+        }
 
         function showSlide(index) {
+            if (isTransitioning) return;
+
+            isTransitioning = true;
             $slides.removeClass('active').eq(index).addClass('active');
             currentSlide = index;
+
+            // Reset transition lock after animation
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 1000);
+
+            console.log('📍 Showing slide:', index);
         }
 
         function nextSlide() {
@@ -76,32 +89,73 @@
         }
 
         function startSlider() {
-            slideInterval = setInterval(nextSlide, 6000);
+            if ($slides.length > 1) {
+                slideInterval = setInterval(nextSlide, 5000);
+            }
         }
 
         function stopSlider() {
             clearInterval(slideInterval);
         }
 
-        // Navigation button clicks
-        $nextBtn.on('click', function() {
+        // Navigation button clicks with enhanced feedback
+        $nextBtn.on('click', function(e) {
+            e.preventDefault();
+            console.log('▶️ Next button clicked');
             nextSlide();
             stopSlider();
-            startSlider();
+            setTimeout(startSlider, 1000);
         });
 
-        $prevBtn.on('click', function() {
+        $prevBtn.on('click', function(e) {
+            e.preventDefault();
+            console.log('⏮️ Prev button clicked');
             prevSlide();
             stopSlider();
-            startSlider();
+            setTimeout(startSlider, 1000);
         });
 
-        // Auto-start slider
+        // Touch/Swipe support
+        let startX = 0;
+        let isDragging = false;
+
+        $slider.on('touchstart mousedown', function(e) {
+            startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            isDragging = true;
+            stopSlider();
+        });
+
+        $slider.on('touchmove mousemove', function(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+        });
+
+        $slider.on('touchend mouseup', function(e) {
+            if (!isDragging) return;
+            isDragging = false;
+
+            const endX = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
+            const deltaX = startX - endX;
+
+            if (Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+
+            setTimeout(startSlider, 1000);
+        });
+
+        // Initialize
         showSlide(0);
         startSlider();
 
         // Pause on hover
         $slider.on('mouseenter', stopSlider).on('mouseleave', startSlider);
+
+        console.log('✅ Hero slider initialized successfully');
     }
 
     // News Carousel (Trending/Latest sections)
