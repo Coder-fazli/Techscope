@@ -49,7 +49,8 @@
     function initHeroSlider() {
         const $slider = $('.hero-slider');
         const $slides = $slider.find('.hero-slide');
-        const $indicators = $('.hero-indicators .indicator');
+        const $prevBtn = $('.hero-prev');
+        const $nextBtn = $('.hero-next');
         let currentSlide = 0;
         let slideInterval;
 
@@ -57,13 +58,17 @@
 
         function showSlide(index) {
             $slides.removeClass('active').eq(index).addClass('active');
-            $indicators.removeClass('active').eq(index).addClass('active');
             currentSlide = index;
         }
 
         function nextSlide() {
             const next = (currentSlide + 1) % $slides.length;
             showSlide(next);
+        }
+
+        function prevSlide() {
+            const prev = (currentSlide - 1 + $slides.length) % $slides.length;
+            showSlide(prev);
         }
 
         function startSlider() {
@@ -74,10 +79,15 @@
             clearInterval(slideInterval);
         }
 
-        // Indicator clicks
-        $indicators.on('click', function() {
-            const index = $(this).index();
-            showSlide(index);
+        // Navigation button clicks
+        $nextBtn.on('click', function() {
+            nextSlide();
+            stopSlider();
+            startSlider();
+        });
+
+        $prevBtn.on('click', function() {
+            prevSlide();
             stopSlider();
             startSlider();
         });

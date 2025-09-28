@@ -85,6 +85,14 @@
                   <span class="font-medium"><?php echo get_the_author(); ?></span>
                   <span>•</span>
                   <span><?php echo get_the_date('F j, Y'); ?></span>
+                  <span>•</span>
+                  <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                      <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <?php echo $view_count; ?>
+                  </span>
                 </div>
               </div>
             </div>
@@ -116,16 +124,31 @@
                   <span class="font-medium">Admin</span>
                   <span>•</span>
                   <span><?php echo date('F j, Y'); ?></span>
+                  <span>•</span>
+                  <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                      <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                    </svg>
+                    0
+                  </span>
                 </div>
               </div>
             </div>
           <?php endfor; endif; ?>
 
-          <!-- Dots -->
-          <div class="hero-dots">
-            <?php for ($i = 0; $i < max($slide_count, 3); $i++) : ?>
-              <div class="hero-dot <?php echo $i === 0 ? 'active' : ''; ?>" data-slide="<?php echo $i; ?>"></div>
-            <?php endfor; ?>
+          <!-- Minimalistic Navigation -->
+          <div class="hero-nav">
+            <button class="hero-nav-btn hero-prev" aria-label="Previous slide">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+            <button class="hero-nav-btn hero-next" aria-label="Next slide">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
