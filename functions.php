@@ -96,6 +96,7 @@ function techscope_enqueue_scripts() {
         true
     );
 
+
     // --- Admin Dashboard JS ---
     if (is_admin()) {
         wp_enqueue_script(
@@ -293,61 +294,18 @@ function techscope_format_view_count($count) {
     return $count;
 }
 
-/* ===== THEME FALLBACK FUNCTIONS TEMPORARILY DISABLED FOR PLUGIN TESTING =====
-// Enhanced responsive image function - now uses Smart Image Fallback plugin
-function techscope_get_responsive_image($post_id, $size = 'medium', $fallback_url = '') {
-    // Check if Smart Image Fallback plugin is active
-    if (function_exists('sif_get_responsive_image')) {
-        return sif_get_responsive_image($post_id, $size, $fallback_url);
-    }
 
-    // Fallback to original functionality if plugin not active
-    if (has_post_thumbnail($post_id)) {
-        $thumbnail_url = get_the_post_thumbnail_url($post_id, $size);
-        if (!empty($thumbnail_url)) {
-            return $thumbnail_url;
-        }
-    }
-
-    if (!empty($fallback_url)) {
-        return $fallback_url;
-    }
-
-    // Use theme fallback image as last resort
-    return get_template_directory_uri() . '/27002.jpg';
-}
-
-// Enhanced image function - now uses Smart Image Fallback plugin
-function techscope_ensure_image($post_id, $size = 'medium') {
-    // Check if Smart Image Fallback plugin is active
-    if (function_exists('sif_ensure_image')) {
-        return sif_ensure_image($post_id, $size);
-    }
-
-    // Fallback to original functionality if plugin not active
-    return techscope_get_responsive_image($post_id, $size);
-}
-
-// Legacy function - kept for backward compatibility
-function techscope_get_fallback_image() {
-    return get_template_directory_uri() . '/27002.jpg';
-}
-===== END DISABLED THEME FUNCTIONS ===== */
-
-// TEMPORARY: Simple fallback functions for plugin testing
+// Standard WordPress image functions - NO fallback logic
 function techscope_get_responsive_image($post_id, $size = 'medium', $fallback_url = '') {
     if (has_post_thumbnail($post_id)) {
         return get_the_post_thumbnail_url($post_id, $size);
     }
-    return !empty($fallback_url) ? $fallback_url : get_template_directory_uri() . '/27002.jpg';
+    // Return empty if no image - let plugin handle fallbacks
+    return '';
 }
 
 function techscope_ensure_image($post_id, $size = 'medium') {
     return techscope_get_responsive_image($post_id, $size);
-}
-
-function techscope_get_fallback_image() {
-    return get_template_directory_uri() . '/27002.jpg';
 }
 
 // Truncate text

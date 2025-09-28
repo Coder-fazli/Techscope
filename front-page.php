@@ -61,20 +61,31 @@
             <!-- Slide <?php echo $slide_count; ?> -->
             <div class="hero-slide <?php echo $active_class; ?> tech-img"
                  style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'hero-slider'); ?>')">
-              <div class="absolute inset-x-0 bottom-0 p-3 md:p-6">
-                <div class="glass-effect-dark text-white rounded-lg p-2 md:p-4">
-                  <h2 class="text-base md:text-2xl lg:text-3xl font-extrabold mb-1 md:mb-2">
-                    <a href="<?php the_permalink(); ?>" class="text-white hover:text-blue-200 transition-colors">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              <div class="absolute inset-x-0 bottom-0 p-4 md:p-6">
+                <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg">
+                  <?php
+                  $categories = get_the_category();
+                  if (!empty($categories)) :
+                    $category = $categories[0];
+                  ?>
+                  <div class="mb-3">
+                    <span class="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      <?php echo esc_html($category->name); ?>
+                    </span>
+                  </div>
+                  <?php endif; ?>
+
+                  <h2 class="text-lg md:text-xl lg:text-2xl font-bold mb-3 text-gray-900 leading-tight">
+                    <a href="<?php the_permalink(); ?>" class="text-gray-900 hover:text-red-600 transition-colors">
                       <?php the_title(); ?>
                     </a>
                   </h2>
-                  <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm opacity-90">
-                    <span><?php echo get_the_date('M j, Y'); ?></span>
-                    <span class="hidden sm:inline"><?php comments_number('0 comments', '1 comment', '% comments'); ?></span>
-                    <?php if ($rating > 0) : ?>
-                      <span class="hidden md:inline">•</span>
-                      <?php echo techscope_display_rating(get_the_ID()); ?>
-                    <?php endif; ?>
+
+                  <div class="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-600">
+                    <span class="font-medium"><?php echo get_the_author(); ?></span>
+                    <span>•</span>
+                    <span><?php echo get_the_date('F j, Y'); ?></span>
                   </div>
                 </div>
               </div>
@@ -89,11 +100,25 @@
           ?>
             <div class="hero-slide <?php echo $active_class; ?> tech-img"
                  style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')">
-              <div class="absolute inset-x-0 bottom-0 p-3 md:p-6">
-                <div class="glass-effect-dark text-white rounded-lg p-2 md:p-4">
-                  <h2 class="text-base md:text-2xl lg:text-3xl font-extrabold mb-1 md:mb-2">Welcome to <?php bloginfo('name'); ?></h2>
-                  <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm opacity-90">
-                    <span><?php echo date('M j, Y'); ?></span>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              <div class="absolute inset-x-0 bottom-0 p-4 md:p-6">
+                <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg">
+                  <div class="mb-3">
+                    <span class="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      Technology
+                    </span>
+                  </div>
+
+                  <h2 class="text-lg md:text-xl lg:text-2xl font-bold mb-3 text-gray-900 leading-tight">
+                    <a href="#" class="text-gray-900 hover:text-red-600 transition-colors">
+                      Welcome to <?php bloginfo('name'); ?>
+                    </a>
+                  </h2>
+
+                  <div class="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-600">
+                    <span class="font-medium">Admin</span>
+                    <span>•</span>
+                    <span><?php echo date('F j, Y'); ?></span>
                   </div>
                 </div>
               </div>
