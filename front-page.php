@@ -629,51 +629,50 @@
   </div>
 </div>
 
-<!-- IMMEDIATE PAGE LOADING FIX -->
+<!-- SKELETON TO MAIN CONTENT TRANSITION -->
 <script>
 (function() {
-  console.log('Starting immediate page loading fix...');
+  console.log('🚀 Initializing page loading system...');
 
-  function showContent() {
+  let hasExecuted = false; // Prevent double execution
+
+  function showMainContent() {
+    if (hasExecuted) {
+      console.log('⚠️ Already executed, skipping...');
+      return;
+    }
+    hasExecuted = true;
+
     const loading = document.getElementById('loading-content');
     const main = document.getElementById('main-content');
 
+    console.log('📱 Loading element:', loading ? '✅' : '❌');
+    console.log('📄 Main element:', main ? '✅' : '❌');
+
     if (loading) {
+      loading.style.transition = 'opacity 0.3s ease';
       loading.style.opacity = '0';
       setTimeout(() => {
         loading.style.display = 'none';
+        console.log('💀 Skeleton hidden');
       }, 300);
-      console.log('Skeleton hidden');
     }
 
     if (main) {
       main.style.opacity = '1';
       main.style.visibility = 'visible';
-      console.log('Main content shown');
+      console.log('✨ Main content shown');
     }
   }
 
-  // Try immediately
+  // Single execution - wait for DOM to be ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', showContent);
+    document.addEventListener('DOMContentLoaded', showMainContent);
   } else {
-    showContent();
+    showMainContent();
   }
 
-  // Force show after very short delay regardless
-  setTimeout(showContent, 200);
-
-  // Emergency fallback - show content no matter what after 500ms
-  setTimeout(() => {
-    const main = document.getElementById('main-content');
-    if (main) {
-      main.style.opacity = '1';
-      main.style.visibility = 'visible';
-      console.log('Emergency fallback: Content forced visible');
-    }
-  }, 500);
-
-  console.log('Page loading fix script loaded');
+  console.log('✅ Loading system initialized');
 })();
 
 // Smart fallback image system - only replaces actually broken images

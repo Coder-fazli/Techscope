@@ -164,48 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .querySelectorAll('.section-animate')
     .forEach((section) => section.classList.add('visible'));
 
-  // --- Fast loading: swap skeleton -> main content ---
-  function showMainContent() {
-    const loading = document.getElementById('loading-content');
-    const main = document.getElementById('main-content');
-
-    if (!loading || !main) {
-      console.warn('Loading elements not found');
-      return;
-    }
-
-    // Quick transition to show content immediately
-    loading.style.opacity = '0';
-    loading.style.transition = 'opacity 0.2s ease';
-
-    setTimeout(() => {
-      loading.style.display = 'none';
-      main.classList.remove('hidden');
-      main.style.opacity = '0';
-      main.style.transition = 'opacity 0.3s ease';
-
-      // Force reflow
-      main.offsetHeight;
-
-      // Show main content
-      main.style.opacity = '1';
-
-      // Reset body height calculation
-      document.body.style.minHeight = 'auto';
-
-      console.log('Main content loaded successfully');
-    }, 200);
-  }
-
-  // Show content faster - reduced from 800ms to 300ms
-  setTimeout(showMainContent, 300);
-
-  // Fallback: if content still hidden after 1 second, force show it
-  setTimeout(() => {
-    const main = document.getElementById('main-content');
-    if (main && main.classList.contains('hidden')) {
-      console.warn('Fallback: Force showing main content');
-      showMainContent();
-    }
-  }, 1000);
+  // --- Loading functionality removed from here ---
+  // Loading is now handled in front-page.php inline script to avoid conflicts
 });
