@@ -995,6 +995,7 @@ function techscope_sections_page() {
         // Save section visibility options
         update_option('techscope_show_hero', isset($_POST['show_hero']) ? 1 : 0);
         update_option('techscope_show_trending', isset($_POST['show_trending']) ? 1 : 0);
+        update_option('techscope_show_trending_tech', isset($_POST['show_trending_tech']) ? 1 : 0);
         update_option('techscope_show_editor', isset($_POST['show_editor']) ? 1 : 0);
         update_option('techscope_show_hot', isset($_POST['show_hot']) ? 1 : 0);
         update_option('techscope_show_mobile', isset($_POST['show_mobile']) ? 1 : 0);
@@ -1012,6 +1013,7 @@ function techscope_sections_page() {
     // Get current settings
     $show_hero = get_option('techscope_show_hero', 1);
     $show_trending = get_option('techscope_show_trending', 1);
+    $show_trending_tech = get_option('techscope_show_trending_tech', 1);
     $show_editor = get_option('techscope_show_editor', 1);
     $show_hot = get_option('techscope_show_hot', 1);
     $show_mobile = get_option('techscope_show_mobile', 1);
@@ -1043,6 +1045,15 @@ function techscope_sections_page() {
                             <label>
                                 <input type="checkbox" name="show_trending" value="1" <?php checked($show_trending, 1); ?> />
                                 <?php _e('Show Trending Tech Section', 'techscope'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e('Trending Tech Carousel', 'techscope'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="show_trending_tech" value="1" <?php checked($show_trending_tech, 1); ?> />
+                                <?php _e('Show Trending Tech Carousel Section', 'techscope'); ?>
                             </label>
                         </td>
                     </tr>

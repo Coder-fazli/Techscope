@@ -234,6 +234,7 @@
     <!-- MAIN CONTENT SECTIONS -->
     <div class="lg:col-span-3 space-y-6 lg:space-y-8">
 
+      <?php if (get_option('techscope_show_trending_tech', 1)) : ?>
       <!-- ========== TRENDING TECH SECTION - KATEN STYLE DIVIDER ========== -->
       <div class="mb-8 mt-12 section-divider-katen">
         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
@@ -283,6 +284,7 @@
         endif;
         ?>
       </section>
+      <?php endif; ?>
 
 
 
