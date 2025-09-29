@@ -177,9 +177,116 @@
     .border-gray-100 {
       border-color: #F3F4F6;
     }
+
+    /* ===== LOADING SCREEN ===== */
+    #page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #page-loader.loaded {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-icon {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    /* Animated tech icon - CPU/chip style */
+    .tech-icon {
+      width: 60px;
+      height: 60px;
+      border: 3px solid #6366f1;
+      border-radius: 8px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .tech-icon::before,
+    .tech-icon::after {
+      content: '';
+      position: absolute;
+      background: #6366f1;
+    }
+
+    /* Horizontal lines (chip pins) */
+    .tech-icon::before {
+      width: 20px;
+      height: 3px;
+      left: -23px;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 -15px 0 #6366f1, 0 15px 0 #6366f1;
+    }
+
+    .tech-icon::after {
+      width: 20px;
+      height: 3px;
+      right: -23px;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 -15px 0 #6366f1, 0 15px 0 #6366f1;
+    }
+
+    /* Inner chip detail */
+    .tech-icon-inner {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 2px solid #6366f1;
+      border-radius: 4px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        border-color: #6366f1;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        border-color: #818cf8;
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
   </style>
 </head>
 <body <?php body_class('bg-gray-100 font-inter'); ?>>
+
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="loader-icon">
+    <div class="tech-icon">
+      <div class="tech-icon-inner"></div>
+    </div>
+  </div>
+</div>
 
 <?php wp_body_open(); ?>
 

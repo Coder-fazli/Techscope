@@ -143,6 +143,29 @@
 
 <?php wp_footer(); ?>
 
+<!-- Page Loader Script - Hide after page loads -->
+<script>
+  // Hide loader immediately when DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      var loader = document.getElementById('page-loader');
+      if (loader) {
+        loader.classList.add('loaded');
+      }
+    }, 400); // Short 400ms delay for smooth experience
+  });
+
+  // Fallback: Hide loader when everything is fully loaded
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var loader = document.getElementById('page-loader');
+      if (loader) {
+        loader.classList.add('loaded');
+      }
+    }, 500);
+  });
+</script>
+
 <!-- jQuery and Slick Slider -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
