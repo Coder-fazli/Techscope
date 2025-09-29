@@ -301,11 +301,11 @@
           <?php if (has_custom_logo()) : ?>
             <?php the_custom_logo(); ?>
           <?php else : ?>
-            <span class="material-icons text-blue-600">phone_iphone</span>
-            <span class="text-blue-600 font-bold text-lg"><?php bloginfo('name'); ?></span>
+            <span class="material-icons text-orange-600">phone_iphone</span>
+            <span class="text-orange-600 font-bold text-lg"><?php bloginfo('name'); ?></span>
           <?php endif; ?>
         </div>
-        <button id="mobile-menu-btn" class="text-gray-600 hover:text-blue-600 transition-colors">
+        <button id="mobile-menu-btn" class="text-amber-700 hover:text-orange-600 transition-colors">
           <span class="material-icons text-2xl">menu</span>
         </button>
       </div>
@@ -318,8 +318,8 @@
             <?php the_custom_logo(); ?>
           <?php else : ?>
             <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-2">
-              <span class="material-icons text-blue-600 text-2xl">smartphone</span>
-              <span class="text-blue-600 font-bold text-xl"><?php bloginfo('name'); ?></span>
+              <span class="material-icons text-orange-600 text-2xl">smartphone</span>
+              <span class="text-orange-600 font-bold text-xl"><?php bloginfo('name'); ?></span>
             </a>
           <?php endif; ?>
         </div>

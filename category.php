@@ -3,13 +3,14 @@
 <style>
   /* Masonry Layout */
   .masonry-grid {
-    column-count: 1;
-    column-gap: 1.5rem;
+    column-count: 2;
+    column-gap: 1rem;
   }
 
   @media (min-width: 768px) {
     .masonry-grid {
       column-count: 2;
+      column-gap: 1.5rem;
     }
   }
 
@@ -21,9 +22,15 @@
 
   .masonry-item {
     break-inside: avoid;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     display: inline-block;
     width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .masonry-item {
+      margin-bottom: 1.5rem;
+    }
   }
 
   /* Remove line-clamp for masonry to allow natural heights */

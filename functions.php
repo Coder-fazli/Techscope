@@ -2022,7 +2022,7 @@ class TechScope_Walker_Nav_Menu extends Walker_Nav_Menu {
         $item_name_lower = strtolower($item->title);
         $icon = isset($icons[$item_name_lower]) ? $icons[$item_name_lower] : 'category';
 
-        $current_class = in_array('current-menu-item', $classes) ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700';
+        $current_class = in_array('current-menu-item', $classes) ? 'text-orange-600' : 'text-amber-700 hover:text-orange-600';
 
         $output .= '<a href="' . $item->url . '" class="relative pb-3 px-1 sm:px-2 ' . $current_class . ' font-medium text-base sm:text-lg transition-colors duration-200">';
         $output .= '<span class="flex items-center gap-2">';
@@ -2030,7 +2030,7 @@ class TechScope_Walker_Nav_Menu extends Walker_Nav_Menu {
         $output .= $item->title;
         $output .= '</span>';
         if (in_array('current-menu-item', $classes)) {
-            $output .= '<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></div>';
+            $output .= '<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 rounded-full"></div>';
         }
         $output .= '</a>';
     }
@@ -2061,7 +2061,7 @@ class TechScope_Mobile_Walker_Nav_Menu extends Walker_Nav_Menu {
         $item_name_lower = strtolower($item->title);
         $icon = isset($icons[$item_name_lower]) ? $icons[$item_name_lower] : 'category';
 
-        $current_class = in_array('current-menu-item', $classes) ? 'text-blue-600 font-medium bg-blue-50 border-r-2 border-blue-600' : 'text-gray-600 hover:bg-gray-50';
+        $current_class = in_array('current-menu-item', $classes) ? 'text-orange-600 font-medium bg-orange-50 border-r-2 border-orange-600' : 'text-amber-700 hover:bg-orange-50 hover:text-orange-600';
 
         $output .= '<a href="' . $item->url . '" class="w-full text-left px-4 py-3 ' . $current_class . ' transition-colors block">';
         $output .= '<span class="flex items-center gap-3">';
