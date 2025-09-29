@@ -294,6 +294,11 @@
             <!-- RIGHT SIDEBAR -->
             <div class="lg:col-span-1 space-y-4 lg:space-y-6 section-animate stagger-2">
 
+                <!-- DYNAMIC WIDGET AREA -->
+                <?php if (is_active_sidebar('single-post-sidebar')) : ?>
+                    <?php dynamic_sidebar('single-post-sidebar'); ?>
+                <?php endif; ?>
+
                 <!-- TRENDING NOW -->
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
                     <div class="bg-gradient-to-r from-orange-500 to-red-500 p-4">

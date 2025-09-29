@@ -53,6 +53,22 @@ function techscope_theme_setup() {
 add_action('after_setup_theme', 'techscope_theme_setup');
 
 /**
+ * Register Widget Areas
+ */
+function techscope_widgets_init() {
+    register_sidebar(array(
+        'name'          => __('Single Post Sidebar', 'techscope'),
+        'id'            => 'single-post-sidebar',
+        'description'   => __('Appears on single post pages', 'techscope'),
+        'before_widget' => '<div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 mb-6">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<div class="bg-gradient-to-r from-blue-500 to-purple-500 p-4"><h3 class="font-bold text-white text-lg flex items-center gap-2"><span class="material-icons">widgets</span>',
+        'after_title'   => '</h3></div><div class="p-4">',
+    ));
+}
+add_action('widgets_init', 'techscope_widgets_init');
+
+/**
  * Calculate Reading Time (Russian optimized)
  */
 function techscope_reading_time() {
@@ -69,6 +85,170 @@ function techscope_reading_time() {
         return $reading_time . ' минут';
     }
 }
+
+/**
+ * Custom Widget: TechScope Posts
+ */
+class TechScope_Posts_Widget extends WP_Widget {
+
+    public function __construct() {
+        parent::__construct(
+            'techscope_posts_widget',
+            __('TechScope Posts', 'techscope'),
+            array('description' => __('Display posts by category, featured, or latest', 'techscope'))
+        );
+    }
+
+    public function widget($args, $instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : __('Posts', 'techscope');
+        $post_type = !empty($instance['post_type']) ? $instance['post_type'] : 'latest';
+        $category = !empty($instance['category']) ? $instance['category'] : '';
+        $number = !empty($instance['number']) ? absint($instance['number']) : 5;
+
+        echo $args['before_widget'];
+
+        // Custom header with icon based on post type
+        $icon = 'article';
+        $gradient = 'from-blue-500 to-purple-500';
+
+        if ($post_type == 'featured') {
+            $icon = 'star';
+            $gradient = 'from-yellow-500 to-orange-500';
+        } elseif ($post_type == 'category') {
+            $icon = 'category';
+            $gradient = 'from-green-500 to-teal-500';
+        } elseif ($post_type == 'latest') {
+            $icon = 'schedule';
+            $gradient = 'from-indigo-500 to-blue-500';
+        }
+
+        echo '<div class="bg-gradient-to-r ' . $gradient . ' p-4">';
+        echo '<h3 class="font-bold text-white text-lg flex items-center gap-2">';
+        echo '<span class="material-icons">' . $icon . '</span>';
+        echo esc_html($title);
+        echo '</h3></div><div class="p-4 space-y-4">';
+
+        // Query arguments
+        $query_args = array(
+            'posts_per_page' => $number,
+            'post_status' => 'publish',
+            'ignore_sticky_posts' => 1
+        );
+
+        if ($post_type == 'category' && !empty($category)) {
+            $query_args['cat'] = $category;
+        } elseif ($post_type == 'featured') {
+            $query_args['meta_key'] = '_is_featured';
+            $query_args['meta_value'] = '1';
+        }
+
+        if ($post_type == 'latest') {
+            $query_args['orderby'] = 'date';
+            $query_args['order'] = 'DESC';
+        }
+
+        $posts_query = new WP_Query($query_args);
+
+        if ($posts_query->have_posts()) {
+            $index = 1;
+            while ($posts_query->have_posts()) {
+                $posts_query->the_post();
+                ?>
+                <div class="group">
+                    <a href="<?php the_permalink(); ?>" class="flex gap-3 hover:bg-gray-50 p-2 -m-2 rounded-lg transition-all">
+                        <div class="relative flex-shrink-0">
+                            <div class="w-20 h-20 tech-img rounded-lg shadow-sm bg-cover bg-center" style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'thumbnail'); ?>')"></div>
+                            <span class="absolute -top-2 -left-2 w-6 h-6 bg-gradient-to-r <?php echo $gradient; ?> text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
+                                <?php echo $index; ?>
+                            </span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-sm text-gray-900 mb-1.5 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                                <?php the_title(); ?>
+                            </h4>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <span class="flex items-center gap-1">
+                                    <span class="material-icons text-orange-500" style="font-size: 14px;">visibility</span>
+                                    <?php if (function_exists('pvc_get_post_views')) echo pvc_get_post_views(); else echo '0'; ?>
+                                </span>
+                                <span>•</span>
+                                <span><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')); ?> назад</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <?php
+                $index++;
+            }
+            wp_reset_postdata();
+        } else {
+            echo '<p class="text-gray-500 text-sm">' . __('No posts found', 'techscope') . '</p>';
+        }
+
+        echo '</div>';
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : '';
+        $post_type = !empty($instance['post_type']) ? $instance['post_type'] : 'latest';
+        $category = !empty($instance['category']) ? $instance['category'] : '';
+        $number = !empty($instance['number']) ? absint($instance['number']) : 5;
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php _e('Title:', 'techscope'); ?></label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+                   name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+                   value="<?php echo esc_attr($title); ?>">
+        </p>
+
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('post_type')); ?>"><?php _e('Post Type:', 'techscope'); ?></label>
+            <select class="widefat" id="<?php echo esc_attr($this->get_field_id('post_type')); ?>"
+                    name="<?php echo esc_attr($this->get_field_name('post_type')); ?>">
+                <option value="latest" <?php selected($post_type, 'latest'); ?>><?php _e('Latest Posts', 'techscope'); ?></option>
+                <option value="featured" <?php selected($post_type, 'featured'); ?>><?php _e('Featured Posts', 'techscope'); ?></option>
+                <option value="category" <?php selected($post_type, 'category'); ?>><?php _e('By Category', 'techscope'); ?></option>
+            </select>
+        </p>
+
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('category')); ?>"><?php _e('Category (if By Category selected):', 'techscope'); ?></label>
+            <?php
+            wp_dropdown_categories(array(
+                'name' => $this->get_field_name('category'),
+                'id' => $this->get_field_id('category'),
+                'selected' => $category,
+                'show_option_all' => __('All Categories', 'techscope'),
+                'class' => 'widefat'
+            ));
+            ?>
+        </p>
+
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('number')); ?>"><?php _e('Number of posts:', 'techscope'); ?></label>
+            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('number')); ?>"
+                   name="<?php echo esc_attr($this->get_field_name('number')); ?>" type="number"
+                   step="1" min="1" value="<?php echo esc_attr($number); ?>" size="3">
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
+        $instance['post_type'] = (!empty($new_instance['post_type'])) ? sanitize_text_field($new_instance['post_type']) : 'latest';
+        $instance['category'] = (!empty($new_instance['category'])) ? absint($new_instance['category']) : '';
+        $instance['number'] = (!empty($new_instance['number'])) ? absint($new_instance['number']) : 5;
+        return $instance;
+    }
+}
+
+// Register the widget
+function techscope_register_widgets() {
+    register_widget('TechScope_Posts_Widget');
+}
+add_action('widgets_init', 'techscope_register_widgets');
 
 /**
  * Enqueue Styles and Scripts
