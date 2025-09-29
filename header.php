@@ -44,6 +44,11 @@
   <meta name="google-site-verification" content="EVv8JI1rI99r26zArKjlnhP4Bh0y4Jy9JBpxNncgoyw" />
   <meta name="yandex-verification" content="003691d1a0a98324" />
 
+  <!-- Preload Critical CSS Resources -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" as="style">
+
   <!-- Slick Slider Assets -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
@@ -58,6 +63,37 @@
 
   <!-- SIDEBAR STYLING - TARGET PARENT CONTAINERS FOR SHADOWS -->
   <style>
+    /* ===== CRITICAL CSS TO PREVENT FOUC ===== */
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #F3F4F6;
+      margin: 0;
+      padding: 0;
+      visibility: visible !important;
+    }
+
+    nav {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Prevent initial layout shift */
+    .max-w-7xl {
+      max-width: 80rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .bg-white {
+      background-color: white;
+    }
+
+    .rounded-lg {
+      border-radius: 0.5rem;
+    }
+    /* ===== END CRITICAL CSS ===== */
+
     /* Individual post cards - rounded corners and hover effects */
     .lg\:col-span-1 .sidebar-card {
       background-color: #FFFFFF !important;

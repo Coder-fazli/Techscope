@@ -50,24 +50,18 @@ add_action('after_setup_theme', 'techscope_theme_setup');
  * Enqueue Styles and Scripts
  */
 function techscope_enqueue_scripts() {
-    // --- Tailwind via CDN - OPTIMIZED LOADING TO PREVENT RELOADS ---
+    // --- Tailwind via CDN - LOAD IN HEAD WITHOUT DEFER FOR INSTANT RENDERING ---
 
-    // Load Tailwind CDN with defer to prevent blocking
+    // Load Tailwind CDN in head (NOT footer) to prevent FOUC
     wp_enqueue_script(
         'tailwindcdn',
         'https://cdn.tailwindcss.com',
         array(),
         null,
-        true // Load in footer
+        false // Load in HEAD, not footer
     );
 
-    // Add script attributes to prevent blocking
-    add_filter('script_loader_tag', function($tag, $handle) {
-        if ('tailwindcdn' === $handle) {
-            return str_replace('<script ', '<script defer ', $tag);
-        }
-        return $tag;
-    }, 10, 2);
+    // NO defer attribute - we want blocking load to prevent FOUC
 
     // --- Fonts & styles ---
     wp_enqueue_style(
