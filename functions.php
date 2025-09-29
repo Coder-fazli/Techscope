@@ -56,6 +56,7 @@ add_action('after_setup_theme', 'techscope_theme_setup');
  * Register Widget Areas
  */
 function techscope_widgets_init() {
+    // Single Post Sidebar
     register_sidebar(array(
         'name'          => __('Single Post Sidebar', 'techscope'),
         'id'            => 'single-post-sidebar',
@@ -64,6 +65,28 @@ function techscope_widgets_init() {
         'after_widget'  => '</div>',
         'before_title'  => '<div class="bg-gradient-to-r from-blue-500 to-purple-500 p-4"><h3 class="font-bold text-white text-lg flex items-center gap-2"><span class="material-icons">widgets</span>',
         'after_title'   => '</h3></div><div class="p-4">',
+    ));
+
+    // General Sidebar
+    register_sidebar(array(
+        'name'          => __('Sidebar', 'techscope'),
+        'id'            => 'sidebar-1',
+        'description'   => __('Add widgets here to appear in your sidebar.', 'techscope'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s bg-white rounded-lg p-4 shadow-sm mb-6">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title font-bold text-gray-800 mb-4">',
+        'after_title'   => '</h3>',
+    ));
+
+    // Footer Widgets
+    register_sidebar(array(
+        'name'          => __('Footer Widgets', 'techscope'),
+        'id'            => 'footer-widgets',
+        'description'   => __('Add widgets here to appear in your footer.', 'techscope'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="widget-title text-lg font-bold mb-4 text-blue-400">',
+        'after_title'   => '</h4>',
     ));
 }
 add_action('widgets_init', 'techscope_widgets_init');
@@ -321,31 +344,6 @@ function techscope_enqueue_scripts() {
 }
 add_action('wp_enqueue_scripts', 'techscope_enqueue_scripts');
 
-/**
- * Register Widget Areas
- */
-function techscope_widgets_init() {
-    register_sidebar(array(
-        'name'          => __('Sidebar', 'techscope'),
-        'id'            => 'sidebar-1',
-        'description'   => __('Add widgets here to appear in your sidebar.', 'techscope'),
-        'before_widget' => '<div id="%1$s" class="widget %2$s bg-white rounded-lg p-4 shadow-sm mb-6">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title font-bold text-gray-800 mb-4">',
-        'after_title'   => '</h3>',
-    ));
-
-    register_sidebar(array(
-        'name'          => __('Footer Widgets', 'techscope'),
-        'id'            => 'footer-widgets',
-        'description'   => __('Add widgets here to appear in your footer.', 'techscope'),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="widget-title text-lg font-bold mb-4 text-blue-400">',
-        'after_title'   => '</h4>',
-    ));
-}
-add_action('widgets_init', 'techscope_widgets_init');
 
 /**
  * Custom Post Meta for Featured Posts
