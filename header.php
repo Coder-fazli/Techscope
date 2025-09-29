@@ -311,7 +311,20 @@
       </div>
 
       <!-- Desktop Menu -->
-      <div class="hidden md:flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-8 p-4 border-b border-gray-100">
+      <div class="hidden md:flex flex-wrap items-center justify-between gap-2 sm:gap-4 md:gap-8 p-4 border-b border-gray-100">
+        <!-- Logo on Desktop -->
+        <div class="flex items-center gap-2">
+          <?php if (has_custom_logo()) : ?>
+            <?php the_custom_logo(); ?>
+          <?php else : ?>
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-2">
+              <span class="material-icons text-blue-600 text-2xl">smartphone</span>
+              <span class="text-blue-600 font-bold text-xl"><?php bloginfo('name'); ?></span>
+            </a>
+          <?php endif; ?>
+        </div>
+
+        <!-- Navigation Menu -->
         <?php
         wp_nav_menu(array(
           'theme_location' => 'primary',
