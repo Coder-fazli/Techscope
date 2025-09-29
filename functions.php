@@ -43,6 +43,12 @@ function techscope_theme_setup() {
         'audio',
         'chat'
     ));
+
+    // Add Gutenberg block editor support
+    add_theme_support('align-wide');
+    add_theme_support('responsive-embeds');
+    add_theme_support('editor-styles');
+    add_theme_support('wp-block-styles');
 }
 add_action('after_setup_theme', 'techscope_theme_setup');
 
@@ -84,6 +90,9 @@ function techscope_enqueue_scripts() {
         array('google-fonts', 'material-icons'),
         wp_get_theme()->get('Version')
     );
+
+    // Enqueue Gutenberg block styles for frontend
+    wp_enqueue_style('wp-block-library');
 
     // --- Theme JS (DISABLED TO PREVENT DOUBLE LOADING) ---
     // wp_enqueue_script(
