@@ -70,10 +70,9 @@
 
           <!-- Featured Image -->
           <?php if (has_post_thumbnail()) : ?>
-            <div class="w-full h-48 tech-img bg-cover bg-center"
-                 style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'medium'); ?>')">
-              <a href="<?php the_permalink(); ?>" class="block w-full h-full"></a>
-            </div>
+            <a href="<?php the_permalink(); ?>" class="block w-full h-48 tech-img bg-cover bg-center"
+               style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'medium'); ?>')">
+            </a>
           <?php endif; ?>
 
           <!-- Post Content -->

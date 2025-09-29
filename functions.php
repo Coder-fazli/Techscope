@@ -67,14 +67,44 @@ function techscope_widgets_init() {
         'after_title'   => '</h3></div><div class="p-4">',
     ));
 
-    // Footer Widgets
+    // Footer Widget Areas (4 columns)
     register_sidebar(array(
-        'name'          => __('Footer Widgets', 'techscope'),
-        'id'            => 'footer-widgets',
-        'description'   => __('Add widgets here to appear in your footer.', 'techscope'),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'name'          => __('Footer 1', 'techscope'),
+        'id'            => 'footer-1',
+        'description'   => __('First footer column', 'techscope'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="widget-title text-lg font-bold mb-4 text-blue-400">',
+        'before_title'  => '<h4 class="text-lg font-bold mb-4 text-orange-400">',
+        'after_title'   => '</h4>',
+    ));
+
+    register_sidebar(array(
+        'name'          => __('Footer 2', 'techscope'),
+        'id'            => 'footer-2',
+        'description'   => __('Second footer column', 'techscope'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="text-lg font-bold mb-4 text-orange-400">',
+        'after_title'   => '</h4>',
+    ));
+
+    register_sidebar(array(
+        'name'          => __('Footer 3', 'techscope'),
+        'id'            => 'footer-3',
+        'description'   => __('Third footer column', 'techscope'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="text-lg font-bold mb-4 text-orange-400">',
+        'after_title'   => '</h4>',
+    ));
+
+    register_sidebar(array(
+        'name'          => __('Footer 4', 'techscope'),
+        'id'            => 'footer-4',
+        'description'   => __('Fourth footer column', 'techscope'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s mb-6">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="text-lg font-bold mb-4 text-orange-400">',
         'after_title'   => '</h4>',
     ));
 }
@@ -1995,32 +2025,77 @@ function techscope_display_category_checkboxes($option_name) {
     echo '</div>';
 }
 
+// Add custom icon field to menu items
+function techscope_menu_icon_fields($item_id, $item, $depth, $args) {
+    $menu_icon = get_post_meta($item_id, '_menu_item_icon', true);
+    ?>
+    <p class="field-icon description description-wide" style="margin-top: 10px;">
+        <label for="edit-menu-item-icon-<?php echo $item_id; ?>" style="display: block; margin-bottom: 5px; font-weight: 600;">
+            <?php _e('🎨 Material Icon Name', 'techscope'); ?>
+        </label>
+        <input type="text" id="edit-menu-item-icon-<?php echo $item_id; ?>"
+               class="widefat code edit-menu-item-icon"
+               name="menu-item-icon[<?php echo $item_id; ?>]"
+               placeholder="phone_iphone"
+               value="<?php echo esc_attr($menu_icon); ?>"
+               style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        <span class="description" style="display: block; margin-top: 5px; font-style: italic; color: #666;">
+            <?php _e('Enter icon name (e.g., phone_iphone, auto_awesome, sports_esports)', 'techscope'); ?>
+        </span>
+        <span class="description" style="display: block; margin-top: 3px;">
+            <a href="https://fonts.google.com/icons?icon.set=Material+Icons" target="_blank" style="color: #2271b1; text-decoration: underline;">
+                <?php _e('📚 Browse Material Icons Library', 'techscope'); ?>
+            </a>
+        </span>
+    </p>
+    <?php
+}
+add_action('wp_nav_menu_item_custom_fields', 'techscope_menu_icon_fields', 10, 4);
+
+// Save custom icon field
+function techscope_save_menu_icon($menu_id, $menu_item_db_id) {
+    if (isset($_POST['menu-item-icon'][$menu_item_db_id])) {
+        $sanitized_icon = sanitize_text_field($_POST['menu-item-icon'][$menu_item_db_id]);
+        update_post_meta($menu_item_db_id, '_menu_item_icon', $sanitized_icon);
+    } else {
+        delete_post_meta($menu_item_db_id, '_menu_item_icon');
+    }
+}
+add_action('wp_update_nav_menu_item', 'techscope_save_menu_icon', 10, 2);
+
 // Menu Walker Classes and Fallback Functions
 class TechScope_Walker_Nav_Menu extends Walker_Nav_Menu {
     function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
         $classes = empty($item->classes) ? array() : (array) $item->classes;
         $classes[] = 'menu-item-' . $item->ID;
 
-        // Get icon based on menu item title
-        $icons = array(
-            'mobile' => 'phone_iphone',
-            'мобильные' => 'phone_iphone',
-            'ai' => 'auto_awesome',
-            'ии' => 'auto_awesome',
-            'games' => 'sports_esports',
-            'игры' => 'sports_esports',
-            'laptops' => 'laptop_mac',
-            'ноутбуки' => 'laptop_mac',
-            'gadgets' => 'bolt',
-            'гаджеты' => 'bolt',
-            'startups' => 'rocket_launch',
-            'стартапы' => 'rocket_launch',
-            'reviews' => 'reviews',
-            'обзоры' => 'reviews'
-        );
+        // Get custom icon first, then fallback to automatic detection
+        $custom_icon = get_post_meta($item->ID, '_menu_item_icon', true);
 
-        $item_name_lower = strtolower($item->title);
-        $icon = isset($icons[$item_name_lower]) ? $icons[$item_name_lower] : 'category';
+        if (!empty($custom_icon)) {
+            $icon = $custom_icon;
+        } else {
+            // Automatic icon based on menu item title
+            $icons = array(
+                'mobile' => 'phone_iphone',
+                'мобильные' => 'phone_iphone',
+                'ai' => 'auto_awesome',
+                'ии' => 'auto_awesome',
+                'games' => 'sports_esports',
+                'игры' => 'sports_esports',
+                'laptops' => 'laptop_mac',
+                'ноутбуки' => 'laptop_mac',
+                'gadgets' => 'bolt',
+                'гаджеты' => 'bolt',
+                'startups' => 'rocket_launch',
+                'стартапы' => 'rocket_launch',
+                'reviews' => 'reviews',
+                'обзоры' => 'reviews'
+            );
+
+            $item_name_lower = strtolower($item->title);
+            $icon = isset($icons[$item_name_lower]) ? $icons[$item_name_lower] : 'category';
+        }
 
         $current_class = in_array('current-menu-item', $classes) ? 'text-orange-600' : 'text-amber-700 hover:text-orange-600';
 
@@ -2040,26 +2115,33 @@ class TechScope_Mobile_Walker_Nav_Menu extends Walker_Nav_Menu {
     function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
         $classes = empty($item->classes) ? array() : (array) $item->classes;
 
-        // Get icon based on menu item title
-        $icons = array(
-            'mobile' => 'phone_iphone',
-            'мобильные' => 'phone_iphone',
-            'ai' => 'auto_awesome',
-            'ии' => 'auto_awesome',
-            'games' => 'sports_esports',
-            'игры' => 'sports_esports',
-            'laptops' => 'laptop_mac',
-            'ноутбуки' => 'laptop_mac',
-            'gadgets' => 'bolt',
-            'гаджеты' => 'bolt',
-            'startups' => 'rocket_launch',
-            'стартапы' => 'rocket_launch',
-            'reviews' => 'reviews',
-            'обзоры' => 'reviews'
-        );
+        // Get custom icon first, then fallback to automatic detection
+        $custom_icon = get_post_meta($item->ID, '_menu_item_icon', true);
 
-        $item_name_lower = strtolower($item->title);
-        $icon = isset($icons[$item_name_lower]) ? $icons[$item_name_lower] : 'category';
+        if (!empty($custom_icon)) {
+            $icon = $custom_icon;
+        } else {
+            // Automatic icon based on menu item title
+            $icons = array(
+                'mobile' => 'phone_iphone',
+                'мобильные' => 'phone_iphone',
+                'ai' => 'auto_awesome',
+                'ии' => 'auto_awesome',
+                'games' => 'sports_esports',
+                'игры' => 'sports_esports',
+                'laptops' => 'laptop_mac',
+                'ноутбуки' => 'laptop_mac',
+                'gadgets' => 'bolt',
+                'гаджеты' => 'bolt',
+                'startups' => 'rocket_launch',
+                'стартапы' => 'rocket_launch',
+                'reviews' => 'reviews',
+                'обзоры' => 'reviews'
+            );
+
+            $item_name_lower = strtolower($item->title);
+            $icon = isset($icons[$item_name_lower]) ? $icons[$item_name_lower] : 'category';
+        }
 
         $current_class = in_array('current-menu-item', $classes) ? 'text-orange-600 font-medium bg-orange-50 border-r-2 border-orange-600' : 'text-amber-700 hover:bg-orange-50 hover:text-orange-600';
 

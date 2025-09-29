@@ -194,8 +194,8 @@
           ?>
             <!-- Clean Sidebar Post Card - Katen Style: Remove white background box -->
             <div class="overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1 sidebar-card-katen">
-              <div class="w-full h-[140px] relative overflow-hidden tech-img sidebar-image"
-                   style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
+              <a href="<?php the_permalink(); ?>" class="block w-full h-[140px] relative overflow-hidden tech-img sidebar-image"
+                 style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-3">
                   <h4 class="font-bold text-sm mb-2 leading-tight text-white">
@@ -211,7 +211,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           <?php
             endwhile;
@@ -477,12 +477,12 @@
           ?>
             <!-- Hot Stories Card - Katen Style: Remove white background box -->
             <div class="overflow-hidden card-hover-katen">
-              <div class="w-full h-32 md:h-40 tech-img relative"
-                   style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
+              <a href="<?php the_permalink(); ?>" class="block w-full h-32 md:h-40 tech-img relative"
+                 style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
                 <div class="absolute top-2 left-2">
                   <span class="hot-badge px-2 py-1 text-xs font-bold bg-red-500 text-white rounded">HOT</span>
                 </div>
-              </div>
+              </a>
               <div class="p-3 md:p-4 bg-white">
                 <h4 class="font-bold text-sm md:text-base mb-2 leading-tight">
                   <a href="<?php the_permalink(); ?>" class="hover:text-red-600 transition-colors">
@@ -540,9 +540,9 @@
           ?>
             <!-- Mobile Tech Card - Katen Style: Remove white background box -->
             <div class="overflow-hidden card-hover-katen">
-              <div class="w-full h-40 md:h-48 tech-img"
-                   style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
-              </div>
+              <a href="<?php the_permalink(); ?>" class="block w-full h-40 md:h-48 tech-img"
+                 style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
+              </a>
               <div class="p-3 md:p-4 bg-white">
                 <h4 class="font-bold text-sm md:text-base mb-2 leading-tight">
                   <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors">
@@ -600,9 +600,9 @@
           ?>
             <!-- AI & Gaming Card - Katen Style: Remove white background box -->
             <div class="overflow-hidden card-hover-katen">
-              <div class="w-full h-48 tech-img"
-                   style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
-              </div>
+              <a href="<?php the_permalink(); ?>" class="block w-full h-48 tech-img"
+                 style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>')">
+              </a>
               <div class="p-3 md:p-4 bg-white">
                 <h4 class="font-bold text-sm md:text-base mb-2">
                   <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors">
