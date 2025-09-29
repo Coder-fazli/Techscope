@@ -53,13 +53,21 @@ function techscope_theme_setup() {
 add_action('after_setup_theme', 'techscope_theme_setup');
 
 /**
- * Calculate Reading Time
+ * Calculate Reading Time (Russian optimized)
  */
 function techscope_reading_time() {
     $content = get_post_field('post_content', get_the_ID());
     $word_count = str_word_count(strip_tags($content));
     $reading_time = ceil($word_count / 200); // Average reading speed: 200 words per minute
-    return $reading_time;
+
+    // Russian plural forms
+    if ($reading_time % 10 == 1 && $reading_time % 100 != 11) {
+        return $reading_time . ' минута';
+    } elseif ($reading_time % 10 >= 2 && $reading_time % 10 <= 4 && ($reading_time % 100 < 10 || $reading_time % 100 >= 20)) {
+        return $reading_time . ' минуты';
+    } else {
+        return $reading_time . ' минут';
+    }
 }
 
 /**

@@ -165,12 +165,12 @@
                         <!-- Complete metadata in single line -->
                         <div class="flex flex-wrap items-center gap-3 sm:gap-6 text-sm mb-6 pb-6 border-b border-gray-100">
                             <span class="flex items-center gap-2 text-gray-700 font-medium">
-                                <span class="material-icons text-blue-600">calendar_today</span>
+                                <span class="material-icons text-orange-600">calendar_today</span>
                                 <span><?php echo get_the_date('M j, Y'); ?></span>
                             </span>
                             <span class="flex items-center gap-2 text-gray-700 font-medium">
                                 <span class="material-icons text-green-600">schedule</span>
-                                <span><?php echo techscope_reading_time(); ?> min read</span>
+                                <span><?php echo techscope_reading_time(); ?></span>
                             </span>
                             <span class="flex items-center gap-2 text-gray-700 font-medium">
                                 <span class="material-icons text-orange-600">visibility</span>
@@ -294,72 +294,64 @@
             <!-- RIGHT SIDEBAR -->
             <div class="lg:col-span-1 space-y-4 lg:space-y-6 section-animate stagger-2">
 
-                <!-- AUTHOR INFO -->
-                <div class="bg-white rounded-lg p-6 shadow-sm">
-                    <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <span class="text-blue-500">👤</span> About the Author
-                    </h3>
-                    <div class="text-center">
-                        <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-4">
-                            <?php echo strtoupper(substr(get_the_author(), 0, 2)); ?>
-                        </div>
-                        <h4 class="font-bold text-lg mb-2"><?php the_author(); ?></h4>
-                        <p class="text-sm text-gray-600 mb-4"><?php echo get_the_author_meta('description'); ?></p>
-                        <div class="flex justify-center gap-3">
-                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">Follow</button>
-                            <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-gray-200 transition-colors">Message</button>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- TRENDING NOW -->
-                <div class="bg-white rounded-lg p-4 shadow-sm">
-                    <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <span class="text-orange-500">🔥</span> Trending Now
-                    </h3>
-                    <div class="space-y-4">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <div class="bg-gradient-to-r from-orange-500 to-red-500 p-4">
+                        <h3 class="font-bold text-white text-lg flex items-center gap-2">
+                            <span class="material-icons">local_fire_department</span>
+                            Trending Now
+                        </h3>
+                    </div>
+                    <div class="p-4 space-y-4">
                         <?php
                         $trending_posts = get_posts(array(
                             'meta_key' => 'post_views_count',
                             'orderby' => 'meta_value_num',
                             'order' => 'DESC',
-                            'numberposts' => 3
+                            'numberposts' => 5
                         ));
+                        $trend_index = 1;
                         foreach ($trending_posts as $post) : setup_postdata($post);
                         ?>
-                        <div class="flex gap-3">
-                            <!-- Trending Sidebar Image - Enhanced with Fallback System -->
-                            <div class="w-16 h-16 tech-img rounded" style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'thumbnail'); ?>')"></div>
-                            <div class="flex-1">
-                                <h4 class="font-semibold text-sm mb-1">
-                                    <a href="<?php the_permalink(); ?>" class="hover:text-blue-600 transition-colors"><?php the_title(); ?></a>
-                                </h4>
-                                <div class="flex items-center gap-2 text-xs text-gray-500">
-                                    <span><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' ago'; ?></span>
-                                    <span class="text-orange-500">🔥 <?php echo rand(1, 15); ?>.<?php echo rand(1, 9); ?>K</span>
+                        <div class="group">
+                            <a href="<?php the_permalink(); ?>" class="flex gap-3 hover:bg-gray-50 p-2 -m-2 rounded-lg transition-all">
+                                <div class="relative flex-shrink-0">
+                                    <div class="w-20 h-20 tech-img rounded-lg shadow-sm" style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'thumbnail'); ?>')"></div>
+                                    <span class="absolute -top-2 -left-2 w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
+                                        <?php echo $trend_index; ?>
+                                    </span>
                                 </div>
-                            </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-semibold text-sm text-gray-900 mb-1.5 line-clamp-2 group-hover:text-orange-600 transition-colors">
+                                        <?php the_title(); ?>
+                                    </h4>
+                                    <div class="flex items-center gap-2 text-xs text-gray-500">
+                                        <span class="flex items-center gap-1">
+                                            <span class="material-icons text-orange-500" style="font-size: 14px;">visibility</span>
+                                            <?php if (function_exists('pvc_get_post_views')) echo pvc_get_post_views(); else echo '0'; ?>
+                                        </span>
+                                        <span>•</span>
+                                        <span><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')); ?> назад</span>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                        <?php endforeach; wp_reset_postdata(); ?>
+                        <?php
+                        $trend_index++;
+                        endforeach;
+                        wp_reset_postdata();
+                        ?>
                     </div>
-                </div>
-
-                <!-- NEWSLETTER -->
-                <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6">
-                    <h3 class="font-bold text-blue-800 mb-4">📧 Stay Updated</h3>
-                    <p class="text-sm text-blue-700 mb-4">Get the latest tech news and AI insights delivered to your inbox weekly.</p>
-                    <div class="space-y-3">
-                        <input type="email" placeholder="Enter your email" class="w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:border-blue-500">
-                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors">Subscribe Now</button>
-                    </div>
-                    <p class="text-xs text-blue-600 mt-3">Join 142K+ tech enthusiasts</p>
                 </div>
 
                 <!-- AD SPACE -->
-                <div class="bg-gray-100 rounded-lg p-6 text-center">
-                    <div class="text-gray-500 mb-2">Advertisement</div>
-                    <div class="w-full h-32 bg-gray-200 rounded flex items-center justify-center text-gray-400">
-                        <span class="material-icons text-4xl">image</span>
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 text-center border border-gray-200">
+                    <div class="text-sm text-gray-500 mb-3 font-medium">Advertisement</div>
+                    <div class="w-full h-64 bg-white rounded-lg flex items-center justify-center text-gray-300 border-2 border-dashed border-gray-300">
+                        <div class="text-center">
+                            <span class="material-icons text-6xl mb-2">campaign</span>
+                            <p class="text-sm text-gray-400">300x250</p>
+                        </div>
                     </div>
                 </div>
 
