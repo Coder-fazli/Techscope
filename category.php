@@ -1,5 +1,40 @@
 <?php get_header(); ?>
 
+<style>
+  /* Masonry Layout */
+  .masonry-grid {
+    column-count: 1;
+    column-gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .masonry-grid {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .masonry-grid {
+      column-count: 3;
+    }
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    width: 100%;
+  }
+
+  /* Remove line-clamp for masonry to allow natural heights */
+  .masonry-item .excerpt-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+
 <div class="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
 
   <?php if (have_posts()) : ?>
@@ -15,8 +50,8 @@
       <?php endif; ?>
     </div>
 
-    <!-- Posts Grid - 3 Columns -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Posts Masonry Grid - 3 Columns -->
+    <div class="masonry-grid">
       <?php while (have_posts()) : the_post();
         $view_count = techscope_format_view_count(techscope_get_post_views(get_the_ID()));
         $rating = techscope_get_post_rating(get_the_ID());
@@ -24,7 +59,7 @@
         // Increment view count
         techscope_increment_post_views(get_the_ID());
       ?>
-        <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+        <article class="masonry-item bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
 
           <!-- Featured Image -->
           <?php if (has_post_thumbnail()) : ?>
@@ -53,8 +88,8 @@
             </h2>
 
             <!-- Excerpt -->
-            <p class="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3">
-              <?php echo wp_trim_words(get_the_excerpt(), 15); ?>
+            <p class="text-gray-600 text-sm mb-4 leading-relaxed excerpt-text">
+              <?php echo wp_trim_words(get_the_excerpt(), 20); ?>
             </p>
 
             <!-- Meta Information -->
