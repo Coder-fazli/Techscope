@@ -77,11 +77,21 @@
     .article-content ul {
         margin: 1rem 0;
         padding-left: 2rem;
+        list-style-type: disc;
+        list-style-position: outside;
+    }
+
+    .article-content ol {
+        margin: 1rem 0;
+        padding-left: 2rem;
+        list-style-type: decimal;
+        list-style-position: outside;
     }
 
     .article-content li {
         margin: 0.5rem 0;
         color: #4b5563;
+        display: list-item;
     }
 
     /* Prevent horizontal scroll */
