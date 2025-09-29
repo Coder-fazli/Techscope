@@ -121,17 +121,17 @@ class TechScope_Posts_Widget extends WP_Widget {
 
         // Custom header with icon based on post type
         $icon = 'article';
-        $gradient = 'from-blue-500 to-purple-500';
+        $gradient = 'from-orange-500 to-red-500';
 
         if ($post_type == 'featured') {
             $icon = 'star';
-            $gradient = 'from-yellow-500 to-orange-500';
+            $gradient = 'from-orange-500 to-red-500';
         } elseif ($post_type == 'category') {
             $icon = 'category';
-            $gradient = 'from-green-500 to-teal-500';
+            $gradient = 'from-orange-500 to-red-500';
         } elseif ($post_type == 'latest') {
             $icon = 'schedule';
-            $gradient = 'from-indigo-500 to-blue-500';
+            $gradient = 'from-orange-500 to-red-500';
         }
 
         echo '<div class="bg-gradient-to-r ' . $gradient . ' p-4">';

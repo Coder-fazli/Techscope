@@ -292,13 +292,13 @@
             </div>
 
             <!-- RIGHT SIDEBAR -->
-            <div class="lg:col-span-1 space-y-4 lg:space-y-6 section-animate stagger-2">
-
-                <!-- DYNAMIC WIDGET AREA -->
-                <?php if (is_active_sidebar('single-post-sidebar')) : ?>
-                    <?php dynamic_sidebar('single-post-sidebar'); ?>
-                <?php endif; ?>
-
+            <div class="lg:col-span-1 space-y-4 lg:space-y-6">
+                <div class="techscope-sidebar-container lg:sticky lg:top-4">
+                    <!-- DYNAMIC WIDGET AREA -->
+                    <?php if (is_active_sidebar('single-post-sidebar')) : ?>
+                        <?php dynamic_sidebar('single-post-sidebar'); ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>
