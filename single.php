@@ -170,7 +170,7 @@
                             </span>
                             <span class="flex items-center gap-2 text-gray-700 font-medium">
                                 <span class="material-icons text-green-600">schedule</span>
-                                <span><?php echo do_shortcode('[rt_reading_time label="" postfix=" min read"]'); ?></span>
+                                <span><?php echo techscope_reading_time(); ?> min read</span>
                             </span>
                             <span class="flex items-center gap-2 text-gray-700 font-medium">
                                 <span class="material-icons text-orange-600">visibility</span>
