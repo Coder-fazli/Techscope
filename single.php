@@ -299,67 +299,6 @@
                     <?php dynamic_sidebar('single-post-sidebar'); ?>
                 <?php endif; ?>
 
-                <!-- TRENDING NOW -->
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-                    <div class="bg-gradient-to-r from-orange-500 to-red-500 p-4">
-                        <h3 class="font-bold text-white text-lg flex items-center gap-2">
-                            <span class="material-icons">local_fire_department</span>
-                            Trending Now
-                        </h3>
-                    </div>
-                    <div class="p-4 space-y-4">
-                        <?php
-                        $trending_posts = get_posts(array(
-                            'meta_key' => 'post_views_count',
-                            'orderby' => 'meta_value_num',
-                            'order' => 'DESC',
-                            'numberposts' => 5
-                        ));
-                        $trend_index = 1;
-                        foreach ($trending_posts as $post) : setup_postdata($post);
-                        ?>
-                        <div class="group">
-                            <a href="<?php the_permalink(); ?>" class="flex gap-3 hover:bg-gray-50 p-2 -m-2 rounded-lg transition-all">
-                                <div class="relative flex-shrink-0">
-                                    <div class="w-20 h-20 tech-img rounded-lg shadow-sm" style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'thumbnail'); ?>')"></div>
-                                    <span class="absolute -top-2 -left-2 w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
-                                        <?php echo $trend_index; ?>
-                                    </span>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="font-semibold text-sm text-gray-900 mb-1.5 line-clamp-2 group-hover:text-orange-600 transition-colors">
-                                        <?php the_title(); ?>
-                                    </h4>
-                                    <div class="flex items-center gap-2 text-xs text-gray-500">
-                                        <span class="flex items-center gap-1">
-                                            <span class="material-icons text-orange-500" style="font-size: 14px;">visibility</span>
-                                            <?php if (function_exists('pvc_get_post_views')) echo pvc_get_post_views(); else echo '0'; ?>
-                                        </span>
-                                        <span>•</span>
-                                        <span><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')); ?> назад</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <?php
-                        $trend_index++;
-                        endforeach;
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                </div>
-
-                <!-- AD SPACE -->
-                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 text-center border border-gray-200">
-                    <div class="text-sm text-gray-500 mb-3 font-medium">Advertisement</div>
-                    <div class="w-full h-64 bg-white rounded-lg flex items-center justify-center text-gray-300 border-2 border-dashed border-gray-300">
-                        <div class="text-center">
-                            <span class="material-icons text-6xl mb-2">campaign</span>
-                            <p class="text-sm text-gray-400">300x250</p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

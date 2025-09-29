@@ -63,7 +63,7 @@ function techscope_widgets_init() {
         'description'   => __('Appears on single post pages', 'techscope'),
         'before_widget' => '<div class="techscope-sidebar-widget"><div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 mb-6">',
         'after_widget'  => '</div></div>',
-        'before_title'  => '<div class="bg-gradient-to-r from-blue-500 to-purple-500 p-4"><h3 class="font-bold text-white text-lg flex items-center gap-2"><span class="material-icons">widgets</span>',
+        'before_title'  => '<div class="bg-gradient-to-r from-orange-500 to-red-500 p-4"><h3 class="font-bold text-white text-lg flex items-center gap-2"><span class="material-icons">local_fire_department</span>',
         'after_title'   => '</h3></div><div class="p-4">',
     ));
 
