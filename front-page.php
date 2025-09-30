@@ -315,38 +315,65 @@
       </div>
       <!-- ========== END TRENDING TECH DIVIDER ========== -->
 
-      <!-- ========== EXACT EPCL CAROUSEL - ORIGINAL TEMPLATE STRUCTURE ========== -->
+      <!-- ========== MODERN CAROUSEL SLIDER ========== -->
       <section class="epcl-carousel slick-slider section outer-arrows slides-5" data-show="5" data-rtl="" data-aos="fade">
         <?php
         $trending_posts = techscope_get_featured_posts();
         if ($trending_posts->have_posts()) :
           while ($trending_posts->have_posts()) : $trending_posts->the_post();
+            $view_count = techscope_get_post_views(get_the_ID());
+            $categories = get_the_category();
+            $category_name = !empty($categories) ? $categories[0]->name : 'Tech';
         ?>
           <div class="item">
-            <article>
-              <div class="img cover" role="img" alt="<?php echo esc_attr(get_the_title()); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>" style="background: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>');">
-                <div class="info border-effect">
-                  <time datetime="<?php echo get_the_date('Y-m-d'); ?>">
-                    <?php echo get_the_date('F j, Y'); ?>
-                  </time>
-                  <h2 class="title white"><?php the_title(); ?></h2>
-                </div>
-                <div class="clear"></div>
-                <footer class="views-meta">
-                  <div class="views-count">
-                    <?php
-                    $views = get_post_meta(get_the_ID(), 'post_views_count', true);
-                    if (!$views) $views = '0';
-                    echo number_format($views) . ' views';
-                    ?>
+            <article class="group">
+              <a href="<?php the_permalink(); ?>" class="block">
+                <!-- Card Container -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+
+                  <!-- Image Container -->
+                  <div class="relative h-48 overflow-hidden">
+                    <div class="w-full h-full tech-img transform group-hover:scale-110 transition-transform duration-700"
+                         style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
+                    </div>
+
+                    <!-- Gradient Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+
+                    <!-- Category Badge -->
+                    <div class="absolute top-3 left-3">
+                      <span class="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm">
+                        <?php echo esc_html($category_name); ?>
+                      </span>
+                    </div>
+
+                    <!-- Date Badge -->
+                    <div class="absolute bottom-3 left-3">
+                      <div class="flex items-center gap-1 text-white text-xs font-medium bg-black/40 backdrop-blur-sm px-2 py-1 rounded-lg">
+                        <span class="material-icons text-sm">calendar_today</span>
+                        <time datetime="<?php echo get_the_date('Y-m-d'); ?>">
+                          <?php echo get_the_date('M j'); ?>
+                        </time>
+                      </div>
+                    </div>
+
+                    <!-- Views Badge -->
+                    <div class="absolute bottom-3 right-3">
+                      <div class="flex items-center gap-1 text-white text-xs font-medium bg-orange-500/90 backdrop-blur-sm px-2 py-1 rounded-lg">
+                        <span class="material-icons text-sm">visibility</span>
+                        <span><?php echo number_format($view_count); ?></span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="clear"></div>
-                </footer>
-                <a href="<?php the_permalink(); ?>" class="full-link" aria-label="<?php echo esc_attr(get_the_title()); ?>">
-                  <span style="display:none;"><?php the_title(); ?></span>
-                </a>
-                <div class="overlay"></div>
-              </div>
+
+                  <!-- Content Container -->
+                  <div class="p-4">
+                    <h2 class="font-bold text-sm leading-snug text-gray-900 group-hover:text-orange-600 transition-colors line-clamp-2 min-h-[2.5rem]">
+                      <?php the_title(); ?>
+                    </h2>
+                  </div>
+                </div>
+              </a>
             </article>
           </div>
         <?php
