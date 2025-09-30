@@ -307,9 +307,29 @@
             </a>
           <?php endif; ?>
         </div>
-        <button id="mobile-menu-btn" class="text-amber-700 hover:text-orange-600 transition-all duration-300 hover:scale-110 p-2 rounded-lg hover:bg-orange-50">
-          <span class="material-icons text-2xl">menu</span>
-        </button>
+        <div class="flex items-center gap-2">
+          <button id="mobile-search-btn" class="text-amber-700 hover:text-orange-600 transition-all duration-300 hover:scale-110 p-2 rounded-lg hover:bg-orange-50">
+            <span class="material-icons text-xl">search</span>
+          </button>
+          <button id="mobile-menu-btn" class="text-amber-700 hover:text-orange-600 transition-all duration-300 hover:scale-110 p-2 rounded-lg hover:bg-orange-50">
+            <span class="material-icons text-2xl">menu</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Search Bar -->
+      <div id="mobile-search" class="hidden md:hidden border-t border-orange-100 p-4 bg-gradient-to-b from-orange-50/30 to-transparent">
+        <form method="get" action="<?php echo esc_url(home_url('/')); ?>" class="flex gap-2">
+          <input type="search"
+                 name="s"
+                 placeholder="Поиск статей..."
+                 class="flex-1 px-4 py-2 text-sm border border-orange-200 rounded-lg focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 bg-white"
+                 value="<?php echo get_search_query(); ?>">
+          <button type="submit"
+                  class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors">
+            <span class="material-icons text-xl">search</span>
+          </button>
+        </form>
       </div>
 
       <!-- Desktop Menu -->
@@ -324,6 +344,18 @@
               <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 font-bold text-xl"><?php bloginfo('name'); ?></span>
             </a>
           <?php endif; ?>
+        </div>
+
+        <!-- Search Box -->
+        <div class="relative flex items-center group">
+          <input type="text"
+                 id="header-search"
+                 placeholder="Поиск..."
+                 class="w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 transition-all duration-300 px-3 py-2 pr-10 text-sm border border-orange-200 rounded-lg focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 bg-white/80 backdrop-blur-sm"
+                 style="transition: width 0.3s ease, opacity 0.3s ease;">
+          <button class="absolute right-0 p-2 text-amber-800 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-300 hover:scale-110">
+            <span class="material-icons text-xl">search</span>
+          </button>
         </div>
 
         <!-- Navigation Menu -->
@@ -356,3 +388,65 @@
     </div>
   </div>
 </nav>
+
+<script>
+  // Header Search Functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('header-search');
+    const searchButton = searchInput?.nextElementSibling;
+    const mobileSearchBtn = document.getElementById('mobile-search-btn');
+    const mobileSearch = document.getElementById('mobile-search');
+
+    // Desktop search
+    if (searchButton) {
+      // Handle search button click
+      searchButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        if (searchInput.value.trim() !== '') {
+          // Submit search
+          window.location.href = '<?php echo esc_url(home_url('/')); ?>?s=' + encodeURIComponent(searchInput.value);
+        } else {
+          // Focus input if empty
+          searchInput.focus();
+        }
+      });
+
+      // Handle Enter key in search input
+      searchInput?.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && this.value.trim() !== '') {
+          e.preventDefault();
+          window.location.href = '<?php echo esc_url(home_url('/')); ?>?s=' + encodeURIComponent(this.value);
+        }
+      });
+
+      // Keep input expanded when focused
+      searchInput?.addEventListener('focus', function() {
+        this.style.width = '12rem'; // 48 = w-48
+        this.style.opacity = '1';
+      });
+
+      // Collapse only if empty and not hovering
+      searchInput?.addEventListener('blur', function() {
+        if (this.value === '') {
+          setTimeout(() => {
+            if (!searchInput.matches(':hover') && !searchInput.parentElement.matches(':hover')) {
+              searchInput.style.width = '0';
+              searchInput.style.opacity = '0';
+            }
+          }, 200);
+        }
+      });
+    }
+
+    // Mobile search toggle
+    if (mobileSearchBtn && mobileSearch) {
+      mobileSearchBtn.addEventListener('click', function() {
+        mobileSearch.classList.toggle('hidden');
+        if (!mobileSearch.classList.contains('hidden')) {
+          mobileSearch.querySelector('input').focus();
+        }
+      });
+    }
+  });
+</script>
