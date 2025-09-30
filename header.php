@@ -63,25 +63,22 @@
 
     /* Navigation Critical Styles */
     nav {
-      position: sticky;
+      position: fixed;
       top: 0;
       z-index: 50;
-      margin-top: 0.5rem;
     }
 
     nav > div {
       max-width: 100%;
       margin-left: auto;
       margin-right: auto;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
+      padding-left: 0;
+      padding-right: 0;
     }
 
-    nav .bg-white {
-      background-color: white;
-      border-radius: 0.5rem;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      border: 1px solid #E5E7EB;
+    .bg-white\/85 {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
     }
 
     /* Mobile header critical layout */
@@ -115,13 +112,9 @@
 
     /* Desktop menu visibility */
     @media (min-width: 768px) {
-      nav {
-        margin-top: 1rem;
-      }
-
       nav > div {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: 0;
+        padding-right: 0;
       }
 
       nav .md\:flex {
@@ -135,7 +128,7 @@
 
     @media (min-width: 1024px) {
       nav > div {
-        max-width: 80rem;
+        max-width: 100%;
       }
     }
 
@@ -279,7 +272,7 @@
 
 <!-- NAVIGATION -->
 <nav class="fixed top-0 left-0 right-0 z-50">
-  <div class="bg-white/85 backdrop-blur-xl shadow-lg border-b border-white/50" style="box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);">
+  <div class="bg-white/85 backdrop-blur-xl shadow-lg border-b border-white/50" style="box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08); background-color: rgba(255, 255, 255, 0.95) !important;">
     <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
 
       <!-- Mobile Header -->
