@@ -424,8 +424,8 @@
             $rating = techscope_get_post_rating($post->ID);
             ?>
             <!-- Editor's Choice Large Post -->
-            <div class="relative group flex-1 overflow-hidden rounded-2xl transition-all duration-300" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);">
-              <div class="w-full h-full tech-img relative"
+            <div class="relative group flex-1 rounded-2xl transition-all duration-300" style="box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.15); filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));">
+              <div class="w-full h-full tech-img relative overflow-hidden rounded-2xl"
                    style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'hero-slider'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6">
@@ -473,13 +473,13 @@
                 $rating = techscope_get_post_rating($post->ID);
               ?>
                 <!-- Editor's Choice Small Card -->
-                <a href="<?php the_permalink(); ?>" class="block relative overflow-hidden rounded-xl group h-full transition-all duration-300 hover:-translate-y-2" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);">
-                  <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110"
+                <a href="<?php the_permalink(); ?>" class="block relative rounded-xl group h-full transition-all duration-300 hover:-translate-y-2" style="box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18), 0 4px 8px rgba(0, 0, 0, 0.12); filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.1));">
+                  <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110 overflow-hidden rounded-xl"
                        style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center;">
                   </div>
 
                   <!-- Gradient Overlay -->
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent rounded-xl"></div>
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
 
                   <!-- Date Badge -->
                   <div class="absolute top-2 left-2">
