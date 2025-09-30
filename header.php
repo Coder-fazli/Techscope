@@ -278,7 +278,7 @@
 <?php wp_body_open(); ?>
 
 <!-- NAVIGATION -->
-<nav class="fixed top-0 left-0 right-0 z-50 py-3 sm:py-4">
+<nav class="fixed top-0 left-0 right-0 z-50 py-4 sm:py-5">
   <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
     <div class="bg-white/50 backdrop-blur-xl rounded-xl shadow-lg border border-white/30" style="box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);">
 
@@ -320,7 +320,7 @@
       </div>
 
       <!-- Desktop Menu -->
-      <div class="hidden md:flex flex-wrap items-center justify-between gap-2 sm:gap-3 p-4 py-3">
+      <div class="hidden md:flex flex-wrap items-center justify-between gap-2 sm:gap-3 px-4 py-2">
         <!-- Logo on Desktop -->
         <div class="flex items-center gap-2">
           <?php if (has_custom_logo()) : ?>
