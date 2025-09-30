@@ -424,7 +424,7 @@
             $rating = techscope_get_post_rating($post->ID);
             ?>
             <!-- Editor's Choice Large Post - Katen Style: Remove white background -->
-            <div class="relative overflow-hidden rounded-3xl group flex-1">
+            <div class="relative overflow-hidden rounded-3xl group flex-1 shadow-lg hover:shadow-2xl transition-shadow duration-300">
               <div class="w-full h-full tech-img relative"
                    style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'hero-slider'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -473,7 +473,7 @@
                 $rating = techscope_get_post_rating($post->ID);
               ?>
                 <!-- Editor's Choice Small Card - Overlay Style -->
-                <a href="<?php the_permalink(); ?>" class="block relative overflow-hidden rounded-xl group h-full">
+                <a href="<?php the_permalink(); ?>" class="block relative overflow-hidden rounded-xl group h-full shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                   <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110"
                        style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center;">
                   </div>
