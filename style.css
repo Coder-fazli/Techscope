@@ -707,13 +707,53 @@ div[class*="h-48"] {
 
 /* Editor's choice cards */
 div[class*="editor"] .card-hover,
-div[class*="col-span-2"] .card-hover {
+div[class*="col-span-2"] .card-hover,
+.lg\:col-span-2 a[class*="rounded-xl"] {
   /* Pure white background for editor's choice cards */
-  background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
   box-shadow: none !important;
   border-radius: 12px !important;
   overflow: hidden !important;
+}
+
+/* Small editor's choice cards hover */
+.lg\:col-span-2 a[class*="rounded-xl"]:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Scale 102 utility class */
+.group-hover\:scale-102 {
+  transition: transform 0.3s ease;
+}
+
+.group:hover .group-hover\:scale-102 {
+  transform: scale(1.02);
+}
+
+/* Small cards grid container fix */
+.lg\:col-span-2 .grid {
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .lg\:col-span-2 .grid {
+    gap: 0.75rem;
+  }
+}
+
+/* Ensure small cards have consistent height */
+.lg\:col-span-2 .grid > a {
+  min-height: 200px;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+@media (min-width: 768px) {
+  .lg\:col-span-2 .grid > a {
+    min-height: 220px;
+  }
 }
 
 /* Hot stories cards */

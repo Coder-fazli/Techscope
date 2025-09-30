@@ -74,7 +74,7 @@
 
     /* Navigation Critical Styles */
     nav {
-      position: fixed;
+    
       top: 0;
       left: 0;
       right: 0;
@@ -91,11 +91,6 @@
       .admin-bar nav {
         top: 46px;
       }
-    }
-
-    /* Menu shadow-xl fix */
-    .shadow-xl {
-      position: fixed;
     }
 
     nav > div {

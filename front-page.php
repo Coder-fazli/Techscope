@@ -473,8 +473,8 @@
                 $rating = techscope_get_post_rating($post->ID);
               ?>
                 <!-- Editor's Choice Small Card -->
-                <a href="<?php the_permalink(); ?>" class="block relative rounded-xl group h-full transition-all duration-300 hover:-translate-y-2">
-                  <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110 overflow-hidden rounded-xl"
+                <a href="<?php the_permalink(); ?>" class="block relative rounded-xl overflow-hidden group h-full transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-100">
+                  <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-102 overflow-hidden"
                        style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center;">
                   </div>
 
