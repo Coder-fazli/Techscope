@@ -264,7 +264,7 @@
     }
   </style>
 </head>
-<body <?php body_class('bg-gray-100 font-inter'); ?>>
+<body <?php body_class('bg-gray-100 font-inter pt-20 sm:pt-24'); ?>>
 
 <!-- Page Loader -->
 <div id="page-loader">
@@ -278,9 +278,9 @@
 <?php wp_body_open(); ?>
 
 <!-- NAVIGATION -->
-<nav class="sticky top-0 z-50 mt-2 sm:mt-4">
+<nav class="fixed top-0 left-0 right-0 z-50 mt-2 sm:mt-4">
   <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
-    <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white/40" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);">
+    <div class="bg-white/50 backdrop-blur-xl rounded-xl shadow-lg border border-white/30" style="box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);">
 
       <!-- Mobile Header -->
       <div class="flex items-center justify-between p-4 md:hidden">
