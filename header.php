@@ -280,7 +280,7 @@
 <!-- NAVIGATION -->
 <nav class="sticky top-0 z-50 mt-2 sm:mt-4">
   <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
-    <div class="bg-white rounded-xl shadow-md border border-orange-100" style="box-shadow: 0 4px 6px -1px rgba(251, 146, 60, 0.1), 0 2px 4px -1px rgba(251, 146, 60, 0.06);">
+    <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white/40" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);">
 
       <!-- Mobile Header -->
       <div class="flex items-center justify-between p-4 md:hidden">
@@ -320,7 +320,7 @@
       </div>
 
       <!-- Desktop Menu -->
-      <div class="hidden md:flex flex-wrap items-center justify-between gap-2 sm:gap-4 md:gap-6 p-4 py-3">
+      <div class="hidden md:flex flex-wrap items-center justify-between gap-2 sm:gap-3 p-4 py-3">
         <!-- Logo on Desktop -->
         <div class="flex items-center gap-2">
           <?php if (has_custom_logo()) : ?>
