@@ -112,49 +112,53 @@
 
   /* Pagination styling - ensure it's visible and below content */
   .pagination-wrapper {
-    position: relative;
-    z-index: 10;
-    margin-top: 3rem;
-    clear: both;
-    width: 100%;
+    position: relative !important;
+    z-index: 10 !important;
+    margin-top: 3rem !important;
+    clear: both !important;
+    width: 100% !important;
+    display: block !important;
   }
 
-  .pagination-wrapper .navigation {
+  .pagination-wrapper .navigation.pagination {
     display: flex !important;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 2rem 0;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    padding: 2rem 0 !important;
+    position: static !important;
   }
 
   .pagination-wrapper .nav-links {
     display: flex !important;
-    gap: 0.5rem;
-    align-items: center;
+    gap: 0.5rem !important;
+    align-items: center !important;
   }
 
-  .pagination-wrapper a,
-  .pagination-wrapper .current {
+  .pagination-wrapper .nav-links a,
+  .pagination-wrapper .nav-links .current,
+  .pagination-wrapper .nav-links .dots {
     display: inline-flex !important;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
+    align-items: center !important;
+    padding: 0.5rem 1rem !important;
+    background: white !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 0.5rem !important;
+    transition: all 0.3s ease !important;
+    color: #374151 !important;
   }
 
-  .pagination-wrapper a:hover {
-    background: #f97316;
-    color: white;
-    border-color: #f97316;
+  .pagination-wrapper .nav-links a:hover {
+    background: #f97316 !important;
+    color: white !important;
+    border-color: #f97316 !important;
   }
 
-  .pagination-wrapper .current {
-    background: #f97316;
-    color: white;
-    border-color: #f97316;
-    font-weight: bold;
+  .pagination-wrapper .nav-links .current {
+    background: #f97316 !important;
+    color: white !important;
+    border-color: #f97316 !important;
+    font-weight: bold !important;
   }
 </style>
 
