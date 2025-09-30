@@ -108,14 +108,14 @@
 
     <!-- Category Header -->
     <div class="category-header-wrapper">
-      <h1 class="text-3xl md:text-4xl font-bold mb-3 flex items-center gap-3">
-        <span class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-500 rounded-xl shadow-lg">
-          <span class="material-icons text-white text-2xl">category</span>
+      <h1 class="text-2xl md:text-4xl font-bold mb-3 flex items-center gap-3">
+        <span class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-500 rounded-xl shadow-lg flex-shrink-0">
+          <span class="material-icons text-white text-xl md:text-2xl">category</span>
         </span>
         <span class="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent"><?php single_cat_title(); ?></span>
       </h1>
       <?php if (category_description()) : ?>
-        <div class="text-gray-700 text-base md:text-lg ml-16 leading-relaxed"><?php echo category_description(); ?></div>
+        <div class="text-gray-700 text-sm md:text-lg leading-relaxed ml-0 md:ml-16"><?php echo category_description(); ?></div>
       <?php endif; ?>
     </div>
 
