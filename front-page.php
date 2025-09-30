@@ -424,7 +424,7 @@
             <!-- Editor's Choice Large Post - Katen Style: Remove white background -->
             <div class="relative overflow-hidden rounded-3xl group flex-1">
               <div class="w-full h-full tech-img relative"
-                   style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'hero-slider'); ?>'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+                   style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'hero-slider'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6">
                   <div class="text-white">
@@ -470,45 +470,41 @@
                 $view_count = techscope_format_view_count(techscope_get_post_views($post->ID));
                 $rating = techscope_get_post_rating($post->ID);
               ?>
-                <!-- Editor's Choice Small Card - Modern Design -->
-                <a href="<?php the_permalink(); ?>" class="group block">
-                  <div class="overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white border border-gray-100">
-                    <!-- Image Container -->
-                    <div class="relative h-40 overflow-hidden">
-                      <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110"
-                           style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center;">
-                      </div>
-                      <!-- Gradient Overlay -->
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <!-- Editor's Choice Small Card - Overlay Style -->
+                <a href="<?php the_permalink(); ?>" class="block relative overflow-hidden rounded-xl group h-44">
+                  <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110"
+                       style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center;">
+                  </div>
 
-                      <!-- Date Badge -->
-                      <div class="absolute top-2 left-2">
-                        <div class="flex items-center gap-1 text-white text-xs font-medium bg-black/40 backdrop-blur-sm px-2 py-1 rounded-lg">
-                          <span class="material-icons text-xs">calendar_today</span>
-                          <span><?php echo get_the_date('M j'); ?></span>
-                        </div>
-                      </div>
+                  <!-- Gradient Overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                  <!-- Date Badge -->
+                  <div class="absolute top-2 left-2">
+                    <div class="flex items-center gap-1 text-white text-xs font-medium bg-black/50 backdrop-blur-sm px-2 py-1 rounded-md">
+                      <span class="material-icons text-xs">calendar_today</span>
+                      <span><?php echo get_the_date('M j'); ?></span>
                     </div>
+                  </div>
 
-                    <!-- Content Container -->
-                    <div class="p-3">
-                      <h4 class="font-bold text-sm leading-tight text-gray-900 group-hover:text-orange-600 transition-colors line-clamp-2 mb-2">
-                        <?php the_title(); ?>
-                      </h4>
+                  <!-- Content Overlay -->
+                  <div class="absolute bottom-0 left-0 right-0 p-3">
+                    <h4 class="font-bold text-sm leading-tight text-white group-hover:text-orange-300 transition-colors line-clamp-2 mb-2">
+                      <?php the_title(); ?>
+                    </h4>
 
-                      <!-- Meta Info -->
-                      <div class="flex items-center justify-between text-xs">
-                        <div class="flex items-center gap-1 text-orange-500">
-                          <span class="material-icons text-sm">visibility</span>
-                          <span class="font-medium"><?php echo $view_count; ?></span>
-                        </div>
-                        <?php if ($rating > 0) : ?>
-                          <div class="flex items-center gap-1 text-yellow-500">
-                            <span class="material-icons text-sm">star</span>
-                            <span class="font-medium"><?php echo number_format($rating, 1); ?></span>
-                          </div>
-                        <?php endif; ?>
+                    <!-- Meta Info -->
+                    <div class="flex items-center gap-3 text-xs text-gray-300">
+                      <div class="flex items-center gap-1">
+                        <span class="material-icons text-xs text-orange-400">visibility</span>
+                        <span class="font-medium"><?php echo $view_count; ?></span>
                       </div>
+                      <?php if ($rating > 0) : ?>
+                        <div class="flex items-center gap-1">
+                          <span class="material-icons text-xs text-yellow-400">star</span>
+                          <span class="font-medium"><?php echo number_format($rating, 1); ?></span>
+                        </div>
+                      <?php endif; ?>
                     </div>
                   </div>
                 </a>
