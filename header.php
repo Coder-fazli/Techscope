@@ -272,7 +272,7 @@
 
 <!-- NAVIGATION -->
 <nav class="fixed top-0 left-0 right-0 z-50">
-  <div id="main-nav" class="bg-white/85 backdrop-blur-xl shadow-lg border-b border-white/50 transition-all duration-300" style="box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08); background-color: rgba(255, 255, 255, 0.5) !important;">
+  <div id="main-nav" class="backdrop-blur-xl shadow-lg border-b border-white/50 transition-all duration-300" style="box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08); background-color: transparent !important;">
     <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
 
       <!-- Mobile Header -->
@@ -369,13 +369,13 @@
 </nav>
 
 <script>
-  // Navbar scroll effect - transparent at top, opaque when scrolling
+  // Navbar scroll effect - fully transparent at top, opaque when scrolling
   window.addEventListener('scroll', function() {
     const nav = document.getElementById('main-nav');
     if (window.scrollY > 50) {
       nav.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
     } else {
-      nav.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+      nav.style.backgroundColor = 'transparent';
     }
   });
 
