@@ -71,6 +71,29 @@
   .masonry-item:nth-child(8) { animation-delay: 0.8s; }
   .masonry-item:nth-child(9) { animation-delay: 0.9s; }
   .masonry-item:nth-child(n+10) { animation-delay: 1s; }
+
+  /* Enhanced hover effects */
+  .masonry-item {
+    transition: all 0.3s ease;
+  }
+
+  .masonry-item:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Category page background gradient */
+  body.category {
+    background: linear-gradient(135deg, #f8f9fa 0%, #fff5f2 50%, #f8f9fa 100%);
+  }
+
+  /* Enhanced category header */
+  .category-header-wrapper {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(251, 146, 60, 0.08) 100%);
+    border-left: 4px solid #f97316;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+  }
 </style>
 
 <div class="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
@@ -78,13 +101,15 @@
   <?php if (have_posts()) : ?>
 
     <!-- Category Header -->
-    <div class="mb-8">
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-        <span class="material-icons text-orange-600 text-4xl">category</span>
-        <?php single_cat_title(); ?>
+    <div class="category-header-wrapper">
+      <h1 class="text-3xl md:text-4xl font-bold mb-3 flex items-center gap-3">
+        <span class="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-500 rounded-xl shadow-lg">
+          <span class="material-icons text-white text-2xl">category</span>
+        </span>
+        <span class="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent"><?php single_cat_title(); ?></span>
       </h1>
       <?php if (category_description()) : ?>
-        <div class="text-gray-600 text-lg"><?php echo category_description(); ?></div>
+        <div class="text-gray-700 text-base md:text-lg ml-16 leading-relaxed"><?php echo category_description(); ?></div>
       <?php endif; ?>
     </div>
 
