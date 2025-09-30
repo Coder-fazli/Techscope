@@ -44,8 +44,8 @@
     <!-- HERO SLIDER -->
     <?php if (techscope_should_show_section('hero')) : ?>
     <div class="lg:col-span-2 relative hero-slider section-animate mb-2">
-      <!-- Hero Slider - Katen Style: Remove white background wrapper -->
-      <div class="rounded-xl overflow-hidden mx-2 lg:mx-4">
+      <!-- Hero Slider - Modern Card Style -->
+      <div class="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 bg-white border border-gray-100">
         <div class="w-full h-[350px] sm:h-[450px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden relative">
           <?php
           $hero_posts = techscope_get_hero_posts();
@@ -140,19 +140,32 @@
         </div>
       </div>
 
-      <!-- Minimalistic Navigation - Positioned relative to hero-slider container -->
-      <div class="hero-nav" style="position: absolute !important; top: 50% !important; right: 20px !important; transform: translateY(-50%) !important; display: flex !important; flex-direction: column !important; gap: 8px !important; z-index: 999 !important; height: auto !important; align-items: center !important;">
-        <button class="hero-nav-btn hero-prev" aria-label="Previous slide" style="width: 44px !important; height: 44px !important; border-radius: 50% !important; background: rgba(255, 255, 255, 0.9) !important; color: #FF4D78 !important; border: 2px solid rgba(255, 77, 120, 0.3) !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px !important; height: 18px !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      <!-- Modern Navigation Buttons -->
+      <div class="hero-nav" style="position: absolute !important; top: 50% !important; right: 20px !important; transform: translateY(-50%) !important; display: flex !important; flex-direction: column !important; gap: 12px !important; z-index: 999 !important; height: auto !important; align-items: center !important;">
+        <button class="hero-nav-btn hero-prev group" aria-label="Previous slide" style="width: 48px !important; height: 48px !important; border-radius: 12px !important; background: rgba(255, 255, 255, 0.95) !important; color: #f97316 !important; border: none !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important; backdrop-filter: blur(8px) !important; transition: all 0.3s ease !important;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px !important; height: 20px !important; stroke-width: 2.5 !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
-        <button class="hero-nav-btn hero-next" aria-label="Next slide" style="width: 44px !important; height: 44px !important; border-radius: 50% !important; background: rgba(255, 255, 255, 0.9) !important; color: #FF4D78 !important; border: 2px solid rgba(255, 77, 120, 0.3) !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px !important; height: 18px !important;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        <button class="hero-nav-btn hero-next group" aria-label="Next slide" style="width: 48px !important; height: 48px !important; border-radius: 12px !important; background: rgba(255, 255, 255, 0.95) !important; color: #f97316 !important; border: none !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important; backdrop-filter: blur(8px) !important; transition: all 0.3s ease !important;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px !important; height: 20px !important; stroke-width: 2.5 !important;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
           </svg>
         </button>
       </div>
+
+      <style>
+        .hero-nav-btn:hover {
+          background: linear-gradient(135deg, #f97316 0%, #ef4444 100%) !important;
+          color: white !important;
+          transform: scale(1.1) !important;
+          box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.4), 0 4px 6px -2px rgba(249, 115, 22, 0.2) !important;
+        }
+
+        .hero-nav-btn:active {
+          transform: scale(0.95) !important;
+        }
+      </style>
     </div>
     <?php endif; ?>
 
