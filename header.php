@@ -334,13 +334,12 @@
         </div>
 
         <!-- Search Box -->
-        <div class="relative flex items-center group">
+        <div class="relative flex items-center">
           <input type="text"
                  id="header-search"
                  placeholder="Поиск..."
-                 class="w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 transition-all duration-300 px-3 py-2 pr-10 text-sm border border-orange-200 rounded-lg focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 bg-white/80 backdrop-blur-sm"
-                 style="transition: width 0.3s ease, opacity 0.3s ease;">
-          <button class="absolute right-0 p-2 text-amber-800 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-300 hover:scale-110">
+                 class="w-48 px-3 py-2 pr-10 text-sm border border-orange-200 rounded-lg focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 bg-white/80 backdrop-blur-sm transition-all duration-300">
+          <button class="absolute right-2 p-1 text-orange-600 hover:text-orange-700 transition-colors">
             <span class="material-icons text-xl">search</span>
           </button>
         </div>
@@ -404,24 +403,6 @@
         if (e.key === 'Enter' && this.value.trim() !== '') {
           e.preventDefault();
           window.location.href = '<?php echo esc_url(home_url('/')); ?>?s=' + encodeURIComponent(this.value);
-        }
-      });
-
-      // Keep input expanded when focused
-      searchInput?.addEventListener('focus', function() {
-        this.style.width = '12rem'; // 48 = w-48
-        this.style.opacity = '1';
-      });
-
-      // Collapse only if empty and not hovering
-      searchInput?.addEventListener('blur', function() {
-        if (this.value === '') {
-          setTimeout(() => {
-            if (!searchInput.matches(':hover') && !searchInput.parentElement.matches(':hover')) {
-              searchInput.style.width = '0';
-              searchInput.style.opacity = '0';
-            }
-          }, 200);
         }
       });
     }

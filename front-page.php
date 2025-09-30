@@ -329,7 +329,7 @@
             <article class="group">
               <a href="<?php the_permalink(); ?>" class="block">
                 <!-- Card Container -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
 
                   <!-- Image Container -->
                   <div class="relative h-48 overflow-hidden">
