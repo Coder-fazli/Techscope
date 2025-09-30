@@ -470,35 +470,48 @@
                 $view_count = techscope_format_view_count(techscope_get_post_views($post->ID));
                 $rating = techscope_get_post_rating($post->ID);
               ?>
-                <!-- Editor's Choice Small Card - Katen Style: Remove white background box -->
-                <div class="overflow-hidden card-hover-katen transform transition-all duration-300 hover:-translate-y-0.5">
-                  <!-- Editor's Choice Small Card Content - Katen Style: Image as main element -->
-                  <div class="w-full h-36 sm:h-44 overflow-hidden relative">
-                    <div class="w-full h-full tech-img transform transition-transform duration-300 hover:scale-105"
-                         style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-                      <!-- Overlay gradient -->
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                      <!-- Title overlay -->
-                      <div class="absolute bottom-0 left-0 right-0 p-3">
-                        <h4 class="font-semibold text-white text-sm leading-tight mb-1 line-clamp-2">
-                          <a href="<?php the_permalink(); ?>" class="text-white hover:text-gray-200 transition-colors">
-                            <?php the_title(); ?>
-                          </a>
-                        </h4>
-                        <div class="flex items-center justify-between text-xs text-gray-300">
+                <!-- Editor's Choice Small Card - Modern Design -->
+                <a href="<?php the_permalink(); ?>" class="group block">
+                  <div class="overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white border border-gray-100">
+                    <!-- Image Container -->
+                    <div class="relative h-40 overflow-hidden">
+                      <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110"
+                           style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center;">
+                      </div>
+                      <!-- Gradient Overlay -->
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+
+                      <!-- Date Badge -->
+                      <div class="absolute top-2 left-2">
+                        <div class="flex items-center gap-1 text-white text-xs font-medium bg-black/40 backdrop-blur-sm px-2 py-1 rounded-lg">
+                          <span class="material-icons text-xs">calendar_today</span>
                           <span><?php echo get_the_date('M j'); ?></span>
-                          <div class="flex items-center gap-1">
-                            <?php if ($rating > 0) : ?>
-                              <span class="text-yellow-400">⭐ <?php echo number_format($rating, 1); ?></span>
-                            <?php else : ?>
-                              <span class="text-orange-400">🔥 <?php echo $view_count; ?></span>
-                            <?php endif; ?>
-                          </div>
                         </div>
                       </div>
                     </div>
+
+                    <!-- Content Container -->
+                    <div class="p-3">
+                      <h4 class="font-bold text-sm leading-tight text-gray-900 group-hover:text-orange-600 transition-colors line-clamp-2 mb-2">
+                        <?php the_title(); ?>
+                      </h4>
+
+                      <!-- Meta Info -->
+                      <div class="flex items-center justify-between text-xs">
+                        <div class="flex items-center gap-1 text-orange-500">
+                          <span class="material-icons text-sm">visibility</span>
+                          <span class="font-medium"><?php echo $view_count; ?></span>
+                        </div>
+                        <?php if ($rating > 0) : ?>
+                          <div class="flex items-center gap-1 text-yellow-500">
+                            <span class="material-icons text-sm">star</span>
+                            <span class="font-medium"><?php echo number_format($rating, 1); ?></span>
+                          </div>
+                        <?php endif; ?>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </a>
               <?php
                 $post = $temp_post;
               endforeach;
