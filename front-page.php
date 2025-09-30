@@ -192,22 +192,47 @@
               $categories = get_the_category();
               $category_name = !empty($categories) ? esc_html($categories[0]->name) : 'TRENDING';
           ?>
-            <!-- Clean Sidebar Post Card - Katen Style: Remove white background box -->
-            <div class="overflow-hidden transition-all duration-300 hover:transform hover:translate-y-1 sidebar-card-katen">
-              <a href="<?php the_permalink(); ?>" class="block w-full h-[140px] relative overflow-hidden tech-img sidebar-image"
-                 style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-3">
-                  <h4 class="font-bold text-sm mb-2 leading-tight text-white">
-                    <a href="<?php the_permalink(); ?>" class="text-white hover:text-gray-200 transition-colors">
-                      <?php echo techscope_truncate_text(get_the_title(), 45); ?>
-                    </a>
+            <!-- Modern Sidebar Card -->
+            <div class="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 bg-white border border-gray-100">
+              <a href="<?php the_permalink(); ?>" class="block relative">
+                <!-- Image Container -->
+                <div class="relative h-[180px] overflow-hidden">
+                  <div class="w-full h-full tech-img transform group-hover:scale-105 transition-transform duration-500"
+                       style="background-image: url('<?php echo techscope_ensure_image(get_the_ID(), 'featured-card'); ?>'); background-size: cover; background-position: center;">
+                  </div>
+                  <!-- Gradient Overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+                  <!-- Number Badge -->
+                  <div class="absolute top-3 left-3">
+                    <span class="w-8 h-8 flex items-center justify-center bg-orange-500 text-white font-bold text-sm rounded-full shadow-lg">
+                      <?php echo $post_counter; ?>
+                    </span>
+                  </div>
+
+                  <!-- Category Badge -->
+                  <div class="absolute top-3 right-3">
+                    <span class="px-2 py-1 bg-white/90 backdrop-blur-sm text-orange-600 text-xs font-semibold rounded-full shadow-sm">
+                      <?php echo $category_name; ?>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Content Container -->
+                <div class="p-4">
+                  <h4 class="font-bold text-sm mb-3 leading-tight text-gray-900 group-hover:text-orange-600 transition-colors line-clamp-2">
+                    <?php echo techscope_truncate_text(get_the_title(), 60); ?>
                   </h4>
-                  <div class="flex items-center justify-between text-xs text-gray-300">
-                    <span><?php echo get_the_date('M j'); ?></span>
+
+                  <!-- Meta Info -->
+                  <div class="flex items-center justify-between text-xs text-gray-500">
                     <div class="flex items-center gap-1">
-                      <span class="material-icons text-xs">visibility</span>
-                      <span><?php echo $view_count; ?></span>
+                      <span class="material-icons text-sm">schedule</span>
+                      <span><?php echo get_the_date('M j'); ?></span>
+                    </div>
+                    <div class="flex items-center gap-1 text-orange-500">
+                      <span class="material-icons text-sm">visibility</span>
+                      <span class="font-medium"><?php echo $view_count; ?></span>
                     </div>
                   </div>
                 </div>
@@ -218,11 +243,12 @@
             wp_reset_postdata();
           else :
           ?>
-            <div class="text-center text-gray-500 py-4">
-              <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-pink-100 flex items-center justify-center">
-                <span class="material-icons text-pink-400 text-sm">trending_up</span>
+            <div class="text-center text-gray-500 py-12 px-6 bg-white rounded-xl border-2 border-dashed border-gray-200">
+              <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
+                <span class="material-icons text-orange-500 text-3xl">trending_up</span>
               </div>
-              <p class="text-xs"><?php _e('No trending posts yet.', 'techscope'); ?></p>
+              <p class="text-sm font-medium text-gray-700 mb-2"><?php _e('Пока нет трендовых постов', 'techscope'); ?></p>
+              <p class="text-xs text-gray-500"><?php _e('Скоро здесь появятся популярные статьи', 'techscope'); ?></p>
             </div>
           <?php endif; ?>
 
@@ -243,11 +269,11 @@
             }
           }
         ?>
-          <div class="text-center mt-3 pt-3 border-t border-pink-100">
+          <div class="text-center mt-4 pt-4">
             <a href="<?php echo esc_url($see_more_url); ?>"
-               class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:from-pink-600 hover:to-rose-600 transition-all duration-300 shadow-sm hover:shadow-md">
+               class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold text-sm hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group">
               <span><?php echo esc_html($see_more_text); ?></span>
-              <span class="material-icons text-sm">arrow_forward</span>
+              <span class="material-icons text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </a>
           </div>
         <?php endif; ?>
