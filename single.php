@@ -45,6 +45,21 @@
     .stagger-4 { transition-delay: 0.4s; }
 
     /* Article Content Styling */
+    /* CRITICAL: Force all content images to display at proper size */
+    .article-content img {
+        width: 100% !important;
+        max-width: 800px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 1.5rem auto !important;
+    }
+
+    @media (max-width: 640px) {
+        .article-content img {
+            max-width: 100% !important;
+        }
+    }
+
     .article-content h2 {
         font-size: 1.75rem;
         font-weight: 700;
@@ -95,23 +110,18 @@
     }
 
     /* WordPress Image Styling - Fix for Gutenberg images */
-    .article-content img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 1.5rem auto;
-        border-radius: 8px;
-    }
-
     .article-content figure {
-        margin: 1.5rem 0;
+        margin: 1.5rem auto;
         display: block;
+        max-width: 800px;
     }
 
     .article-content figure img {
-        width: 100%;
-        height: auto;
-        margin: 0;
+        width: 100% !important;
+        height: auto !important;
+        max-width: 800px !important;
+        display: block !important;
+        margin: 0 auto !important;
     }
 
     .article-content figcaption {
@@ -157,22 +167,44 @@
         max-width: 50%;
     }
 
-    /* WordPress size classes */
+    /* WordPress size classes - Override to make images larger */
     .article-content .size-thumbnail {
-        max-width: 150px;
+        max-width: 300px !important;
+        width: 100% !important;
+        height: auto !important;
     }
 
     .article-content .size-medium {
-        max-width: 300px;
+        max-width: 600px !important;
+        width: 100% !important;
+        height: auto !important;
     }
 
     .article-content .size-large {
-        max-width: 1024px;
+        max-width: 100% !important;
+        width: 100% !important;
+        height: auto !important;
     }
 
     .article-content .size-full {
-        width: 100%;
-        max-width: 100%;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Override any inline width/height attributes */
+    .article-content img[width],
+    .article-content img[height] {
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+    }
+
+    /* Make small images larger by default */
+    .article-content img[width="150"],
+    .article-content img[width="300"] {
+        width: 100% !important;
+        max-width: 600px !important;
     }
 
     /* Yandex Market widget images */
