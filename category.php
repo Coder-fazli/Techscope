@@ -110,11 +110,51 @@
     visibility: visible !important;
   }
 
-  /* Pagination styling - ensure it's below content */
+  /* Pagination styling - ensure it's visible and below content */
   .pagination-wrapper {
     position: relative;
     z-index: 10;
     margin-top: 3rem;
+    clear: both;
+    width: 100%;
+  }
+
+  .pagination-wrapper .navigation {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 2rem 0;
+  }
+
+  .pagination-wrapper .nav-links {
+    display: flex !important;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .pagination-wrapper a,
+  .pagination-wrapper .current {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .pagination-wrapper a:hover {
+    background: #f97316;
+    color: white;
+    border-color: #f97316;
+  }
+
+  .pagination-wrapper .current {
+    background: #f97316;
+    color: white;
+    border-color: #f97316;
+    font-weight: bold;
   }
 </style>
 
