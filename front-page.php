@@ -424,8 +424,8 @@
             $rating = techscope_get_post_rating($post->ID);
             ?>
             <!-- Editor's Choice Large Post -->
-            <div class="relative overflow-hidden rounded-2xl group flex-1 bg-white shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div class="w-full h-full tech-img relative"
+            <div class="relative group flex-1 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
+              <div class="w-full h-full tech-img relative overflow-hidden rounded-2xl"
                    style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'hero-slider'); ?>'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6">
@@ -473,8 +473,8 @@
                 $rating = techscope_get_post_rating($post->ID);
               ?>
                 <!-- Editor's Choice Small Card -->
-                <a href="<?php the_permalink(); ?>" class="block relative overflow-hidden rounded-xl group h-full bg-white shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
-                  <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110"
+                <a href="<?php the_permalink(); ?>" class="block relative group h-full rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110 overflow-hidden rounded-xl"
                        style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center;">
                   </div>
 
