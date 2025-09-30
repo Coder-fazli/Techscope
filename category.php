@@ -209,7 +209,7 @@
         'mid_size' => 2,
         'prev_text' => '<span class="material-icons">arrow_back</span> ' . __('Previous', 'techscope'),
         'next_text' => __('Next', 'techscope') . ' <span class="material-icons">arrow_forward</span>',
-        'class' => 'flex justify-center items-center space-x-2',
+        'class' => 'flex justify-center items-center space-x-2 mt-8 mb-8',
       ));
       ?>
     </div>
