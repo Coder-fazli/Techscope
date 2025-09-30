@@ -94,6 +94,96 @@
         display: list-item;
     }
 
+    /* WordPress Image Styling - Fix for Gutenberg images */
+    .article-content img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1.5rem auto;
+        border-radius: 8px;
+    }
+
+    .article-content figure {
+        margin: 1.5rem 0;
+        display: block;
+    }
+
+    .article-content figure img {
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+
+    .article-content figcaption {
+        text-align: center;
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 0.5rem;
+        font-style: italic;
+    }
+
+    /* WordPress alignment classes */
+    .article-content .alignleft {
+        float: left;
+        margin: 0.5rem 1.5rem 1rem 0;
+        max-width: 50%;
+    }
+
+    .article-content .alignright {
+        float: right;
+        margin: 0.5rem 0 1rem 1.5rem;
+        max-width: 50%;
+    }
+
+    .article-content .aligncenter {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    /* Gutenberg image blocks */
+    .article-content .wp-block-image {
+        margin: 1.5rem 0;
+    }
+
+    .article-content .wp-block-image img {
+        display: block;
+        margin: 0;
+    }
+
+    .article-content .wp-block-image.alignleft,
+    .article-content .wp-block-image.alignright {
+        max-width: 50%;
+    }
+
+    /* WordPress size classes */
+    .article-content .size-thumbnail {
+        max-width: 150px;
+    }
+
+    .article-content .size-medium {
+        max-width: 300px;
+    }
+
+    .article-content .size-large {
+        max-width: 1024px;
+    }
+
+    .article-content .size-full {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Yandex Market widget images */
+    .article-content iframe,
+    .article-content [class*="ym-"],
+    .article-content [id*="ym-"] {
+        max-width: 100%;
+        margin: 1rem auto;
+        display: block;
+    }
+
     /* Prevent horizontal scroll */
     * {
         box-sizing: border-box;
