@@ -756,6 +756,68 @@ div[class*="col-span-2"] .card-hover,
   }
 }
 
+/* Mobile fixes for small cards */
+@media (max-width: 640px) {
+  /* Fix main grid container on mobile */
+  .grid.grid-cols-1.lg\:grid-cols-5 {
+    gap: 0.75rem !important;
+    min-height: auto !important;
+  }
+
+  .lg\:col-span-2 .grid {
+    gap: 0.5rem !important;
+  }
+
+  .lg\:col-span-2 .grid > a {
+    border-radius: 12px !important;
+    min-height: 140px !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+  }
+
+  /* Fix text on mobile small cards */
+  .lg\:col-span-2 .grid > a h4 {
+    font-size: 0.75rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .lg\:col-span-2 .grid > a .absolute.bottom-0 {
+    padding: 0.5rem !important;
+  }
+
+  .lg\:col-span-2 .grid > a .text-xs {
+    font-size: 0.65rem !important;
+  }
+
+  /* Fix date badge on mobile */
+  .lg\:col-span-2 .grid > a .absolute.top-2 {
+    top: 0.25rem !important;
+    left: 0.25rem !important;
+  }
+
+  .lg\:col-span-2 .grid > a .absolute.top-2 > div {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.65rem !important;
+  }
+
+  .lg\:col-span-2 .grid > a .material-icons {
+    font-size: 0.75rem !important;
+  }
+
+  /* Force rounded corners on all elements */
+  .lg\:col-span-2 .grid > a,
+  .lg\:col-span-2 .grid > a > div,
+  .lg\:col-span-2 .grid > a .tech-img {
+    border-radius: 12px !important;
+  }
+
+  /* Ensure proper clipping */
+  .lg\:col-span-2 .grid > a > div:first-child {
+    border-radius: 12px !important;
+  }
+}
+
 /* Hot stories cards */
 .hot-badge {
   /* Enhanced hot badge styling */
