@@ -63,7 +63,7 @@
 
     /* Navigation Critical Styles */
     nav {
-      position: fixed;
+      position: sticky;
       top: 0;
       z-index: 50;
     }
@@ -257,7 +257,7 @@
     }
   </style>
 </head>
-<body <?php body_class('font-inter pt-24 sm:pt-28'); ?> style="background-color: #F3F4F6;">
+<body <?php body_class('font-inter'); ?> style="background-color: #F3F4F6;">
 
 <!-- Page Loader -->
 <div id="page-loader">
@@ -271,7 +271,7 @@
 <?php wp_body_open(); ?>
 
 <!-- NAVIGATION -->
-<nav class="fixed top-0 left-0 right-0 z-50">
+<nav class="sticky top-0 z-50">
   <div id="main-nav" class="backdrop-blur-xl shadow-lg border-b border-white/50 transition-all duration-300" style="box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08); background-color: transparent !important;">
     <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
 
