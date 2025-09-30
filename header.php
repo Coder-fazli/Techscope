@@ -293,7 +293,7 @@
 <!-- NAVIGATION -->
 <nav class="sticky top-0 z-50 mt-2 sm:mt-4">
   <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div class="bg-white rounded-xl shadow-md border border-orange-100" style="box-shadow: 0 4px 6px -1px rgba(251, 146, 60, 0.1), 0 2px 4px -1px rgba(251, 146, 60, 0.06);">
 
       <!-- Mobile Header -->
       <div class="flex items-center justify-between p-4 md:hidden">
@@ -301,25 +301,27 @@
           <?php if (has_custom_logo()) : ?>
             <?php the_custom_logo(); ?>
           <?php else : ?>
-            <span class="material-icons text-orange-600">phone_iphone</span>
-            <span class="text-orange-600 font-bold text-lg"><?php bloginfo('name'); ?></span>
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-2">
+              <span class="material-icons text-orange-600">phone_iphone</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 font-bold text-lg"><?php bloginfo('name'); ?></span>
+            </a>
           <?php endif; ?>
         </div>
-        <button id="mobile-menu-btn" class="text-amber-700 hover:text-orange-600 transition-colors">
+        <button id="mobile-menu-btn" class="text-amber-700 hover:text-orange-600 transition-all duration-300 hover:scale-110 p-2 rounded-lg hover:bg-orange-50">
           <span class="material-icons text-2xl">menu</span>
         </button>
       </div>
 
       <!-- Desktop Menu -->
-      <div class="hidden md:flex flex-wrap items-center justify-between gap-2 sm:gap-4 md:gap-8 p-4 border-b border-gray-100">
+      <div class="hidden md:flex flex-wrap items-center justify-between gap-2 sm:gap-4 md:gap-6 p-4 py-3">
         <!-- Logo on Desktop -->
         <div class="flex items-center gap-2">
           <?php if (has_custom_logo()) : ?>
             <?php the_custom_logo(); ?>
           <?php else : ?>
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-2">
-              <span class="material-icons text-orange-600 text-2xl">smartphone</span>
-              <span class="text-orange-600 font-bold text-xl"><?php bloginfo('name'); ?></span>
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-2 group">
+              <span class="material-icons text-orange-600 text-2xl group-hover:scale-110 transition-transform duration-300">smartphone</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 font-bold text-xl"><?php bloginfo('name'); ?></span>
             </a>
           <?php endif; ?>
         </div>
@@ -328,7 +330,7 @@
         <?php
         wp_nav_menu(array(
           'theme_location' => 'primary',
-          'menu_class' => 'flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-8',
+          'menu_class' => 'flex flex-wrap items-center justify-center gap-1 sm:gap-2',
           'container' => false,
           'fallback_cb' => 'techscope_fallback_menu',
           'walker' => new TechScope_Walker_Nav_Menu()
@@ -337,8 +339,8 @@
       </div>
 
       <!-- Mobile Menu -->
-      <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200">
-        <div class="py-2">
+      <div id="mobile-menu" class="hidden md:hidden border-t border-orange-100 bg-gradient-to-b from-orange-50/30 to-transparent">
+        <div class="py-1">
           <?php
           wp_nav_menu(array(
             'theme_location' => 'primary',

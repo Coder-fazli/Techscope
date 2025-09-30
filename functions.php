@@ -2097,15 +2097,15 @@ class TechScope_Walker_Nav_Menu extends Walker_Nav_Menu {
             $icon = isset($icons[$item_name_lower]) ? $icons[$item_name_lower] : 'category';
         }
 
-        $current_class = in_array('current-menu-item', $classes) ? 'text-orange-600' : 'text-amber-700 hover:text-orange-600';
+        $current_class = in_array('current-menu-item', $classes) ? 'text-orange-600 bg-orange-50' : 'text-amber-800 hover:text-orange-600 hover:bg-orange-50';
 
-        $output .= '<a href="' . $item->url . '" class="relative pb-3 px-1 sm:px-2 ' . $current_class . ' font-medium text-base sm:text-lg transition-colors duration-200">';
+        $output .= '<a href="' . $item->url . '" class="relative pb-2 pt-2 px-3 sm:px-4 rounded-lg ' . $current_class . ' font-medium text-sm sm:text-base transition-all duration-300 group">';
         $output .= '<span class="flex items-center gap-2">';
-        $output .= '<span class="material-icons">' . $icon . '</span>';
-        $output .= $item->title;
+        $output .= '<span class="material-icons text-lg group-hover:scale-110 transition-transform duration-300">' . $icon . '</span>';
+        $output .= '<span class="font-medium">' . $item->title . '</span>';
         $output .= '</span>';
         if (in_array('current-menu-item', $classes)) {
-            $output .= '<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 rounded-full"></div>';
+            $output .= '<div class="absolute bottom-0 left-3 right-3 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-sm"></div>';
         }
         $output .= '</a>';
     }
@@ -2143,12 +2143,12 @@ class TechScope_Mobile_Walker_Nav_Menu extends Walker_Nav_Menu {
             $icon = isset($icons[$item_name_lower]) ? $icons[$item_name_lower] : 'category';
         }
 
-        $current_class = in_array('current-menu-item', $classes) ? 'text-orange-600 font-medium bg-orange-50 border-r-2 border-orange-600' : 'text-amber-700 hover:bg-orange-50 hover:text-orange-600';
+        $current_class = in_array('current-menu-item', $classes) ? 'text-orange-600 font-semibold bg-gradient-to-r from-orange-50 to-transparent border-l-4 border-orange-600' : 'text-amber-800 hover:bg-gradient-to-r hover:from-orange-50 hover:to-transparent hover:text-orange-600 hover:border-l-4 hover:border-orange-300';
 
-        $output .= '<a href="' . $item->url . '" class="w-full text-left px-4 py-3 ' . $current_class . ' transition-colors block">';
+        $output .= '<a href="' . $item->url . '" class="w-full text-left px-4 py-3.5 ' . $current_class . ' transition-all duration-300 block group">';
         $output .= '<span class="flex items-center gap-3">';
-        $output .= '<span class="material-icons">' . $icon . '</span>';
-        $output .= $item->title;
+        $output .= '<span class="material-icons text-lg group-hover:scale-110 transition-transform duration-300">' . $icon . '</span>';
+        $output .= '<span class="font-medium">' . $item->title . '</span>';
         $output .= '</span>';
         $output .= '</a>';
     }
