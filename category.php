@@ -30,6 +30,8 @@
   @media (min-width: 768px) {
     .masonry-item {
       margin-bottom: 1.5rem;
+      border: solid 1.5px #EBEBEB;
+      /* padding: 24px; */
     }
   }
 
@@ -40,6 +42,35 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Fade-in animation for posts */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .masonry-item {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Stagger animation for each post */
+  .masonry-item:nth-child(1) { animation-delay: 0.1s; }
+  .masonry-item:nth-child(2) { animation-delay: 0.2s; }
+  .masonry-item:nth-child(3) { animation-delay: 0.3s; }
+  .masonry-item:nth-child(4) { animation-delay: 0.4s; }
+  .masonry-item:nth-child(5) { animation-delay: 0.5s; }
+  .masonry-item:nth-child(6) { animation-delay: 0.6s; }
+  .masonry-item:nth-child(7) { animation-delay: 0.7s; }
+  .masonry-item:nth-child(8) { animation-delay: 0.8s; }
+  .masonry-item:nth-child(9) { animation-delay: 0.9s; }
+  .masonry-item:nth-child(n+10) { animation-delay: 1s; }
 </style>
 
 <div class="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
