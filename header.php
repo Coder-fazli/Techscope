@@ -58,7 +58,18 @@
       background-color: #F3F4F6;
       margin: 0;
       padding: 0;
+      padding-top: 5rem;
       visibility: visible !important;
+    }
+
+    .admin-bar body {
+      padding-top: calc(5rem + 32px);
+    }
+
+    @media screen and (max-width: 782px) {
+      .admin-bar body {
+        padding-top: calc(5rem + 46px);
+      }
     }
 
     /* Navigation Critical Styles */
@@ -69,6 +80,17 @@
       right: 0;
       z-index: 50;
       width: 100%;
+    }
+
+    /* WordPress Admin Bar Fix */
+    .admin-bar nav {
+      top: 32px;
+    }
+
+    @media screen and (max-width: 782px) {
+      .admin-bar nav {
+        top: 46px;
+      }
     }
 
     nav > div {
@@ -260,7 +282,7 @@
     }
   </style>
 </head>
-<body <?php body_class('font-inter pt-20 sm:pt-24'); ?> style="background-color: #F3F4F6;">
+<body <?php body_class('font-inter'); ?> style="background-color: #F3F4F6; padding-top: 5rem;">
 
 <!-- Page Loader -->
 <div id="page-loader">
