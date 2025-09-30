@@ -479,29 +479,28 @@ nav, header, footer, main, section, div { max-width: 100vw; }
   padding: 0 !important;
 }
 .hero-slider .hero-nav-btn {
-  width: 44px !important;
-  height: 44px !important;
-  border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.9) !important;
-  color: #FF4D78 !important;
-  border: 2px solid rgba(255, 77, 120, 0.3) !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  color: #f97316 !important;
+  border: none !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   backdrop-filter: blur(8px) !important;
-  box-shadow: 0 4px 12px rgba(255, 77, 120, 0.2) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
   margin: 0 !important;
   padding: 0 !important;
   outline: none !important;
 }
 .hero-slider .hero-nav-btn:hover {
-  background: #FF4D78 !important;
+  background: linear-gradient(135deg, #f97316 0%, #ef4444 100%) !important;
   color: white !important;
-  border-color: #FF4D78 !important;
-  transform: scale(1.1) !important;
-  box-shadow: 0 6px 20px rgba(255, 77, 120, 0.4) !important;
+  transform: translateY(-50%) scale(1.15) !important;
+  box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.5), 0 4px 6px -2px rgba(249, 115, 22, 0.3) !important;
 }
 .hero-slider .hero-nav-btn svg {
   width: 18px !important;
