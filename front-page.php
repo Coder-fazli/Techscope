@@ -155,15 +155,23 @@
       </button>
 
       <style>
-        .hero-nav-btn:hover {
+        button.hero-nav-btn.hero-prev:hover,
+        button.hero-nav-btn.hero-next:hover {
           background: linear-gradient(135deg, #f97316 0%, #ef4444 100%) !important;
           color: white !important;
-          transform: translateY(-50%) scale(1.1) !important;
-          box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.4), 0 4px 6px -2px rgba(249, 115, 22, 0.2) !important;
+          transform: translateY(-50%) scale(1.15) !important;
+          box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.5), 0 4px 6px -2px rgba(249, 115, 22, 0.3) !important;
+          transition: all 0.3s ease !important;
         }
 
-        .hero-nav-btn:active {
+        button.hero-nav-btn.hero-prev:active,
+        button.hero-nav-btn.hero-next:active {
           transform: translateY(-50%) scale(0.95) !important;
+        }
+
+        button.hero-nav-btn.hero-prev svg,
+        button.hero-nav-btn.hero-next svg {
+          transition: none !important;
         }
       </style>
     </div>
