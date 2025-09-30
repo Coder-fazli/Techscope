@@ -96,9 +96,25 @@
   .category-header-wrapper {
     background: linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(251, 146, 60, 0.08) 100%);
     border-left: 4px solid #f97316;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 1rem;
     margin-bottom: 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Make description visible */
+  .category-description {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Pagination styling - ensure it's below content */
+  .pagination-wrapper {
+    position: relative;
+    z-index: 10;
+    margin-top: 3rem;
   }
 </style>
 
@@ -115,7 +131,7 @@
         <span class="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent"><?php single_cat_title(); ?></span>
       </h1>
       <?php if (category_description()) : ?>
-        <div class="text-gray-700 text-sm md:text-lg leading-relaxed ml-0 md:ml-16"><?php echo category_description(); ?></div>
+        <div class="category-description text-gray-700 text-sm md:text-base leading-relaxed mt-3"><?php echo category_description(); ?></div>
       <?php endif; ?>
     </div>
 
@@ -187,7 +203,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="mt-12">
+    <div class="pagination-wrapper mt-12">
       <?php
       the_posts_pagination(array(
         'mid_size' => 2,
