@@ -257,7 +257,7 @@
     }
   </style>
 </head>
-<body <?php body_class('font-inter pt-16 sm:pt-20'); ?> style="background-color: #F3F4F6;">
+<body <?php body_class('font-inter pt-24 sm:pt-28'); ?> style="background-color: #F3F4F6;">
 
 <!-- Page Loader -->
 <div id="page-loader">
