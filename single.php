@@ -131,7 +131,7 @@
             <div class="lg:col-span-2 space-y-6 lg:space-y-8">
 
                 <!-- BREADCRUMBS -->
-                <nav class="section-animate mt-4">
+                <nav class="section-animate mt-4 relative z-40">
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
                         <a href="<?php echo home_url(); ?>" class="hover:text-blue-600 transition-colors">Главная</a>
                         <span class="material-icons text-xs">chevron_right</span>
