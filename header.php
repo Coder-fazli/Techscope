@@ -93,6 +93,11 @@
       }
     }
 
+    /* Menu shadow-xl fix */
+    .shadow-xl {
+      position: fixed;
+    }
+
     nav > div {
       max-width: 100%;
       margin-left: auto;
