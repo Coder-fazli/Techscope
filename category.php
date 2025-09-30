@@ -28,15 +28,9 @@
     position: relative;
   }
 
-  /* Tiny transparent divider line between posts */
-  .masonry-item::after {
-    content: '';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
+  /* Tiny transparent divider line - inside the card at bottom */
+  .masonry-item article {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
   }
 
   @media (min-width: 768px) {
@@ -93,9 +87,9 @@
     transform: translateY(-4px);
   }
 
-  /* Category page background gradient */
+  /* Category page background gradient - lighter */
   body.category {
-    background: linear-gradient(135deg, #f8f9fa 0%, #fff5f2 50%, #f8f9fa 100%);
+    background: linear-gradient(135deg, #fafbfc 0%, #fffaf8 50%, #fafbfc 100%);
   }
 
   /* Enhanced category header */
