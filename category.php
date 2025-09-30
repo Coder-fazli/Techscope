@@ -25,6 +25,18 @@
     margin-bottom: 1rem;
     display: inline-block;
     width: 100%;
+    position: relative;
+  }
+
+  /* Tiny transparent divider line between posts */
+  .masonry-item::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
   }
 
   @media (min-width: 768px) {
