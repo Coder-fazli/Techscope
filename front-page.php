@@ -461,7 +461,7 @@
 
           <!-- RIGHT: Small Posts 2x2 Grid (2/5 width) - Equal Heights -->
           <div class="lg:col-span-2 flex">
-            <div class="grid grid-cols-2 gap-2 sm:gap-3 w-full content-start overflow-hidden">
+            <div class="grid grid-cols-2 auto-rows-fr gap-2 sm:gap-3 w-full h-full overflow-hidden">
               <?php
               foreach ($secondary_posts as $secondary_post) :
                 $temp_post = $post;
@@ -471,7 +471,7 @@
                 $rating = techscope_get_post_rating($post->ID);
               ?>
                 <!-- Editor's Choice Small Card - Overlay Style -->
-                <a href="<?php the_permalink(); ?>" class="block relative overflow-hidden rounded-xl group h-44">
+                <a href="<?php the_permalink(); ?>" class="block relative overflow-hidden rounded-xl group h-full">
                   <div class="w-full h-full tech-img transform transition-transform duration-500 group-hover:scale-110"
                        style="background-image: url('<?php echo techscope_ensure_image($post->ID, 'featured-card'); ?>'); background-size: cover; background-position: center;">
                   </div>
