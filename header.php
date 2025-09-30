@@ -5,19 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php wp_title('|', true, 'right'); ?><?php bloginfo('name'); ?></title>
 
-  <!-- Tailwind CSS Configuration -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            'inter': ['Inter', 'system-ui', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-
   <!-- Yandex Market Widget -->
   <script async src="https://aflt.market.yandex.ru/widget/script/api" type="text/javascript"></script>
 

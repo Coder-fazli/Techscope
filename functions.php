@@ -307,6 +307,21 @@ function techscope_enqueue_scripts() {
         false // Load in HEAD, not footer
     );
 
+    // Add Tailwind config inline after Tailwind CDN loads
+    wp_add_inline_script(
+        'tailwindcdn',
+        'tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        "inter": ["Inter", "system-ui", "sans-serif"]
+                    }
+                }
+            }
+        };',
+        'after'
+    );
+
     // NO defer attribute - we want blocking load to prevent FOUC
 
     // --- Fonts & styles ---
