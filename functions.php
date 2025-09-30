@@ -334,6 +334,14 @@ function techscope_enqueue_scripts() {
     // Enqueue Gutenberg block styles for frontend
     wp_enqueue_style('wp-block-library');
 
+    // Enqueue Hero Navigation Styles
+    wp_enqueue_style(
+        'hero-navigation',
+        get_template_directory_uri() . '/css/hero-navigation.css',
+        array('techscope-style'),
+        filemtime(get_template_directory() . '/css/hero-navigation.css')
+    );
+
     // --- Theme JS (DISABLED TO PREVENT DOUBLE LOADING) ---
     // wp_enqueue_script(
     //     'techscope-script',
