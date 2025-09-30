@@ -63,9 +63,11 @@
 
     /* Navigation Critical Styles */
     nav {
+      position: -webkit-sticky;
       position: sticky;
       top: 0;
       z-index: 50;
+      width: 100%;
     }
 
     nav > div {
@@ -271,7 +273,7 @@
 <?php wp_body_open(); ?>
 
 <!-- NAVIGATION -->
-<nav class="sticky top-0 z-50">
+<nav class="sticky top-0 z-50 w-full">
   <div id="main-nav" class="backdrop-blur-xl shadow-lg border-b border-white/50 transition-all duration-300" style="box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08); background-color: transparent !important;">
     <div class="max-w-full lg:max-w-7xl mx-auto px-3 sm:px-4">
 
