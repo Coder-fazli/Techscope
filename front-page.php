@@ -389,29 +389,31 @@
     </div>
 
     <?php if (techscope_should_show_section('editor')) : ?>
-    <!-- ========== EDITOR'S CHOICE SECTION - KATEN STYLE CONTAINER ========== -->
-    <div class="lg:col-span-3 katen-section-container">
-      <!-- Section Header -->
-      <div class="katen-section-header">
-        <h3 class="flex items-center gap-2">
+    <!-- ========== EDITOR'S CHOICE SECTION ========== -->
+    <div class="lg:col-span-3">
+      <!-- Section Header with Dividers -->
+      <div class="flex items-center gap-4 mb-6">
+        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-orange-300 to-orange-400"></div>
+        <h3 class="flex items-center gap-2 text-xl font-bold text-gray-800 whitespace-nowrap">
           <span class="text-amber-500">⭐</span>
           <?php echo techscope_get_section_title('editor'); ?>
         </h3>
+        <div class="flex-1 h-px bg-gradient-to-l from-transparent via-orange-300 to-orange-400"></div>
       </div>
 
       <!-- EDITOR'S CHOICE Content -->
       <section class="section-animate stagger-2">
         <?php
         $editor_posts = techscope_get_editor_posts();
-        $editor_secondary_count = get_option('techscope_editor_secondary_count', 4); // Increased default to 4
+        $editor_secondary_count = get_option('techscope_editor_secondary_count', 4);
 
         if ($editor_posts->have_posts() && count($editor_posts->posts) > 0) :
           $all_posts = $editor_posts->posts;
-          $featured_post = $all_posts[0]; // First post as featured
-          $secondary_posts = array_slice($all_posts, 1, $editor_secondary_count); // Remaining posts
+          $featured_post = $all_posts[0];
+          $secondary_posts = array_slice($all_posts, 1, $editor_secondary_count);
         ?>
 
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-2 sm:gap-3 min-h-[250px] lg:h-96 w-full overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-2 sm:gap-3 min-h-[280px] lg:h-[450px] w-full overflow-hidden">
           <!-- LEFT: Large Featured Post (3/5 width) - Full Height -->
           <div class="lg:col-span-3 flex">
             <?php
